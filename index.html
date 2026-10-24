@@ -1,1 +1,36 @@
 
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#0f3d2e">
+<meta name="description" content="Discover products, compare prices and find shops across Nigeria.">
+<title>Naija Mart | Discover. Compare. Shop.</title><link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<header class="header"><a class="brand" href="#"><b>N</b> Naija<span>Mart</span></a>
+<button class="hamburger" id="hamburger" aria-label="Open menu">☰</button>
+<nav id="nav"><a href="#categories">Categories</a><a href="#how">How it works</a><button class="outline" id="signin">Sign in</button><button class="primary" id="join">Join Naija Mart</button></nav></header>
+<main>
+<section class="hero"><div class="hero-copy"><p class="eyebrow">● NIGERIA'S MARKETPLACE, ONE PLACE</p>
+<h1>Find what you need.<br><em>Compare before you buy.</em></h1>
+<p class="intro">Discover products, explore shops, and compare prices across markets and cities in Nigeria.</p>
+<form id="searchForm" class="search"><label>WHAT ARE YOU LOOKING FOR?<input id="query" placeholder="Try rice, phones, shoes..." type="search"></label><label>LOCATION<input id="location" placeholder="Any state, city or market"></label><button class="primary">Search products</button></form>
+<div class="popular">Popular: <button data-search="Rice">Rice</button><button data-search="Garri">Garri</button><button data-search="Phones">Phones</button><button data-search="Building materials">Building materials</button></div></div>
+<div class="hero-art"><div class="orbit"></div><div class="shop-card"><div class="card-top"><b>N</b><small>MARKETPLACE</small></div><div class="shop-art"><div class="awning"></div><div class="produce"><i>🥬</i><i>🌽</i><i>🍅</i><i>🥑</i></div></div><div class="card-bottom"><div><strong>Local shops, closer</strong><small>Discover sellers around Nigeria</small></div><span>↗</span></div></div><div class="float price"><b>₦</b><div><strong>Compare prices</strong><small>Across locations</small></div></div><div class="float trust"><b>✓</b><div><strong>Verified sellers</strong><small>Trust starts here</small></div></div></div></section>
+<section class="location-strip"><div><strong>⌖ &nbsp; Explore across Nigeria</strong><small>Choose your state, city, or market</small></div><button class="link-button" id="browse">Browse locations →</button></section>
+<section class="section" id="categories"><div class="section-heading"><div><p class="eyebrow">BROWSE BY INTEREST</p><h2>Explore categories</h2></div><a href="#products">View products →</a></div>
+<div class="categories"><button data-category="Food & groceries"><i>🥬</i><b>Food & groceries</b><small>Everyday essentials</small></button><button data-category="Electronics"><i>📱</i><b>Electronics</b><small>Phones and gadgets</small></button><button data-category="Fashion"><i>👟</i><b>Fashion</b><small>Clothes and footwear</small></button><button data-category="Home & living"><i>🛋️</i><b>Home & living</b><small>Make your space yours</small></button><button data-category="Building materials"><i>🧱</i><b>Building materials</b><small>Build and repair</small></button><button data-category="Beauty & care"><i>🧴</i><b>Beauty & care</b><small>Daily care essentials</small></button></div></section>
+<section class="section products" id="products"><div class="section-heading"><div><p class="eyebrow">A FIRST LOOK</p><h2>Discover popular products</h2><p class="muted">These are sample design cards, not live offers or confirmed prices.</p></div><label class="filter">FILTER LOCATION<select id="filter"><option value="">All locations</option><option>Benin City, Edo</option><option>Lagos, Lagos</option><option>Port Harcourt, Rivers</option><option>Abuja, FCT</option></select></label></div>
+<div class="product-grid" id="grid">
+<article data-name="Premium rice" data-location="Benin City, Edo" data-category="Food & groceries"><div class="product-image rice">🌾<small>PREVIEW</small></div><div class="product-info"><small>FOOD & GROCERIES</small><h3>Premium rice</h3><p>⌖ Benin City, Edo</p><b>Price to be confirmed</b><small class="note">Sample card — not a live offer</small><button class="detail">View details →</button></div></article>
+<article data-name="Fresh garri" data-location="Lagos, Lagos" data-category="Food & groceries"><div class="product-image garri">🌽<small>PREVIEW</small></div><div class="product-info"><small>FOOD & GROCERIES</small><h3>Fresh garri</h3><p>⌖ Lagos, Lagos</p><b>Price to be confirmed</b><small class="note">Sample card — not a live offer</small><button class="detail">View details →</button></div></article>
+<article data-name="Android smartphone" data-location="Port Harcourt, Rivers" data-category="Electronics"><div class="product-image phone">📱<small>PREVIEW</small></div><div class="product-info"><small>ELECTRONICS</small><h3>Android smartphone</h3><p>⌖ Port Harcourt, Rivers</p><b>Price to be confirmed</b><small class="note">Sample card — not a live offer</small><button class="detail">View details →</button></div></article>
+<article data-name="Building blocks" data-location="Abuja, FCT" data-category="Building materials"><div class="product-image blocks">🧱<small>PREVIEW</small></div><div class="product-info"><small>BUILDING MATERIALS</small><h3>Building blocks</h3><p>⌖ Abuja, FCT</p><b>Price to be confirmed</b><small class="note">Sample card — not a live offer</small><button class="detail">View details →</button></div></article>
+</div><p id="empty" hidden>No sample products match. Try another search or location.</p></section>
+<section class="seller-banner"><div><p class="eyebrow">FOR NIGERIAN TRADERS</p><h2>Bring your shop online.</h2><p>Create a digital storefront, share products, and help more customers discover your business.</p></div><button class="light" id="sellerJoin">Join as a seller →</button></section>
+<section class="section" id="how"><p class="eyebrow">SIMPLE BY DESIGN</p><h2>How Naija Mart will work</h2><div class="steps"><div><b>01</b><h3>Search anywhere</h3><p>Look for a product and choose any Nigerian location.</p></div><div><b>02</b><h3>Compare and explore</h3><p>Review locations, price freshness, and seller details.</p></div><div><b>03</b><h3>Connect with shops</h3><p>Contact sellers and check pickup or delivery options.</p></div></div></section>
+</main><footer><a class="brand" href="#"><b>N</b> Naija<span>Mart</span></a><p>Discover. Compare. Shop.</p><small>© <span id="year"></span> Naija Mart. Built for Nigeria.</small></footer>
+<dialog id="dialog"><button class="close" id="close">×</button><p class="eyebrow">WELCOME TO NAIJA MART</p><h2 id="dialogTitle">How would you like to join?</h2><p id="dialogText">Choose an account type to continue.</p><button class="account" data-role="buyer">🛍️ &nbsp; <span><b>I'm a buyer</b><small>Discover products and shops</small></span> →</button><button class="account" data-role="seller">🏪 &nbsp; <span><b>I'm a seller</b><small>Apply to open a shop</small></span> →</button><p class="disclaimer">Preview only. Registration and seller approval are not connected yet.</p></dialog>
+<div class="toast" id="toast" role="status"></div><script src="app.js"></script></body></html>
+  
