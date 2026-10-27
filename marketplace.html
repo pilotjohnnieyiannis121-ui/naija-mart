@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Marketplace – Naija Mart</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{--g1:#0F3D2E;--g2:#185541;--gold:#C7A64A;--bg:#FBFAF6;--surface:#FFFFFF;--text:#1D2822;--muted:#68756E;--line:#E5E9E2;--tint:#EEF3EC;--goldtext:#8A6F1F;--gtext:#185541;--red:#B3261E;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0E1411;--surface:#16201B;--text:#EEF2EE;--muted:#A3B0A9;--line:#26332C;--tint:#1B2A23;--goldtext:#D9BC63;--gtext:#8FD0B3;--red:#F2928B}}
+*,*::before,*::after{box-sizing:border-box}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+body{margin:0;background:var(--bg);color:var(--text);font:500 17px/1.55 Manrope,Inter,system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;-webkit-text-size-adjust:100%}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);background:var(--bg);z-index:60}
+a{color:inherit;text-decoration:none}button,input,select{font:inherit;color:inherit}
+:focus-visible{outline:3px solid var(--gold);outline-offset:2px}
+.wrap{max-width:1180px;margin:0 auto;padding:0 20px}
+h1,h2,h3{margin:0;line-height:1.15;letter-spacing:-.02em}
+.hdr{position:sticky;top:env(safe-area-inset-top,0px);z-index:40;background:var(--bg);border-bottom:1px solid var(--line)}
+.hdr .wrap{display:flex;align-items:center;gap:12px;height:64px}
+.logo{display:flex;align-items:center;gap:10px;font-weight:800;font-size:1.3rem;color:var(--g1)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .logo{color:#EEF2EE}}
+.logo i{width:38px;height:38px;border-radius:10px;background:var(--g1);color:#fff;display:grid;place-items:center;font-style:normal}
+.logo b{color:var(--gold)}
+.sp{flex:1}
+.btn{display:inline-flex;align-items:center;justify-content:center;min-height:48px;padding:0 20px;border-radius:12px;font-weight:700;border:1.5px solid var(--g1);background:transparent;color:var(--g1);cursor:pointer}
+.btn.pri{background:var(--g1);color:#fff}.btn.sm{min-height:44px;padding:0 14px}
+.btn[disabled]{opacity:.55;cursor:not-allowed}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .btn:not(.pri){color:#EEF2EE;border-color:var(--line)}}
+.hide-m{display:none}
+.top{padding:22px 0 8px}
+.top h1{font-size:clamp(1.7rem,6vw,2.4rem);font-weight:800}
+.crumb{color:var(--muted);font-size:.95rem;margin-bottom:6px}
+.demo{display:inline-block;background:var(--tint);color:var(--goldtext);border:1px solid var(--gold);border-radius:8px;padding:2px 10px;font-size:.85rem;font-weight:700;margin-top:10px}
+.off{display:none;background:var(--red);color:#fff;padding:10px 20px;font-weight:700;text-align:center}
+.bar{display:grid;gap:10px;margin:16px 0}
+.sbox{display:flex;gap:8px}
+.sbox input{flex:1;min-width:0;min-height:50px;border-radius:12px;border:1.5px solid var(--line);background:var(--surface);padding:0 14px}
+.row{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+.row select{min-height:48px;border-radius:12px;border:1.5px solid var(--line);background:var(--surface);padding:0 10px;flex:1;min-width:0}
+.count{color:var(--muted);font-weight:600}
+.layout{display:block;padding-bottom:60px}
+.filters{position:fixed;inset:auto 0 0 0;max-height:85vh;overflow:auto;background:var(--surface);border-radius:22px 22px 0 0;padding:18px 20px calc(24px + env(safe-area-inset-bottom,0px));z-index:55;transform:translateY(105%);transition:transform .2s;box-shadow:0 -8px 30px rgba(0,0,0,.25)}
+.filters.open{transform:none}
+.scrim{display:none;position:fixed;inset:0;background:rgba(0,0,0,.45);z-index:50}.scrim.open{display:block}
+.fh{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px}
+.fg{margin:14px 0}
+.fg>label,.fg>legend{display:block;font-weight:800;margin-bottom:6px;padding:0}
+fieldset.fg{border:0;padding:0;margin:14px 0}
+.fg select,.fg input[type=number],.fg input[type=text]{width:100%;min-height:48px;border-radius:12px;border:1.5px solid var(--line);background:var(--bg);padding:0 12px}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.ck{display:flex;gap:10px;align-items:center;min-height:44px;font-weight:600}
+.ck input{width:22px;height:22px;accent-color:var(--g1)}
+.grid{display:grid;grid-template-columns:1fr;gap:16px}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:16px;overflow:hidden;display:flex;flex-direction:column}
+.ph{aspect-ratio:4/3;background:var(--tint);display:grid;place-items:center;font-size:3.2rem;position:relative;cursor:pointer;border:0;width:100%}
+.save{position:absolute;top:10px;right:10px;width:44px;height:44px;border-radius:50%;border:0;background:var(--surface);cursor:pointer;font-size:1.2rem;box-shadow:0 1px 4px rgba(0,0,0,.2);display:grid;place-items:center}
+.save[aria-pressed="true"]{color:var(--red)}
+.tag{position:absolute;left:10px;top:10px;background:var(--surface);border-radius:8px;padding:2px 10px;font-size:.8rem;font-weight:700;color:var(--goldtext)}
+.cb{padding:14px 16px 16px;display:grid;gap:3px;flex:1}
+.cb h3{font-size:1.05rem;font-weight:700;letter-spacing:0}
+.price{font-size:1.35rem;font-weight:800;color:var(--g1)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .price{color:var(--gtext)}}
+.meta{color:var(--muted);font-size:.95rem}
+.vf{font-size:.9rem;font-weight:700;color:var(--gtext)}
+.stock{font-size:.92rem;font-weight:700;color:var(--gtext)}.stock.low{color:var(--goldtext)}.stock.out{color:var(--red)}
+.cmp{margin-top:8px}
+.sk{background:linear-gradient(90deg,var(--tint),var(--line),var(--tint));background-size:200% 100%;animation:sh 1.2s infinite;border-radius:16px;height:300px}
+@keyframes sh{to{background-position:-200% 0}}
+@media (prefers-reduced-motion:reduce){.sk{animation:none}.filters{transition:none}}
+.empty{text-align:center;padding:48px 16px;border:1.5px dashed var(--line);border-radius:16px}
+.empty .big{font-size:3rem}
+.more{text-align:center;margin-top:24px}
+.tray{position:fixed;left:0;right:0;bottom:0;z-index:45;background:var(--g1);color:#fff;padding:12px 20px calc(12px + env(safe-area-inset-bottom,0px));display:none;gap:10px;align-items:center;justify-content:space-between}
+.tray.on{display:flex}.tray .btn{border-color:#fff;color:#fff;min-height:44px}.tray .btn.w{background:#fff;color:var(--g1)}
+.modal{position:fixed;inset:0;z-index:70;display:none;background:rgba(0,0,0,.5);overflow:auto}
+.modal.open{display:block}
+.sheet{background:var(--surface);max-width:720px;margin:0 auto;min-height:100%;padding:0 0 calc(24px + env(safe-area-inset-bottom,0px))}
+.sheet .x{position:sticky;top:0;display:flex;justify-content:space-between;align-items:center;padding:calc(10px + env(safe-area-inset-top,0px)) 16px 10px;background:var(--surface);border-bottom:1px solid var(--line)}
+.sheet .in{padding:16px 20px;display:grid;gap:12px}
+.gal{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.gal div{aspect-ratio:1;background:var(--tint);border-radius:12px;display:grid;place-items:center;font-size:2rem}
+.gal div:first-child{grid-column:1/-1;aspect-ratio:4/3;font-size:5rem}
+.pills{display:flex;gap:8px;flex-wrap:wrap}
+.pill{border:1.5px solid var(--line);border-radius:99px;padding:6px 14px;font-weight:600;min-height:40px;background:var(--bg)}
+dl{display:grid;grid-template-columns:auto 1fr;gap:6px 14px;margin:0}dt{color:var(--muted)}dd{margin:0;font-weight:600}
+.note{border-left:4px solid var(--gold);background:var(--tint);padding:12px 14px;border-radius:0 12px 12px 0;color:var(--muted);font-size:.95rem}
+.acts{display:flex;gap:10px;flex-wrap:wrap}.acts .btn{flex:1 1 140px}
+table{border-collapse:collapse;width:100%}th,td{border:1px solid var(--line);padding:10px;text-align:left;vertical-align:top}th{background:var(--tint)}
+.ov{overflow-x:auto}.miss{color:var(--muted);font-style:italic}
+.toast{position:fixed;left:50%;bottom:90px;transform:translateX(-50%);background:var(--text);color:var(--bg);padding:12px 18px;border-radius:12px;font-weight:700;z-index:90;display:none;max-width:90%}
+@media (min-width:720px){.hide-m{display:inline-flex}.grid{grid-template-columns:repeat(2,1fr)}.bar{grid-template-columns:1fr auto}.row select{flex:none}}
+@media (min-width:980px){
+ .layout{display:grid;grid-template-columns:280px 1fr;gap:28px;align-items:start}
+ .filters{position:sticky;top:90px;transform:none;inset:auto;max-height:none;border-radius:16px;border:1px solid var(--line);box-shadow:none;padding:18px}
+ .scrim,.fbtn,.fclose{display:none!important}.grid{grid-template-columns:repeat(3,1fr)}
+}
+</style>
+</head>
+<body>
+<header class="hdr"><div class="wrap">
+  <a class="logo" href="index.html" aria-label="Naija Mart home"><i aria-hidden="true">N</i><span>Naija<b>Mart</b></span></a>
+  <div class="sp"></div>
+  <a class="btn hide-m sm" href="auth.html">Sign in</a><a class="btn pri sm" href="auth.html">Create account</a>
+</div></header>
+<div class="off" id="off" role="alert">You are offline. Showing the listings already loaded. We will refresh when you reconnect.</div>
+
+<main class="wrap">
+<div class="top"><div class="crumb">Home › Marketplace</div><h1>Marketplace</h1><span class="demo">Demo listings – preview mode, not real sellers</span></div>
+
+<div class="bar">
+  <div class="sbox"><input id="q" type="search" placeholder="Search products, shops or markets" aria-label="Search products, shops or markets"><button class="btn pri" id="go">Search</button></div>
+  <div class="row">
+    <button class="btn fbtn" id="fopen" aria-controls="fp">Filters<span id="fn"></span></button>
+    <select id="sort" aria-label="Sort by"><option value="new">Recently added</option><option value="lo">Price: low to high</option><option value="hi">Price: high to low</option></select>
+  </div>
+</div>
+<p class="count" id="count" aria-live="polite"></p>
+
+<div class="layout">
+<div class="scrim" id="scrim"></div>
+<aside class="filters" id="fp" aria-label="Filters">
+  <div class="fh"><h2 style="font-size:1.25rem">Filters</h2><button class="btn sm fclose" id="fclose">Done</button></div>
+  <div class="fg"><label for="fc">Category</label><select id="fc"></select></div>
+  <div class="fg"><label for="fs">State</label><select id="fs"></select></div>
+  <div class="fg"><label for="fm">City or market</label><input id="fm" type="text" placeholder="e.g. Ikeja, Wuse"></div>
+  <fieldset class="fg"><legend>Price (₦)</legend><div class="two"><input id="pmin" type="number" min="0" inputmode="numeric" placeholder="Min" aria-label="Minimum price"><input id="pmax" type="number" min="0" inputmode="numeric" placeholder="Max" aria-label="Maximum price"></div></fieldset>
+  <div class="fg"><label for="fcond">Condition</label><select id="fcond"><option value="">Any</option><option>New</option><option>Used</option></select></div>
+  <label class="ck"><input type="checkbox" id="favail"> Show only items in stock</label>
+  <label class="ck"><input type="checkbox" id="fver"> Verified sellers only</label>
+  <button class="btn" id="reset" style="width:100%;margin-top:12px">Clear all filters</button>
+</aside>
+<section aria-label="Products"><div class="grid" id="grid"></div><div class="more"><button class="btn" id="more" style="display:none">Show more products</button></div></section>
+</div>
+</main>
+
+<div class="tray" id="tray"><span id="tcount"></span><span style="display:flex;gap:8px"><button class="btn" id="tclear">Clear</button><button class="btn w" id="tgo">Compare</button></span></div>
+<div class="modal" id="modal" role="dialog" aria-modal="true" aria-labelledby="mt"><div class="sheet" id="sheet"></div></div>
+<div class="toast" id="toast" role="status"></div>
+
+<script>
+var $=function(i){return document.getElementById(i)};
+var STATES=["Abia","Adamawa","Akwa Ibom","Anambra","Bauchi","Bayelsa","Benue","Borno","Cross River","Delta","Ebonyi","Edo","Ekiti","Enugu","FCT (Abuja)","Gombe","Imo","Jigawa","Kaduna","Kano","Katsina","Kebbi","Kogi","Kwara","Lagos","Nasarawa","Niger","Ogun","Ondo","Osun","Oyo","Plateau","Rivers","Sokoto","Taraba","Yobe","Zamfara"];
+var CATS=["Fashion and clothing","Shoes and bags","Phones and electronics","Home and furniture","Beauty and personal care","Food and groceries","Health and wellness","Building materials","Automotive and spare parts","Sports and fitness","Books and education","Other products"];
+// id, emoji, name, price, category idx, shop, verified, state, area, condition, stock, days since update, delivery, variations, description
+var P=[
+[1,"📱","Smartphone, 128GB",185000,2,"Demo Mobile Hub",1,"Lagos","Ikeja Computer Village","New","in",1,"Pickup and delivery","Black, Blue","Dual SIM, 6.5 inch display. Includes charger."],
+[2,"👟","Leather sandals",12500,1,"Demo Footwear Co.",1,"Abia","Aba","New","in",3,"Pickup and delivery","Sizes 40–45","Hand-stitched leather sandals."],
+[3,"🍚","Local rice, 50kg bag",78000,5,"Demo Grains Ltd",0,"Kano","Kano Central Market","New","in",2,"Delivery in Kano only","","Clean, stone-free local rice."],
+[4,"🪑","Wooden dining set",260000,3,"Demo Home Studio",1,"FCT (Abuja)","Wuse","New","low",5,"Pickup only","Walnut, Oak","Six-seater dining table and chairs."],
+[5,"💻","Used laptop, 8GB RAM",240000,2,"Demo Tech Point",0,"Rivers","Port Harcourt","Used","in",9,"Pickup and delivery","","Tested and working. 256GB SSD."],
+[6,"👗","Ankara dress",18000,0,"Demo Fashion House",1,"Lagos","Balogun Market","New","in",1,"Delivery nationwide","Sizes S–XL, 3 prints","Tailored Ankara fabric dress."],
+[7,"🧱","Cement, 50kg",9800,7,"Demo Build Supply",0,"Oyo","Ibadan","New","out",14,"Pickup only","","Price may change. Call to confirm."],
+[8,"🧴","Shea butter, 1kg",6500,4,"Demo Naturals",1,"Kaduna","Kaduna","New","in",4,"Delivery nationwide","","Unrefined shea butter."],
+[9,"🔌","Power inverter, 1.5kVA",145000,2,"Demo Power Hub",1,"Enugu","Enugu","New","low",6,"Pickup and delivery","","Pure sine wave inverter."],
+[10,"⚽","Football boots",22000,9,"Demo Sports Shop",0,"Delta","Warri","Used","in",11,"Pickup only","Sizes 41–44","Lightly used."],
+[11,"📚","WAEC study pack",7500,10,"Demo Books Ltd",0,"Anambra","Onitsha","New","in",2,"Delivery nationwide","","Past questions and notes."],
+[12,"🚗","Car brake pads",28000,8,"Demo Auto Parts",1,"Lagos","Ladipo","New","in",7,"Pickup and delivery","Toyota, Honda","Check fit with seller first."],
+[13,"🧺","Woven storage basket",4500,11,"Demo Crafts",0,"Plateau","Jos","New","in",20,"Pickup only","S, M, L","Handmade basket."],
+[14,"🍯","Pure honey, 1 litre",8000,5,"Demo Farm Fresh",0,"Kaduna","Kaduna","New","in",0,"Delivery in Kaduna","","Unprocessed honey."]
+];
+var N=function(n){return "₦"+n.toLocaleString("en-NG")};
+var when=function(d){return d===0?"today":d===1?"yesterday":d+" days ago"};
+var SL={in:["In stock",""],low:["Low stock","low"],out:["Out of stock","out"]};
+var shown=8,saved={},cmp=[];
+function opts(sel,first,arr){$(sel).innerHTML="<option value=''>"+first+"</option>"+arr.map(function(a,i){return "<option value='"+(sel==="fc"?i:a)+"'>"+a+"</option>"}).join("")}
+opts("fc","All categories",CATS);opts("fs","All of Nigeria",STATES);
+
+function filtered(){
+  var q=$("q").value.trim().toLowerCase(),c=$("fc").value,s=$("fs").value,m=$("fm").value.trim().toLowerCase(),
+  lo=parseFloat($("pmin").value)||0,hi=parseFloat($("pmax").value)||Infinity,cond=$("fcond").value,av=$("favail").checked,vr=$("fver").checked;
+  var r=P.filter(function(p){
+    var hay=(p[2]+" "+CATS[p[4]]+" "+p[5]+" "+p[7]+" "+p[8]).toLowerCase();
+    return (!q||hay.indexOf(q)>-1)&&(c===""||p[4]==c)&&(!s||p[7]===s)&&(!m||(p[8]+" "+p[7]).toLowerCase().indexOf(m)>-1)&&p[3]>=lo&&p[3]<=hi&&(!cond||p[9]===cond)&&(!av||p[10]!=="out")&&(!vr||p[6]);
+  });
+  var so=$("sort").value;
+  r.sort(function(a,b){return so==="lo"?a[3]-b[3]:so==="hi"?b[3]-a[3]:a[11]-b[11]});
+  return r;
+}
+function card(p){
+  var st=SL[p[10]];
+  return '<article class="card"><button class="ph" data-open="'+p[0]+'" aria-label="View '+p[2]+'"><span aria-hidden="true">'+p[1]+'</span><span class="tag">Demo</span></button>'+
+  '<div class="cb"><h3>'+p[2]+'</h3><div class="price">'+N(p[3])+'</div><div class="meta">'+p[5]+(p[6]?' <span class="vf">✔ Verified</span>':'')+'</div><div class="meta">'+p[8]+', '+p[7]+'</div><div class="stock '+st[1]+'">'+st[0]+'</div><div class="meta">Updated '+when(p[11])+'</div>'+
+  '<div class="acts cmp"><button class="btn sm" data-open="'+p[0]+'">View product</button><button class="btn sm" data-cmp="'+p[0]+'" aria-pressed="'+(cmp.indexOf(p[0])>-1)+'">'+(cmp.indexOf(p[0])>-1?'Remove from compare':'Compare')+'</button><button class="btn sm" data-save="'+p[0]+'" aria-pressed="'+!!saved[p[0]]+'" aria-label="Save '+p[2]+'">'+(saved[p[0]]?'♥ Saved':'♡ Save')+'</button></div></div></article>';
+}
+function render(){
+  var r=filtered(),g=$("grid");
+  $("count").textContent=r.length+" product"+(r.length===1?"":"s")+" found";
+  if(!r.length){g.innerHTML='<div class="empty" style="grid-column:1/-1"><div class="big" aria-hidden="true">🔍</div><h2>No products match</h2><p class="meta">Try a different word, widen your price range, or choose another state.</p><button class="btn pri" id="reset2">Clear all filters</button></div>';$("more").style.display="none";$("reset2").onclick=reset;return}
+  g.innerHTML=r.slice(0,shown).map(card).join("");
+  $("more").style.display=r.length>shown?"inline-flex":"none";
+  var n=["fc","fs","fm","pmin","pmax","fcond"].filter(function(i){return $(i).value!==""}).length+($("favail").checked?1:0)+($("fver").checked?1:0);
+  $("fn").textContent=n?" ("+n+")":"";
+  var t=$("tray");t.classList.toggle("on",cmp.length>0);$("tcount").textContent=cmp.length+" selected (max 3)";$("tgo").disabled=cmp.length<2;
+}
+function load(){
+  var g=$("grid");g.innerHTML='<div class="sk"></div><div class="sk"></div><div class="sk"></div>';
+  setTimeout(render,350);
+}
+function reset(){["q","fc","fs","fm","pmin","pmax","fcond"].forEach(function(i){$(i).value=""});$("favail").checked=$("fver").checked=false;shown=8;load()}
+function apply(){shown=8;load()}
+["go","reset"].forEach(function(i){});
+$("go").onclick=apply;$("q").onkeydown=function(e){if(e.key==="Enter")apply()};
+["fc","fs","fcond","favail","fver","sort"].forEach(function(i){$(i).onchange=apply});
+["fm","pmin","pmax"].forEach(function(i){$(i).onchange=apply});
+$("reset").onclick=reset;$("more").onclick=function(){shown+=8;render()};
+function fp(o){$("fp").classList.toggle("open",o);$("scrim").classList.toggle("open",o)}
+$("fopen").onclick=function(){fp(true)};$("fclose").onclick=$("scrim").onclick=function(){fp(false)};
+function toast(t){var e=$("toast");e.textContent=t;e.style.display="block";clearTimeout(toast.t);toast.t=setTimeout(function(){e.style.display="none"},2400)}
+function byId(id){return P.filter(function(p){return p[0]==id})[0]}
+function open(id){
+  var p=byId(id),st=SL[p[10]];
+  $("sheet").innerHTML='<div class="x"><strong>Product details</strong><button class="btn sm" id="mx">Close</button></div><div class="in">'+
+  '<div class="gal" aria-hidden="true"><div>'+p[1]+'</div><div>'+p[1]+'</div><div>'+p[1]+'</div><div>'+p[1]+'</div></div><span class="demo" style="width:fit-content;margin:0">Demo listing</span>'+
+  '<h2 id="mt" style="font-size:1.6rem">'+p[2]+'</h2><div class="price" style="font-size:1.7rem">'+N(p[3])+'</div><div class="stock '+st[1]+'">'+st[0]+'</div>'+
+  '<p style="margin:0">'+p[14]+'</p>'+(p[13]?'<div><strong>Options</strong><div class="pills" style="margin-top:6px">'+p[13].split(", ").map(function(v){return '<span class="pill">'+v+'</span>'}).join("")+'</div></div>':'')+
+  '<dl><dt>Seller</dt><dd>'+p[5]+(p[6]?' <span class="vf">✔ Verified</span>':' (not verified)')+'</dd><dt>Location</dt><dd>'+p[8]+', '+p[7]+'</dd><dt>Condition</dt><dd>'+p[9]+'</dd><dt>Category</dt><dd>'+CATS[p[4]]+'</dd><dt>Pickup / delivery</dt><dd>'+p[12]+'</dd><dt>Last updated</dt><dd>'+when(p[11])+'</dd></dl>'+
+  '<div class="note">Naija Mart does not take payment or guarantee delivery. Agree the price and handover with the seller, and never pay in advance to someone you cannot verify. Always confirm price and stock first.</div>'+
+  '<div class="acts"><button class="btn pri" data-contact="1">Contact seller</button><button class="btn" data-save="'+p[0]+'">'+(saved[p[0]]?'♥ Saved':'♡ Save')+'</button><button class="btn" data-share="1">Share</button><button class="btn" data-report="1">Report listing</button></div>'+
+  '<a href="#store" class="btn">Visit '+p[5]+' storefront</a></div>';
+  $("modal").classList.add("open");document.body.style.overflow="hidden";$("modal").scrollTop=0;$("mx").focus();
+}
+function close(){$("modal").classList.remove("open");document.body.style.overflow=""}
+document.addEventListener("click",function(e){
+  var t=e.target.closest("[data-open],[data-save],[data-cmp],[data-contact],[data-share],[data-report],#mx");if(!t)return;
+  if(t.id==="mx")return close();
+  if(t.dataset.open)return open(+t.dataset.open);
+  if(t.dataset.save){var id=+t.dataset.save;saved[id]=!saved[id];toast(saved[id]?"Saved (demo only – not stored)":"Removed from saved");render();if($("modal").classList.contains("open"))open(id);return}
+  if(t.dataset.cmp){var i=+t.dataset.cmp,k=cmp.indexOf(i);if(k>-1)cmp.splice(k,1);else if(cmp.length<3)cmp.push(i);else toast("You can compare up to 3 products");render();return}
+  if(t.dataset.contact)return toast("Sign in to message sellers. Messaging is a planned feature.");
+  if(t.dataset.share)return toast("Sharing is a planned feature");
+  if(t.dataset.report)return toast("Reporting is a planned feature");
+});
+document.addEventListener("keydown",function(e){if(e.key==="Escape"){close();fp(false)}});
+$("tclear").onclick=function(){cmp=[];render()};
+$("tgo").onclick=function(){
+  var rows=[["Price",function(p){return N(p[3])}],["Location",function(p){return p[8]+", "+p[7]}],["Condition",function(p){return p[9]}],["Availability",function(p){return SL[p[10]][0]}],["Seller",function(p){return p[5]+(p[6]?" (Verified)":"")}],["Options",function(p){return p[13]||null}],["Delivery",function(p){return p[12]}],["Last updated",function(p){return when(p[11])}]];
+  var ps=cmp.map(byId);
+  $("sheet").innerHTML='<div class="x"><strong id="mt">Compare products</strong><button class="btn sm" id="mx">Close</button></div><div class="in"><div class="ov"><table><tr><th></th>'+ps.map(function(p){return "<th>"+p[1]+" "+p[2]+"</th>"}).join("")+"</tr>"+rows.map(function(r){return "<tr><th>"+r[0]+"</th>"+ps.map(function(p){var v=r[1](p);return v?"<td>"+v+"</td>":'<td class="miss">Not provided</td>'}).join("")+"</tr>"}).join("")+'</table></div><p class="note">Comparison uses the seller’s listing details. Check price and stock with the seller before you buy.</p></div>';
+  $("modal").classList.add("open");document.body.style.overflow="hidden";
+};
+function net(){$("off").style.display=navigator.onLine?"none":"block"}
+addEventListener("online",net);addEventListener("offline",net);net();
+load();
+</script>
+</body>
+</html>
