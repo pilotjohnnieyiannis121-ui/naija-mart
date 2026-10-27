@@ -138,6 +138,7 @@ $("f-fp").onsubmit=e=>{e.preventDefault();run($("b-fp"),async()=>{
 
 if(configured){
  onAuthStateChanged(auth,u=>{
+  if(u){location.replace("account.html");return}
   $("forms").hidden=!!u;$("done").hidden=!u;
   if(u){$("dm").textContent="Signed in as "+(u.displayName||u.email);$("vw").style.display=u.emailVerified?"none":"block";$("vw").className="msg warn";$("resend").hidden=u.emailVerified}
  });
