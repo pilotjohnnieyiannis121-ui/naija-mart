@@ -3,34 +3,41 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Sign in – Naija Mart</title>
+<title>Join or sign in – Naija Mart</title>
 <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@500;600;700;800&display=swap" rel="stylesheet">
 <style>
 :root{--g1:#0F3D2E;--gold:#C7A64A;--bg:#FBFAF6;--sf:#fff;--tx:#1D2822;--mu:#68756E;--ln:#E5E9E2;--ti:#EEF3EC;--gr:#185541;--rd:#B3261E}
 @media (prefers-color-scheme:dark){:root{--bg:#0C1210;--sf:#141E19;--tx:#EEF2EE;--mu:#A3B0A9;--ln:#24312A;--ti:#18261F;--gr:#8FD0B3;--rd:#F2928B}}
 *{box-sizing:border-box}
 body{margin:0;background:var(--bg);color:var(--tx);font:500 17px/1.55 Manrope,Inter,system-ui,sans-serif;min-height:100vh;padding:env(safe-area-inset-top,0) 0 env(safe-area-inset-bottom,0)}
-.wrap{max-width:440px;margin:0 auto;padding:24px 20px 40px}
+.wrap{max-width:460px;margin:0 auto;padding:22px 20px 44px}
 .logo{display:flex;align-items:center;gap:10px;font-weight:800;font-size:1.4rem;color:inherit;text-decoration:none}
 .logo i{width:40px;height:40px;border-radius:11px;background:var(--g1);color:#fff;display:grid;place-items:center;font-style:normal;box-shadow:inset 0 0 0 1px rgba(199,166,74,.6)}
 .logo b{color:var(--gold)}
-h1{font-size:1.8rem;margin:24px 0 4px;letter-spacing:-.02em}
+h1{font-size:1.9rem;line-height:1.12;margin:26px 0 6px;letter-spacing:-.025em}
 .mu{color:var(--mu)}
-.tabs{display:grid;grid-template-columns:repeat(2,1fr);background:var(--ti);border-radius:14px;padding:4px;margin:18px 0}
+svg{width:1.4em;height:1.4em;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;flex:none}
+.opt{display:flex;align-items:center;gap:14px;width:100%;text-align:left;background:var(--sf);border:1.5px solid var(--ln);border-radius:20px;padding:18px;margin:12px 0 0;cursor:pointer;font:inherit;color:inherit}
+.opt:hover,.opt:focus-visible{border-color:var(--g1)}
+.opt .ic{width:52px;height:52px;border-radius:15px;background:var(--g1);color:var(--gold);display:grid;place-items:center;flex:none}
+.opt b{display:block;font-size:1.1rem}.opt small{display:block;color:var(--mu);font-size:.9rem;line-height:1.4}
+.opt .go{margin-left:auto;color:var(--mu)}
+.chip{display:flex;align-items:center;gap:10px;background:var(--ti);border-radius:14px;padding:10px 14px;margin:20px 0 4px;font-weight:700}
+.chip .lnk{margin-left:auto}
+.tabs{display:grid;grid-template-columns:repeat(2,1fr);background:var(--ti);border-radius:14px;padding:4px;margin:14px 0}
 .tabs button{min-height:48px;border:0;background:none;border-radius:11px;font:inherit;font-weight:700;color:var(--mu);cursor:pointer}
 .tabs button[aria-selected=true]{background:var(--g1);color:#fff}
 label{display:block;font-weight:700;font-size:.92rem;margin-bottom:6px}
 input{width:100%;min-height:52px;border-radius:14px;border:1.5px solid var(--ln);background:var(--sf);color:var(--tx);padding:0 14px;margin-bottom:14px;font:inherit}
-input:focus-visible,button:focus-visible{outline:3px solid var(--gold);outline-offset:2px}
+:focus-visible{outline:3px solid var(--gold);outline-offset:2px}
 .pw{position:relative}.pw button{position:absolute;right:6px;top:4px;min-height:44px;border:0;background:none;color:var(--gr);font:inherit;font-weight:700;cursor:pointer}
-.btn{width:100%;min-height:52px;border-radius:14px;border:0;background:var(--g1);color:#fff;font:inherit;font-weight:700;cursor:pointer}
-.btn:disabled{opacity:.6}
+.btn{width:100%;min-height:52px;border-radius:14px;border:0;background:var(--g1);color:#fff;font:inherit;font-weight:700;cursor:pointer}.btn:disabled{opacity:.6}
 .lnk{background:none;border:0;color:var(--gr);font:inherit;font-weight:700;cursor:pointer;min-height:44px;padding:0}
 .ck{display:flex;gap:10px;align-items:flex-start;font-size:.92rem;margin-bottom:16px}
 .ck input{width:22px;height:22px;min-height:0;margin:2px 0 0;accent-color:var(--g1)}
 .msg{border-radius:12px;padding:12px 14px;margin:14px 0;font-size:.95rem;display:none}
 .msg.err{display:block;background:#F7D3D0;color:#7A1912}.msg.ok{display:block;background:#CDEBD9;color:#0F3D2E}.msg.warn{display:block;background:#F6E9B8;color:#5C4700}
-.note{font-size:.88rem;color:var(--mu);margin-top:18px}
+.note{font-size:.88rem;color:var(--mu);margin-top:16px}
 [hidden]{display:none!important}
 </style>
 </head>
@@ -38,83 +45,81 @@ input:focus-visible,button:focus-visible{outline:3px solid var(--gold);outline-o
 <div class="wrap">
  <a class="logo" href="index.html"><i>N</i><span>Naija<b>Mart</b></span></a>
 
- <section id="forms">
-  <h1 id="title">Welcome back</h1>
-  <p class="mu" id="sub">Sign in to your buyer account.</p>
-  <div class="tabs" role="tablist"><button role="tab" id="t-in" aria-selected="true">Sign in</button><button role="tab" id="t-up" aria-selected="false">Create account</button></div>
+ <section id="pick">
+  <h1>How would you like to join?</h1>
+  <p class="mu">Choose one. You can do both later with the same account.</p>
+  <button class="opt" data-r="buyer"><span class="ic"><svg viewBox="0 0 24 24"><path d="M6 8h12l1 12H5zM9 8a3 3 0 0 1 6 0"/></svg></span><span><b>I’m a buyer</b><small>Browse products, save items, follow shops and message sellers.</small></span><svg class="go" viewBox="0 0 24 24"><path d="m9 5 7 7-7 7"/></svg></button>
+  <button class="opt" data-r="seller"><span class="ic"><svg viewBox="0 0 24 24"><path d="M4 9l1-5h14l1 5M4 9v11h16V9M4 9a3 3 0 0 0 5.3 1.9A3 3 0 0 0 14.7 10.9 3 3 0 0 0 20 9M9 20v-5h6v5"/></svg></span><span><b>I’m a seller</b><small>Open a shop. Every seller is reviewed before they can post.</small></span><svg class="go" viewBox="0 0 24 24"><path d="m9 5 7 7-7 7"/></svg></button>
+  <p style="text-align:center;margin-top:22px" class="mu">Already have an account? <button class="lnk" id="hv">Sign in</button></p>
+ </section>
+
+ <section id="forms" hidden>
+  <div class="chip"><span id="rl"></span><button class="lnk" id="chg">Change</button></div>
+  <h1 id="title"></h1>
+  <p class="mu" id="sub"></p>
+  <div class="tabs" role="tablist"><button role="tab" id="t-in" aria-selected="false">Sign in</button><button role="tab" id="t-up" aria-selected="true">Create account</button></div>
   <div class="msg" id="msg" role="alert"></div>
 
   <form id="f-in" novalidate>
-   <label for="ie">Email address</label><input id="ie" type="email" autocomplete="email" required>
-   <label for="ip">Password</label><div class="pw"><input id="ip" type="password" autocomplete="current-password" required><button type="button" data-show="ip">Show</button></div>
+   <label for="ie">Email address</label><input id="ie" type="email" autocomplete="email">
+   <label for="ip">Password</label><div class="pw"><input id="ip" type="password" autocomplete="current-password"><button type="button" data-show="ip">Show</button></div>
    <button class="btn" id="b-in">Sign in</button>
    <p style="text-align:center;margin:10px 0 0"><button type="button" class="lnk" id="to-fp">Forgot password?</button></p>
   </form>
 
   <form id="f-up" hidden novalidate>
-   <label for="un">Full name</label><input id="un" autocomplete="name" required>
-   <label for="ue">Email address</label><input id="ue" type="email" autocomplete="email" required>
+   <label for="un">Full name</label><input id="un" autocomplete="name">
+   <label for="ue">Email address</label><input id="ue" type="email" autocomplete="email">
    <label for="uph">Phone number</label><input id="uph" type="tel" autocomplete="tel" placeholder="0801 234 5678">
-   <label for="up">Password</label><div class="pw"><input id="up" type="password" autocomplete="new-password" required><button type="button" data-show="up">Show</button></div>
-   <label for="uc">Confirm password</label><input id="uc" type="password" autocomplete="new-password" required>
+   <label for="up">Password</label><div class="pw"><input id="up" type="password" autocomplete="new-password"><button type="button" data-show="up">Show</button></div>
+   <label for="uc">Confirm password</label><input id="uc" type="password" autocomplete="new-password">
    <label class="ck"><input type="checkbox" id="ut"><span>I agree to the Terms and Privacy Policy</span></label>
    <button class="btn" id="b-up">Create account</button>
-   <p class="note">We’ll email you a link to verify your address. Want to sell? Create your account first, then apply to sell from your account.</p>
+   <p class="note" id="upn"></p>
   </form>
 
   <form id="f-fp" hidden novalidate>
-   <label for="fe">Email address</label><input id="fe" type="email" autocomplete="email" required>
+   <label for="fe">Email address</label><input id="fe" type="email" autocomplete="email">
    <button class="btn" id="b-fp">Send reset link</button>
    <p style="text-align:center;margin:10px 0 0"><button type="button" class="lnk" id="to-in">Back to sign in</button></p>
    <p class="note">Lost access to your email? Contact support and we’ll help verify it’s you.</p>
   </form>
  </section>
-
- <section id="done" hidden>
-  <h1 id="dn">You’re signed in</h1>
-  <p class="mu" id="dm"></p>
-  <div class="msg warn" id="vw">Please verify your email. Check your inbox and spam folder.</div>
-  <button class="btn" id="resend" hidden>Resend verification email</button>
-  <p style="margin-top:14px"><button class="lnk" id="out">Sign out</button></p>
- </section>
 </div>
 
 <script type="module">
-// 1) Paste YOUR Firebase web config here (Firebase console > Project settings > Your apps).
-//    These values are safe to be public. Security comes from the rules in firestore.rules.
 const firebaseConfig={apiKey:"AIzaSyCRQapXUQ32P4tpKaMiS11uccUc-z5k9yg",authDomain:"naija-mart-35ba6.firebaseapp.com",projectId:"naija-mart-35ba6",appId:"1:761759831734:web:2780ba182d5947d0cff817"};
-
 import {initializeApp} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-import {getAuth,createUserWithEmailAndPassword,signInWithEmailAndPassword,sendEmailVerification,sendPasswordResetEmail,updateProfile,onAuthStateChanged,signOut} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+import {getAuth,createUserWithEmailAndPassword,signInWithEmailAndPassword,sendEmailVerification,sendPasswordResetEmail,updateProfile,onAuthStateChanged} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
 import {getFirestore,doc,setDoc,serverTimestamp} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
-
+const app=initializeApp(firebaseConfig),auth=getAuth(app),db=getFirestore(app);
 const $=i=>document.getElementById(i);
-const configured=!firebaseConfig.apiKey.startsWith("PASTE");
-let auth,db;
-if(configured){const app=initializeApp(firebaseConfig);auth=getAuth(app);db=getFirestore(app)}
-
+let role=sessionStorage.getItem("nm_role")||"buyer",busy=false;
+const next=new URLSearchParams(location.search).get("next");
+const dest=()=>next==="admin.html"?"admin.html":role==="seller"?"seller.html":"account.html";
 const say=(t,k)=>{const m=$("msg");m.textContent=t;m.className="msg "+k};
 const clear=()=>{$("msg").className="msg"};
 const ERR={"auth/invalid-credential":"That email or password isn’t right. Try again or reset your password.","auth/email-already-in-use":"An account with this email already exists. Try signing in.","auth/weak-password":"Choose a stronger password (at least 8 characters).","auth/invalid-email":"Enter a valid email address.","auth/too-many-requests":"Too many attempts. Please wait a few minutes and try again.","auth/network-request-failed":"No connection. Check your internet and try again."};
 const why=e=>ERR[e.code]||"Something went wrong. Please try again.";
 
-function view(v){
+function show(v){
  ["in","up","fp"].forEach(k=>$("f-"+k).hidden=k!==v);
  $("t-in").setAttribute("aria-selected",v==="in");$("t-up").setAttribute("aria-selected",v==="up");
- $("title").textContent=v==="up"?"Create your account":v==="fp"?"Reset your password":"Welcome back";
- $("sub").textContent=v==="up"?"Join as a buyer to save items, follow shops and message sellers.":v==="fp"?"We’ll email you a secure link.":"Sign in to your buyer account.";
+ const s=role==="seller";
+ $("rl").textContent=s?"Joining as a seller":"Joining as a buyer";
+ $("title").textContent=v==="up"?(s?"Create your seller account":"Create your account"):v==="fp"?"Reset your password":"Welcome back";
+ $("sub").textContent=v==="up"?(s?"Start with your account. Next you’ll tell us about your shop.":"Save items, follow shops and message sellers."):v==="fp"?"We’ll email you a secure link.":(s?"Sign in to your seller home.":"Sign in to your account.");
+ $("upn").textContent=s?"After this you’ll fill in your shop details. Our team reviews every seller before you can publish products.":"We’ll email you a link to verify your address.";
  clear();
 }
-$("t-in").onclick=()=>view("in");$("t-up").onclick=()=>view("up");$("to-fp").onclick=()=>view("fp");$("to-in").onclick=()=>view("in");
-document.querySelectorAll("[data-show]").forEach(b=>b.onclick=()=>{const i=$(b.dataset.show);const s=i.type==="password";i.type=s?"text":"password";b.textContent=s?"Hide":"Show"});
+function choose(r){role=r;sessionStorage.setItem("nm_role",r);$("pick").hidden=true;$("forms").hidden=false;show("up")}
+document.querySelectorAll("[data-r]").forEach(b=>b.onclick=()=>choose(b.dataset.r));
+$("hv").onclick=()=>{$("pick").hidden=true;$("forms").hidden=false;show("in")};
+$("chg").onclick=()=>{$("forms").hidden=true;$("pick").hidden=false};
+$("t-in").onclick=()=>show("in");$("t-up").onclick=()=>show("up");$("to-fp").onclick=()=>show("fp");$("to-in").onclick=()=>show("in");
+document.querySelectorAll("[data-show]").forEach(b=>b.onclick=()=>{const i=$(b.dataset.show),s=i.type==="password";i.type=s?"text":"password";b.textContent=s?"Hide":"Show"});
 
-async function run(btn,fn){
- clear();
- if(!configured)return say("Firebase isn’t connected yet. Paste your Firebase config in this file first.","warn");
- if(!navigator.onLine)return say(ERR["auth/network-request-failed"],"err");
- btn.disabled=true;
- try{await fn()}catch(e){say(why(e),"err")}finally{btn.disabled=false}
-}
+async function run(btn,fn){clear();if(!navigator.onLine)return say(ERR["auth/network-request-failed"],"err");btn.disabled=true;try{await fn()}catch(e){say(why(e),"err")}finally{btn.disabled=false}}
 $("f-in").onsubmit=e=>{e.preventDefault();run($("b-in"),async()=>{
  if(!$("ie").value||!$("ip").value)return say("Enter your email and password.","err");
  await signInWithEmailAndPassword(auth,$("ie").value.trim(),$("ip").value);
@@ -125,26 +130,20 @@ $("f-up").onsubmit=e=>{e.preventDefault();run($("b-up"),async()=>{
  if(pw.length<8)return say(ERR["auth/weak-password"],"err");
  if(pw!==$("uc").value)return say("The two passwords don’t match.","err");
  if(!$("ut").checked)return say("Please agree to the Terms and Privacy Policy.","err");
- const c=await createUserWithEmailAndPassword(auth,em,pw);
- await updateProfile(c.user,{displayName:n});
- // Role is always "buyer" here. Firestore rules refuse any other value.
- await setDoc(doc(db,"users",c.user.uid),{name:n,email:em,phone:$("uph").value.trim(),role:"buyer",createdAt:serverTimestamp()});
- await sendEmailVerification(c.user);
+ busy=true;
+ try{
+  const c=await createUserWithEmailAndPassword(auth,em,pw);
+  await updateProfile(c.user,{displayName:n});
+  await setDoc(doc(db,"users",c.user.uid),{name:n,email:em,phone:$("uph").value.trim(),role:"buyer",createdAt:serverTimestamp()});
+  await sendEmailVerification(c.user);
+ }finally{busy=false}
+ location.replace(dest());
 })};
 $("f-fp").onsubmit=e=>{e.preventDefault();run($("b-fp"),async()=>{
  try{await sendPasswordResetEmail(auth,$("fe").value.trim())}catch(x){if(x.code==="auth/network-request-failed")throw x}
  say("If that email has an account, a reset link is on its way. Check your spam folder too.","ok");
 })};
-
-if(configured){
- onAuthStateChanged(auth,u=>{
-  if(u){location.replace("account.html");return}
-  $("forms").hidden=!!u;$("done").hidden=!u;
-  if(u){$("dm").textContent="Signed in as "+(u.displayName||u.email);$("vw").style.display=u.emailVerified?"none":"block";$("vw").className="msg warn";$("resend").hidden=u.emailVerified}
- });
- $("resend").onclick=async()=>{try{await sendEmailVerification(auth.currentUser);alert("Verification email sent.")}catch(e){alert(why(e))}};
- $("out").onclick=()=>signOut(auth);
-}else{view("in")}
+onAuthStateChanged(auth,u=>{if(u&&!busy)location.replace(dest())});
 </script>
 </body>
 </html>
