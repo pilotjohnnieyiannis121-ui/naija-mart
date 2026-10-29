@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Seller home – Naija Mart</title>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{--g1:#0F3D2E;--gold:#C7A64A;--bg:#FBFAF6;--sf:#fff;--tx:#1D2822;--mu:#68756E;--ln:#E5E9E2;--ti:#EEF3EC;--gr:#185541;--rd:#B3261E}
+@media (prefers-color-scheme:dark){:root{--bg:#0C1210;--sf:#141E19;--tx:#EEF2EE;--mu:#A3B0A9;--ln:#24312A;--ti:#18261F;--gr:#8FD0B3;--rd:#F2928B}}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--tx);font:500 17px/1.55 Manrope,Inter,system-ui,sans-serif;padding:env(safe-area-inset-top,0) 0 env(safe-area-inset-bottom,0)}
+.wrap{max-width:560px;margin:0 auto;padding:18px 18px 48px}
+.top{display:flex;align-items:center;gap:10px}
+.logo{display:flex;align-items:center;gap:10px;font-weight:800;font-size:1.3rem;color:inherit;text-decoration:none;flex:1}
+.logo i{width:38px;height:38px;border-radius:11px;background:var(--g1);color:#fff;display:grid;place-items:center;font-style:normal;box-shadow:inset 0 0 0 1px rgba(199,166,74,.6)}
+.logo b{color:var(--gold)}
+svg{width:1.2em;height:1.2em;fill:none;stroke:currentColor;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round;flex:none;vertical-align:-3px}
+.hero{background:var(--g1);color:#fff;border-radius:24px;padding:22px 20px;margin-top:18px;position:relative;overflow:hidden}
+.hero::after{content:"";position:absolute;right:-50px;top:-50px;width:170px;height:170px;border-radius:50%;border:1px solid rgba(199,166,74,.4)}
+.hero small{color:#CFE0D6;font-weight:600}
+.hero h1{font-size:1.8rem;margin:4px 0 10px;letter-spacing:-.02em;line-height:1.1;position:relative;z-index:1}
+.pills{display:flex;gap:8px;flex-wrap:wrap;position:relative;z-index:1}
+.pill{display:inline-flex;gap:6px;align-items:center;border-radius:99px;padding:5px 13px;font-size:.84rem;font-weight:800}
+.pill.ok{background:#CDEBD9;color:#0F3D2E}.pill.wait{background:#F6E9B8;color:#5C4700}.pill.bad{background:#F7D3D0;color:#7A1912}
+.pill.gold{background:var(--gold);color:#1D2822}.pill.off{border:1px solid rgba(255,255,255,.4);color:#E3EDE7}
+.card{background:var(--sf);border:1px solid var(--ln);border-radius:18px;padding:16px;margin:14px 0}
+h2{font-size:1.15rem;margin:0 0 6px}.mu{color:var(--mu);font-size:.95rem}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:14px 0}
+.tile{background:var(--sf);border:1px solid var(--ln);border-radius:16px;padding:14px;min-height:104px}
+.tile b{display:block;font-size:1.6rem;line-height:1.2;margin-top:6px}
+.tile.lock{background:var(--ti);border-style:dashed;color:var(--mu)}
+.tile.lock b{font-size:.95rem;color:var(--mu)}
+.btn{display:flex;align-items:center;justify-content:center;gap:8px;min-height:50px;padding:0 20px;border-radius:13px;border:1.5px solid var(--g1);background:none;color:var(--g1);font:inherit;font-weight:700;cursor:pointer;text-decoration:none;width:100%}
+.btn.p{background:var(--g1);color:#fff}.btn[disabled]{opacity:.5;cursor:not-allowed}
+.sm{width:auto;min-height:44px;padding:0 16px}
+@media (prefers-color-scheme:dark){.btn:not(.p){color:var(--tx);border-color:var(--ln)}}
+.note{border-left:4px solid var(--gold);background:var(--ti);padding:10px 12px;border-radius:0 12px 12px 0;font-size:.9rem;color:var(--mu);margin:14px 0}
+dl{display:grid;grid-template-columns:auto 1fr;gap:6px 14px;margin:10px 0 0}dt{color:var(--mu)}dd{margin:0;font-weight:600;overflow-wrap:anywhere}
+[hidden]{display:none!important}
+</style>
+</head>
+<body>
+<div class="wrap">
+ <div class="top"><a class="logo" href="index.html"><i>N</i><span>Naija<b>Mart</b></span></a><a class="btn sm" href="account.html" style="width:auto">My account</a></div>
+ <div id="load" class="mu" style="margin-top:30px">Loading your seller home…</div>
+ <div id="main" hidden></div>
+</div>
+<script type="module">
+const firebaseConfig={apiKey:"AIzaSyCRQapXUQ32P4tpKaMiS11uccUc-z5k9yg",authDomain:"naija-mart-35ba6.firebaseapp.com",projectId:"naija-mart-35ba6",appId:"1:761759831734:web:2780ba182d5947d0cff817"};
+import {initializeApp} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+import {getAuth,onAuthStateChanged} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+import {getFirestore,doc,getDoc} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+const app=initializeApp(firebaseConfig),auth=getAuth(app),db=getFirestore(app);
+const $=i=>document.getElementById(i);
+const esc=s=>String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const LK='<svg viewBox="0 0 24 24"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg>';
+const CK='<svg viewBox="0 0 24 24"><path d="M12 3 4 6v6c0 5 3.4 8 8 9 4.6-1 8-4 8-9V6z"/><path d="m9 12 2 2 4-4"/></svg>';
+function lock(t,why){return '<div class="tile lock">'+LK+'<b>'+t+'</b><span class="mu">'+why+'</span></div>'}
+
+function draw(a){
+ const s=a.status,ok=s==="approved",ver=ok&&a.verified===true;
+ const pills=(ok?'<span class="pill ok">Approved seller</span>':s==="rejected"?'<span class="pill bad">Not approved</span>':s==="suspended"?'<span class="pill bad">Suspended</span>':'<span class="pill wait">Pending review</span>')+
+  (ver?'<span class="pill gold">'+CK+' Verified seller</span>':'<span class="pill off">'+LK+' Verified badge locked</span>');
+ let body="";
+ if(ok){
+  body='<div class="grid"><div class="tile">Followers<b>0</b><span class="mu">No followers yet</span></div><div class="tile">Products<b>0</b><span class="mu">None published</span></div>'+
+  '<div class="tile lock">'+LK+'<b>Add product</b><span class="mu">Coming in the next update</span></div><div class="tile lock">'+LK+'<b>Messages</b><span class="mu">Coming soon</span></div></div>'+
+  '<div class="note">'+(ver?'You’re a Verified seller. Verification means our team reviewed your details. It doesn’t guarantee any sale.':'Your verified badge is a separate review by our team. Premium never gives it.')+'</div>';
+ }else if(s==="pending"){
+  body='<div class="card"><h2>We’re reviewing your application</h2><p class="mu">Our team checks every seller before they can publish. We’ll update this page when there’s a decision.</p></div>'+
+  '<div class="grid">'+lock("Followers","Unlocks after approval")+lock("Add product","Unlocks after approval")+lock("Verified badge","Separate review after approval")+lock("Messages","Unlocks after approval")+'</div>';
+ }else if(s==="rejected"){
+  body='<div class="card"><h2>Your application wasn’t approved</h2><p class="mu">'+(a.reason?"Reason: "+esc(a.reason):"Contact support to find out more.")+'</p></div>';
+ }else{
+  body='<div class="card"><h2>Your seller account is suspended</h2><p class="mu">'+(a.reason?"Reason: "+esc(a.reason):"Contact support for details.")+'</p></div>';
+ }
+ return '<div class="hero"><small>Seller home</small><h1>'+esc(a.shopName)+'</h1><div class="pills">'+pills+'</div></div>'+body+
+ '<div class="card"><h2>Your shop details</h2><dl><dt>Category</dt><dd>'+esc(a.category)+'</dd><dt>Location</dt><dd>'+esc(a.area)+', '+esc(a.city)+', '+esc(a.state)+'</dd><dt>Address</dt><dd>'+esc(a.address)+'</dd><dt>About</dt><dd>'+esc(a.description)+'</dd></dl></div>'+
+ '<p class="note">Naija Mart helps buyers and sellers find each other. It doesn’t take payment or guarantee delivery.</p>';
+}
+onAuthStateChanged(auth,async u=>{
+ if(!u)return location.replace("auth.html");
+ try{
+  const a=await getDoc(doc(db,"sellerApplications",u.uid));
+  if(!a.exists()){$("main").innerHTML='<div class="card"><h2>You haven’t applied yet</h2><p class="mu">Tell us about your shop to start selling.</p><a class="btn p" href="account.html#sell">Apply to sell</a></div>'}
+  else $("main").innerHTML=draw(a.data());
+  $("load").hidden=true;$("main").hidden=false;
+ }catch(e){$("load").textContent="Couldn’t load your seller home. Check your connection and reload."}
+});
+</script>
+</body>
+</html>
