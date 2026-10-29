@@ -96,7 +96,7 @@ async function seller(){
  if(a.exists()){
   const d=a.data();
   const msg={pending:"We’re reviewing your application. You can’t publish products until it’s approved. We’ll tell you when there’s a decision.",approved:"You’re approved. The seller dashboard is the next thing we’re building.",rejected:"Your application wasn’t approved."+(d.reason?" Reason: "+esc(d.reason):"")}[d.status]||"";
-  box.innerHTML='<span class="st '+esc(d.status)+'">'+esc(d.status==="pending"?"Pending review":d.status==="approved"?"Approved":"Not approved")+'</span><p class="mu">'+msg+'</p><dl><dt>Shop</dt><dd>'+esc(d.shopName)+'</dd><dt>Category</dt><dd>'+esc(d.category)+'</dd><dt>Location</dt><dd>'+esc(d.area)+', '+esc(d.city)+', '+esc(d.state)+'</dd></dl>';
+  box.innerHTML='<span class="st '+esc(d.status)+'">'+esc(d.status==="pending"?"Pending review":d.status==="approved"?"Approved":"Not approved")+'</span><p class="mu">'+msg+'</p><dl><dt>Shop</dt><dd>'+esc(d.shopName)+'</dd><dt>Category</dt><dd>'+esc(d.category)+'</dd><dt>Location</dt><dd>'+esc(d.area)+', '+esc(d.city)+', '+esc(d.state)+'</dd></dl><a class="btn p w" style="display:flex;align-items:center;justify-content:center;text-decoration:none;margin-top:12px" href="seller.html">Open seller home</a>';
   return;
  }
  if(!user.emailVerified){box.innerHTML='<p class="mu">Verify your email to apply to sell.</p>';return}
@@ -133,5 +133,4 @@ $("out").onclick=()=>signOut(auth).then(()=>location.replace("auth.html"));
 onAuthStateChanged(auth,u=>{if(!u)location.replace("auth.html");else load(u).catch(()=>{$("load").textContent="Couldn’t load your account. Check your connection and reload."})});
 </script>
 </body>
-  </html>
-  
+</html>
