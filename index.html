@@ -4,132 +4,159 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Naija Mart – Discover more. Shop smarter. Buy Nigerian.</title>
+<meta name="description" content="A trusted Nigerian marketplace to discover products, find shops near you and talk directly to sellers.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@500;600;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700;800&family=Manrope:wght@500;600;700;800&display=swap" rel="stylesheet">
 <style>
-:root{--g1:#0F3D2E;--g2:#185541;--gold:#C7A64A;--bg:#FBFAF6;--sf:#fff;--tx:#1D2822;--mu:#68756E;--ln:#E5E9E2;--tint:#EEF3EC;--gt:#8A6F1F;--gr:#185541;--red:#B3261E;box-sizing:border-box;padding-top:env(safe-area-inset-top,0);padding-bottom:env(safe-area-inset-bottom,0)}
-@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0C1210;--sf:#141E19;--tx:#EEF2EE;--mu:#A3B0A9;--ln:#24312A;--tint:#18261F;--gt:#D9BC63;--gr:#8FD0B3;--red:#F2928B}}
+:root{--g1:#0F3D2E;--g2:#185541;--gold:#C7A64A;--bg:#FBFAF6;--sf:#fff;--tx:#1D2822;--mu:#68756E;--ln:#E5E9E2;--ti:#F1F4EE;--gt:#8A6F1F;--gr:#185541;--red:#B3261E;padding-top:env(safe-area-inset-top,0);padding-bottom:env(safe-area-inset-bottom,0);box-sizing:border-box}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0C1210;--sf:#141E19;--tx:#EEF2EE;--mu:#A3B0A9;--ln:#24312A;--ti:#16231C;--gt:#D9BC63;--gr:#8FD0B3;--red:#F2928B}}
 *,*::before,*::after{box-sizing:border-box}
-html{scroll-padding-top:calc(72px + env(safe-area-inset-top,0))}
-body{margin:0;background:var(--bg);color:var(--tx);font:500 17px/1.6 Manrope,Inter,system-ui,sans-serif;-webkit-text-size-adjust:100%}
+html{scroll-behavior:smooth;scroll-padding-top:calc(76px + env(safe-area-inset-top,0))}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+body{margin:0;background:var(--bg);color:var(--tx);font:500 17px/1.65 Manrope,Inter,system-ui,sans-serif;-webkit-text-size-adjust:100%}
 body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0);background:var(--bg);z-index:60}
-a{color:inherit;text-decoration:none}button,input{font:inherit;color:inherit}
+a{color:inherit;text-decoration:none}button,input,select,summary{font:inherit;color:inherit}
 :focus-visible{outline:3px solid var(--gold);outline-offset:2px}
-svg.i{width:1.25em;height:1.25em;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;flex:none}
-.wrap{max-width:1120px;margin:0 auto;padding:0 20px}
-h1,h2,h3{margin:0;line-height:1.12;letter-spacing:-.025em}
-h2{font-size:clamp(1.55rem,5vw,2.1rem);font-weight:800}
-section{padding:48px 0}
-.eyebrow{color:var(--gt);font-weight:700;font-size:.9rem;letter-spacing:.02em;margin-bottom:8px}
-.sub{color:var(--mu);margin:10px 0 0;max-width:56ch}
+svg.i{width:1.25em;height:1.25em;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;flex:none;vertical-align:-.2em}
+h1,h2,h3{font-family:"Playfair Display",Georgia,"Times New Roman",serif;margin:0;line-height:1.12;letter-spacing:-.01em}
+h2{font-size:clamp(1.8rem,5.5vw,2.6rem);font-weight:700}
+h3{font-size:1.2rem;font-weight:700}
+.wrap{max-width:1160px;margin:0 auto;padding:0 20px}
+section{padding:64px 0}
+.eb{display:flex;align-items:center;gap:12px;color:var(--gt);font-weight:700;font-size:.85rem;letter-spacing:.14em;text-transform:uppercase;margin-bottom:12px}
+.eb::before{content:"";width:34px;height:1px;background:var(--gold)}
+.sub{color:var(--mu);max-width:58ch;margin:12px 0 0}
+.orn{display:flex;align-items:center;gap:10px;color:var(--gold);margin:0 0 6px}.orn::before,.orn::after{content:"";height:1px;background:currentColor;width:42px;opacity:.7}
 
+.bar{background:var(--g1);color:#DCE9E1;text-align:center;font-size:.88rem;padding:9px 16px;font-weight:600}
+.bar a{color:var(--gold);text-decoration:underline;text-underline-offset:3px;margin-left:8px;font-weight:700}
 .hdr{position:sticky;top:env(safe-area-inset-top,0);z-index:40;background:color-mix(in srgb,var(--bg) 92%,transparent);backdrop-filter:blur(10px);border-bottom:1px solid var(--ln)}
-.hdr .wrap{display:flex;align-items:center;gap:8px;height:68px}
-.logo{display:flex;align-items:center;gap:10px;font-weight:800;font-size:1.3rem;letter-spacing:-.02em;flex:1}
-.logo i{width:38px;height:38px;border-radius:11px;background:var(--g1);color:#fff;display:grid;place-items:center;font-style:normal;box-shadow:inset 0 0 0 1px rgba(199,166,74,.55)}
+.hdr .wrap{display:flex;align-items:center;gap:8px;height:70px}
+.logo{display:flex;align-items:center;gap:10px;font-family:"Playfair Display",Georgia,serif;font-weight:800;font-size:1.45rem;flex:1}
+.logo i{width:40px;height:40px;border-radius:12px;background:var(--g1);color:#fff;display:grid;place-items:center;font:800 1.2rem "Playfair Display",serif;font-style:normal;box-shadow:inset 0 0 0 1px rgba(199,166,74,.7)}
 .logo b{color:var(--gold)}
-.ib{width:46px;height:46px;border-radius:12px;border:0;background:transparent;display:grid;place-items:center;cursor:pointer;font-size:1.1rem}
+.nav{display:none;gap:26px;font-weight:700;color:var(--mu);margin-right:12px}.nav a:hover{color:var(--tx)}
+.ib{width:46px;height:46px;border-radius:12px;border:0;background:none;display:grid;place-items:center;cursor:pointer}
 .btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:50px;padding:0 24px;border-radius:14px;font-weight:700;border:1.5px solid var(--g1);background:transparent;color:var(--g1);cursor:pointer}
-.btn.pri{background:var(--g1);color:#fff}.btn.gold{background:var(--gold);border-color:var(--gold);color:#1D2822}.btn.sm{min-height:44px;padding:0 18px}
-@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .btn:not(.pri):not(.gold){color:var(--tx);border-color:var(--ln)}}
-.nav{display:none;gap:26px;font-weight:700;color:var(--mu);margin-right:12px}
-.nav a:hover{color:var(--tx)}
+.btn.pri{background:var(--g1);color:#fff}.btn.gold{background:var(--gold);border-color:var(--gold);color:#1D2822}.btn.sm{min-height:44px;padding:0 18px}.btn.w{background:#fff;color:var(--g1);border-color:#fff}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .btn:not(.pri):not(.gold):not(.w){color:var(--tx);border-color:var(--ln)}}
 .dsk{display:none}
-.drawer{display:none;padding:6px 20px 20px;border-top:1px solid var(--ln)}
-.drawer.open{display:block}
-.drawer a{display:block;padding:15px 0;font-weight:700;border-bottom:1px solid var(--ln)}
+.drawer{display:none;padding:6px 20px 20px;border-top:1px solid var(--ln)}.drawer.open{display:block}
+.drawer a.l{display:block;padding:15px 0;font-weight:700;border-bottom:1px solid var(--ln)}
 
-.hero{background:var(--g1);color:#fff;position:relative;overflow:hidden;padding:44px 0 60px}
-.hero::before{content:"";position:absolute;right:-90px;top:-90px;width:320px;height:320px;border-radius:50%;border:1px solid rgba(199,166,74,.35)}
-.hero::after{content:"";position:absolute;right:-30px;top:-30px;width:200px;height:200px;border-radius:50%;border:1px solid rgba(199,166,74,.2)}
+.hero{background:var(--g1);color:#fff;position:relative;overflow:hidden;padding:56px 0 72px}
+.hero::before,.hero::after{content:"";position:absolute;border-radius:50%;border:1px solid rgba(199,166,74,.3);pointer-events:none}
+.hero::before{width:420px;height:420px;right:-140px;top:-140px}.hero::after{width:260px;height:260px;right:-60px;top:-60px;border-color:rgba(199,166,74,.2)}
 .hero .wrap{position:relative;z-index:1}
-.pill{display:inline-flex;gap:8px;align-items:center;border:1px solid rgba(199,166,74,.5);color:var(--gold);border-radius:99px;padding:6px 14px;font-weight:700;font-size:.88rem}
-.hero h1{font-size:clamp(2.4rem,10vw,4.2rem);font-weight:800;margin-top:18px;max-width:12ch}
-.hero h1 em{font-style:normal;color:var(--gold)}
-.hero p.lead{color:#CFE0D6;max-width:50ch;margin:16px 0 0}
-.search{background:var(--sf);color:var(--tx);border-radius:20px;padding:8px;margin-top:28px;max-width:720px;box-shadow:0 18px 40px rgba(0,0,0,.28)}
-.fld{display:flex;align-items:center;gap:12px;padding:6px 14px;min-height:56px;border-radius:14px;color:var(--mu)}
+.pill{display:inline-flex;gap:8px;align-items:center;border:1px solid rgba(199,166,74,.55);color:var(--gold);border-radius:99px;padding:6px 16px;font-weight:700;font-size:.86rem}
+.hero h1{font-size:clamp(2.6rem,10.5vw,4.6rem);font-weight:800;margin-top:20px;max-width:13ch}
+.hero h1 em{color:var(--gold);font-style:italic;font-weight:700}
+.lead{color:#CFE0D6;max-width:50ch;margin:18px 0 0;font-size:1.05rem}
+.search{background:var(--sf);color:var(--tx);border-radius:22px;padding:8px;margin-top:30px;max-width:760px;box-shadow:0 22px 50px rgba(0,0,0,.32)}
+.fld{display:flex;align-items:center;gap:12px;padding:4px 14px;min-height:56px;color:var(--mu);border-radius:14px}
 .fld+.fld{border-top:1px solid var(--ln)}
-.fld input{flex:1;min-width:0;border:0;background:transparent;outline:0;font-weight:600;min-height:44px}
+.fld input,.fld select{flex:1;min-width:0;border:0;background:transparent;outline:0;font-weight:600;min-height:44px;color:var(--tx)}
 .fld:focus-within{box-shadow:inset 0 0 0 2px var(--gold)}
 .search .btn{width:100%;margin-top:6px}
-.cta{display:flex;gap:12px;margin-top:20px;flex-wrap:wrap}
-.cta .btn{flex:1 1 180px}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:16px;align-items:center;color:#CFE0D6;font-weight:600}
+.chip{padding:8px 16px;border-radius:99px;border:1px solid rgba(255,255,255,.3);color:#fff;font-weight:600;min-height:40px;display:inline-flex;align-items:center}
+.cta{display:flex;gap:12px;margin-top:22px;flex-wrap:wrap}.cta .btn{flex:1 1 190px}
 .cta .btn.o{border-color:rgba(255,255,255,.5);color:#fff}
-.trust{display:flex;flex-wrap:wrap;gap:10px 22px;margin-top:26px;color:#CFE0D6;font-weight:600;font-size:.95rem}
-.trust span{display:flex;gap:8px;align-items:center}
-.trust svg{color:var(--gold)}
+.stall{display:none}
 
-.tiles{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin-top:24px}
-.tile{background:var(--sf);border:1px solid var(--ln);border-radius:18px;padding:18px;display:flex;flex-direction:column;gap:14px;font-weight:700;min-height:120px}
-.tile .ic{width:48px;height:48px;border-radius:14px;background:var(--tint);color:var(--gr);display:grid;place-items:center;font-size:1.3rem}
-.tile small{display:block;color:var(--mu);font-weight:500}
-.chips{display:flex;gap:8px;overflow-x:auto;padding:16px 0 4px;margin:0 -20px;padding-left:20px;padding-right:20px;scrollbar-width:none}
-.chips::-webkit-scrollbar{display:none}
-.chip{flex:none;border:1px solid var(--ln);background:var(--sf);border-radius:99px;padding:10px 18px;font-weight:600;min-height:44px;display:inline-flex;align-items:center}
+.trust{display:grid;gap:14px;margin-top:-34px;position:relative;z-index:2}
+.tr{background:var(--sf);border:1px solid var(--ln);border-radius:18px;padding:18px;display:flex;gap:14px;align-items:flex-start;box-shadow:0 10px 24px rgba(15,61,46,.08)}
+.tr .ic{width:46px;height:46px;border-radius:14px;background:var(--g1);color:var(--gold);display:grid;place-items:center;flex:none}
+.tr b{display:block}.tr span{color:var(--mu);font-size:.93rem;line-height:1.45;display:block}
+
+.cats{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin-top:26px}
+.cat{background:var(--sf);border:1px solid var(--ln);border-radius:18px;padding:18px;display:flex;flex-direction:column;gap:6px;min-height:116px;position:relative;transition:border-color .15s,transform .15s}
+.cat:hover{border-color:var(--gold);transform:translateY(-2px)}
+.cat .n{font:700 .8rem Manrope;color:var(--gt);letter-spacing:.1em}
+.cat b{font:700 1.08rem/1.2 "Playfair Display",Georgia,serif}.cat small{color:var(--mu);line-height:1.35}
+.cat svg{position:absolute;right:14px;top:16px;color:var(--gold)}
+
+.states{display:flex;flex-wrap:wrap;gap:10px;margin-top:22px}
+.st{padding:11px 20px;border:1px solid var(--ln);background:var(--sf);border-radius:99px;font-weight:700;min-height:46px;display:inline-flex;align-items:center}
+.st:hover{border-color:var(--g2);color:var(--gr)}
+.st.all{background:var(--g1);color:#fff;border-color:var(--g1)}
 
 .demo{display:inline-block;border:1px solid var(--gold);color:var(--gt);border-radius:8px;padding:2px 10px;font-size:.85rem;font-weight:700;margin-top:12px}
 .grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin-top:22px}
 .card{background:var(--sf);border:1px solid var(--ln);border-radius:18px;overflow:hidden}
-.ph{aspect-ratio:1/1;background:var(--tint);color:var(--gr);display:grid;place-items:center;position:relative;font-size:2.2rem}
+.ph{aspect-ratio:1/1;background:var(--ti);color:var(--gr);display:grid;place-items:center;position:relative;font-size:2.2rem}
 .ph .tag{position:absolute;left:10px;top:10px;background:var(--sf);color:var(--gt);border-radius:8px;padding:1px 9px;font-size:.78rem;font-weight:700}
-.ph .save{position:absolute;right:8px;top:8px;width:44px;height:44px;border-radius:50%;border:0;background:var(--sf);display:grid;place-items:center;cursor:pointer;font-size:1rem;color:var(--tx)}
+.ph .save{position:absolute;right:8px;top:8px;width:44px;height:44px;border-radius:50%;border:0;background:var(--sf);display:grid;place-items:center;cursor:pointer;font-size:1rem}
 .save[aria-pressed=true]{color:var(--red)}.save[aria-pressed=true] svg{fill:currentColor}
-.cb{padding:12px 14px 16px}
-.cb h3{font-size:1rem;font-weight:700;letter-spacing:0}
+.cb{padding:12px 14px 16px}.cb h3{font:700 1rem Manrope}
 .price{font-weight:800;font-size:1.15rem;color:var(--g1);margin-top:2px}
 @media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .price{color:var(--gr)}}
 .m{color:var(--mu);font-size:.88rem;line-height:1.45;margin-top:2px}
 .vf{color:var(--gr);font-weight:800;display:inline-flex;gap:4px;align-items:center}
+.more{text-align:center;margin-top:26px}
 
-.shops{display:grid;gap:12px;margin-top:22px}
-.shop{display:flex;align-items:center;gap:14px;background:var(--sf);border:1px solid var(--ln);border-radius:18px;padding:14px}
-.av{width:58px;height:58px;border-radius:50%;background:var(--g1);color:var(--gold);display:grid;place-items:center;font-weight:800;flex:none;box-shadow:inset 0 0 0 1px rgba(199,166,74,.5)}
-.shop>div:nth-child(2){flex:1;min-width:0}
+.how{background:var(--ti)}
+.steps{list-style:none;margin:28px 0 0;padding:0;display:grid;gap:18px;counter-reset:s}
+.steps li{counter-increment:s;position:relative;padding-left:66px;min-height:50px}
+.steps li::before{content:counter(s);position:absolute;left:0;top:0;width:48px;height:48px;border-radius:50%;background:var(--g1);color:var(--gold);display:grid;place-items:center;font:700 1.25rem "Playfair Display",serif;box-shadow:0 0 0 4px var(--ti),0 0 0 5px var(--gold)}
+.steps b{display:block;font-family:"Playfair Display",serif;font-size:1.1rem}.steps span{color:var(--mu);font-size:.95rem}
+.note{margin-top:26px;border-left:4px solid var(--gold);background:var(--sf);padding:14px 16px;border-radius:0 14px 14px 0;color:var(--mu);font-size:.95rem}.note b{color:var(--tx)}
 
-.how{background:var(--tint)}
-.steps{list-style:none;margin:26px 0 0;padding:0;display:grid;gap:16px;counter-reset:s}
-.steps li{counter-increment:s;position:relative;padding-left:62px;min-height:48px}
-.steps li::before{content:counter(s);position:absolute;left:0;top:0;width:46px;height:46px;border-radius:50%;background:var(--g1);color:var(--gold);display:grid;place-items:center;font-weight:800;font-size:1.1rem}
-.steps b{display:block}.steps span{color:var(--mu);font-size:.95rem}
-.note{margin-top:24px;border-left:4px solid var(--gold);background:var(--sf);padding:14px 16px;border-radius:0 14px 14px 0;color:var(--mu);font-size:.95rem}
-.note b{color:var(--tx)}
+.split{display:grid;gap:16px;margin-top:28px}
+.pn{border-radius:24px;padding:28px 24px;position:relative;overflow:hidden}
+.pn.b{background:var(--sf);border:1px solid var(--ln)}.pn.s{background:var(--g1);color:#fff}
+.pn ul{list-style:none;padding:0;margin:14px 0 22px;display:grid;gap:8px}
+.pn li{display:flex;gap:10px;align-items:flex-start}.pn li svg{color:var(--gold);margin-top:3px}
+.pn.s li{color:#DCE9E1}.pn.b li{color:var(--mu)}
+.pn.s::after{content:"";position:absolute;right:-50px;bottom:-50px;width:170px;height:170px;border-radius:50%;border:1px solid rgba(199,166,74,.4)}
 
-.band{background:var(--g1);color:#fff;border-radius:26px;padding:32px 24px;position:relative;overflow:hidden}
-.band::after{content:"";position:absolute;right:-60px;bottom:-60px;width:180px;height:180px;border-radius:50%;border:1px solid rgba(199,166,74,.4)}
-.band p{color:#CFE0D6;margin:12px 0 20px;max-width:46ch}
+details{background:var(--sf);border:1px solid var(--ln);border-radius:16px;margin:10px 0;overflow:hidden}
+summary{cursor:pointer;padding:18px 20px;font-weight:700;list-style:none;display:flex;gap:12px;align-items:center;min-height:56px}
+summary::-webkit-details-marker{display:none}summary::after{content:"+";margin-left:auto;font-size:1.4rem;color:var(--gold);line-height:1}
+details[open] summary::after{content:"–"}
+details p{margin:0;padding:0 20px 18px;color:var(--mu)}
 
-footer{background:var(--g1);color:#CFE0D6;padding:44px 0 30px;margin-top:24px}
-.fg{display:grid;gap:26px}
-footer h3{color:#fff;font-size:1rem;margin-bottom:6px}
-footer a{display:block;padding:7px 0}
-.copy{border-top:1px solid rgba(255,255,255,.16);margin-top:28px;padding-top:18px;font-size:.92rem}
+.band{background:var(--g1);color:#fff;border-radius:28px;padding:40px 24px;text-align:center;position:relative;overflow:hidden}
+.band::before,.band::after{content:"";position:absolute;border-radius:50%;border:1px solid rgba(199,166,74,.35)}
+.band::before{width:220px;height:220px;left:-70px;bottom:-90px}.band::after{width:150px;height:150px;right:-40px;top:-50px}
+.band p{color:#CFE0D6;margin:14px auto 24px;max-width:46ch}.band .cta{justify-content:center}.band .cta .btn{flex:0 1 220px}
 
-.scrim{position:fixed;inset:0;background:rgba(0,0,0,.55);z-index:70;display:none;align-items:flex-end;justify-content:center}
-.scrim.open{display:flex}
-.sheet{background:var(--sf);width:100%;max-width:480px;max-height:92vh;overflow:auto;border-radius:26px 26px 0 0;padding:20px 22px calc(26px + env(safe-area-inset-bottom,0))}
-.sh{display:flex;justify-content:space-between;align-items:center;margin-bottom:14px}
-.seg{display:grid;grid-template-columns:1fr 1fr;background:var(--tint);border-radius:14px;padding:4px;margin-bottom:18px}
-.seg button{min-height:48px;border:0;background:transparent;border-radius:11px;font-weight:700;cursor:pointer;color:var(--mu);display:flex;align-items:center;justify-content:center;gap:8px}
-.seg button[aria-selected=true]{background:var(--g1);color:#fff}
-.f{display:block;font-weight:700;font-size:.92rem;margin:0 0 6px}
-.in{width:100%;min-height:52px;border-radius:14px;border:1.5px solid var(--ln);background:var(--bg);padding:0 14px;margin-bottom:14px}
-.row{display:flex;justify-content:space-between;align-items:center;margin:-6px 0 16px;font-size:.95rem}
-.row a{color:var(--gr);font-weight:700}
-.sheet .btn{width:100%}
-.both{display:flex;gap:12px;background:var(--tint);border-radius:14px;padding:14px;margin-top:16px;color:var(--mu);font-size:.92rem;align-items:flex-start}
-.toast{position:fixed;left:50%;bottom:calc(24px + env(safe-area-inset-bottom,0));transform:translateX(-50%);background:var(--tx);color:var(--bg);padding:12px 18px;border-radius:12px;font-weight:700;z-index:90;display:none;max-width:90%}
+footer{background:var(--g1);color:#CFE0D6;padding:52px 0 30px}
+.fg{display:grid;gap:28px}footer h3{color:#fff;font:700 1.05rem "Playfair Display",serif;margin-bottom:8px}footer a{display:block;padding:7px 0}
+.copy{border-top:1px solid rgba(255,255,255,.16);margin-top:30px;padding-top:18px;font-size:.92rem}
 
 @media (min-width:760px){
  .nav,.dsk{display:flex}.mb{display:none}.drawer.open{display:none}
- .tiles{grid-template-columns:repeat(4,minmax(0,1fr))}.grid{grid-template-columns:repeat(4,minmax(0,1fr))}
- .shops{grid-template-columns:repeat(3,minmax(0,1fr))}.shop{flex-direction:column;text-align:center}
- .steps{grid-template-columns:repeat(4,minmax(0,1fr))}
- .search{display:grid;grid-template-columns:1.3fr 1fr auto;align-items:center}.fld+.fld{border-top:0;border-left:1px solid var(--ln);border-radius:0}.search .btn{width:auto;margin:0 4px}
- .fg{grid-template-columns:2fr 1fr 1fr 1fr}
- .scrim{align-items:center}.sheet{border-radius:26px}
+ .trust{grid-template-columns:repeat(4,minmax(0,1fr))}.cats{grid-template-columns:repeat(4,minmax(0,1fr))}
+ .grid{grid-template-columns:repeat(4,minmax(0,1fr))}.steps{grid-template-columns:repeat(4,minmax(0,1fr))}
+ .split{grid-template-columns:1fr 1fr}
+ .search{display:grid;grid-template-columns:1.4fr 1fr auto;align-items:center}.fld+.fld{border-top:0;border-left:1px solid var(--ln);border-radius:0}.search .btn{width:auto;margin:0 4px}
+ .fg{grid-template-columns:2fr 1fr 1fr 1fr}.hero{padding:84px 0 100px}
+ .hero .wrap{display:grid;grid-template-columns:1.25fr .75fr;gap:40px;align-items:center}.hero .main{grid-column:1}
+ .stall{display:block;grid-column:2}
 }
+.st1{background:var(--sf);color:var(--tx);border-radius:22px;padding:18px;box-shadow:0 24px 50px rgba(0,0,0,.35);transform:rotate(2deg)}
+.st1 .aw{height:22px;border-radius:12px 12px 0 0;background:repeating-linear-gradient(90deg,var(--gold) 0 26px,#fff 26px 52px);margin:-18px -18px 14px}
+.st1 .tg{font-size:.75rem;color:var(--gt);font-weight:700}
+.st1 .row{display:flex;align-items:center;gap:12px;margin-top:10px}
+.st1 .av{width:44px;height:44px;border-radius:50%;background:var(--g1);color:var(--gold);display:grid;place-items:center;font-weight:800}
+.st1 .bub{background:var(--ti);border-radius:14px;padding:10px 14px;font-size:.92rem;margin-top:12px}
+.toast{position:fixed;left:50%;bottom:calc(24px + env(safe-area-inset-bottom,0));transform:translateX(-50%);background:var(--tx);color:var(--bg);padding:12px 18px;border-radius:12px;font-weight:700;z-index:90;display:none}
+.pat{height:22px;background:#0F3D2E url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='44' height='22'%3E%3Crect width='44' height='22' fill='%230F3D2E'/%3E%3Cpath d='M11 2l9 9-9 9-9-9z' fill='%23C7A64A'/%3E%3Ccircle cx='33' cy='11' r='6' fill='none' stroke='%23C7A64A' stroke-width='2'/%3E%3Ccircle cx='33' cy='11' r='2' fill='%23D9774B'/%3E%3C/svg%3E") repeat-x;background-size:auto 22px}
+.art{width:62%;max-width:104px;height:auto;display:block}
+.btn{border-radius:99px}.search{border-radius:30px}.fld{border-radius:99px}
+.card,.cat,.tr,.pn,details,.sel,.empty{border-radius:26px}
+.card{box-shadow:0 10px 26px rgba(15,61,46,.08)}
+.ph{background:var(--c,var(--t,var(--ti)))}
+.gal div:first-child .art{max-width:150px}.gal div .art{width:60%}
+.hs{width:100%;height:auto;display:block;border-radius:28px;box-shadow:0 26px 50px rgba(0,0,0,.34)}
+.stall{display:block;margin-top:28px}
+.cat{gap:8px}.cat .at{width:68px;height:68px;border-radius:22px;display:grid;place-items:center;background:var(--t)}
+.cat .at svg{position:static;width:78%;height:auto;max-width:none}
+.cat>svg{position:absolute;right:14px;top:18px;color:var(--gold)}
+.cat:hover{box-shadow:0 12px 26px rgba(15,61,46,.12)}
+@media (min-width:760px){.stall{margin-top:0}}
 </style>
 </head>
 <body>
@@ -138,151 +165,164 @@ footer a{display:block;padding:7px 0}
 <symbol id="pin" viewBox="0 0 24 24"><path d="M12 21s7-6.2 7-11a7 7 0 1 0-14 0c0 4.8 7 11 7 11z"/><circle cx="12" cy="10" r="2.5"/></symbol>
 <symbol id="shield" viewBox="0 0 24 24"><path d="M12 3 4 6v6c0 5 3.4 8 8 9 4.6-1 8-4 8-9V6z"/><path d="m9 12 2 2 4-4"/></symbol>
 <symbol id="heart" viewBox="0 0 24 24"><path d="M12 20s-7-4.4-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 10c0 5.6-7 10-7 10z"/></symbol>
-<symbol id="store" viewBox="0 0 24 24"><path d="M4 9l1-5h14l1 5M4 9v11h16V9M4 9a3 3 0 0 0 5.3 1.9A3 3 0 0 0 14.7 10.9 3 3 0 0 0 20 9M9 20v-5h6v5"/></symbol>
 <symbol id="bag" viewBox="0 0 24 24"><path d="M6 8h12l1 12H5zM9 8a3 3 0 0 1 6 0"/></symbol>
-<symbol id="user" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 4-6 8-6s8 2 8 6"/></symbol>
-<symbol id="menu" viewBox="0 0 24 24"><path d="M4 7h16M4 12h16M4 17h16"/></symbol>
-<symbol id="x" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6 6 18"/></symbol>
 <symbol id="chat" viewBox="0 0 24 24"><path d="M4 5h16v11H9l-5 4z"/></symbol>
 <symbol id="map" viewBox="0 0 24 24"><path d="M9 4 3 6v14l6-2 6 2 6-2V4l-6 2zM9 4v14M15 6v14"/></symbol>
-<symbol id="shirt" viewBox="0 0 24 24"><path d="M8 4 3 7l2 4 2-1v10h10V10l2 1 2-4-5-3a4 4 0 0 1-8 0z"/></symbol>
-<symbol id="phone" viewBox="0 0 24 24"><rect x="7" y="2" width="10" height="20" rx="2"/><path d="M11 18h2"/></symbol>
-<symbol id="cart" viewBox="0 0 24 24"><path d="M3 4h2l2 11h11l2-8H7"/><circle cx="9" cy="20" r="1"/><circle cx="17" cy="20" r="1"/></symbol>
-<symbol id="home" viewBox="0 0 24 24"><path d="M4 11 12 4l8 7v9H4z"/></symbol>
-<symbol id="check" viewBox="0 0 24 24"><path d="m5 12 5 5 9-10"/></symbol>
+<symbol id="menu" viewBox="0 0 24 24"><path d="M4 7h16M4 12h16M4 17h16"/></symbol>
+<symbol id="arr" viewBox="0 0 24 24"><path d="M5 12h14m-6-6 6 6-6 6"/></symbol>
+<symbol id="chk" viewBox="0 0 24 24"><path d="m5 12 5 5 9-10"/></symbol>
+<symbol id="flag" viewBox="0 0 24 24"><path d="M5 21V4h12l-2 4 2 4H5"/></symbol>
 </defs></svg>
 
-<header class="hdr">
- <div class="wrap">
-  <a class="logo" href="#top" aria-label="Naija Mart home"><i aria-hidden="true">N</i><span>Naija<b>Mart</b></span></a>
-  <nav class="nav" aria-label="Main"><a href="#categories">Categories</a><a href="marketplace.html">Marketplace</a><a href="#shops">Shops</a><a href="#how">How it works</a></nav>
-  <button class="ib" aria-label="Saved items"><svg class="i"><use href="#heart"/></svg></button>
-  <button class="btn pri sm" data-open="in">Sign in</button>
-  <button class="dsk btn sm" data-open="up">Create account</button>
-  <button class="ib mb" id="mb" aria-expanded="false" aria-controls="dr" aria-label="Open menu"><svg class="i"><use href="#menu"/></svg></button>
- </div>
- <div class="drawer" id="dr">
-  <a href="#categories">Categories</a><a href="marketplace.html">Marketplace</a><a href="#shops">Shops</a><a href="#how">How it works</a>
-  <div style="display:grid;gap:10px;margin-top:16px"><button class="btn" data-open="up">Create account</button><button class="btn gold" data-open="sell">Start selling</button></div>
- </div>
-</header>
+<div class="bar">Now accepting seller applications. Every shop is reviewed before it can post.<a href="auth.html?role=seller">Apply to sell</a></div>
+<header class="hdr"><div class="wrap">
+ <a class="logo" href="#top" aria-label="Naija Mart home"><i aria-hidden="true">N</i><span>Naija<b>Mart</b></span></a>
+ <nav class="nav" aria-label="Main"><a href="#categories">Categories</a><a href="#states">Locations</a><a href="marketplace.html">Marketplace</a><a href="#how">How it works</a><a href="#faq">FAQ</a></nav>
+ <a class="btn pri sm" id="si" href="auth.html">Sign in</a>
+ <a class="btn sm dsk" id="ca" href="auth.html">Create account</a>
+ <button class="ib mb" id="mb" aria-expanded="false" aria-controls="dr" aria-label="Open menu"><svg class="i"><use href="#menu"/></svg></button>
+</div>
+<div class="drawer" id="dr">
+ <a class="l" href="#categories">Categories</a><a class="l" href="#states">Locations</a><a class="l" href="marketplace.html">Marketplace</a><a class="l" href="#how">How it works</a><a class="l" href="#faq">FAQ</a>
+ <div style="display:grid;gap:10px;margin-top:16px"><a class="btn" href="auth.html">Create account</a><a class="btn gold" href="auth.html?role=seller">Start selling</a></div>
+</div></header>
 
 <main id="top">
-<section class="hero" style="padding-bottom:60px">
- <div class="wrap">
+<section class="hero" style="padding-bottom:84px"><div class="wrap">
+ <div class="main">
   <span class="pill"><svg class="i"><use href="#shield"/></svg>Sellers reviewed before they post</span>
   <h1>Discover more. Shop smarter. <em>Buy Nigerian.</em></h1>
-  <p class="lead">Explore products from sellers across Nigeria, find businesses near you, and talk directly to the people behind the products.</p>
-  <form class="search" role="search" onsubmit="return false">
-   <label class="fld"><svg class="i"><use href="#search"/></svg><input type="search" placeholder="Search rice, phones, shoes" aria-label="Search products, shops or markets"></label>
-   <label class="fld"><svg class="i"><use href="#pin"/></svg><input type="text" placeholder="All of Nigeria" aria-label="Location"></label>
+  <p class="lead">Explore products from sellers across Nigeria, find shops near you, and talk directly to the people behind the products.</p>
+  <form class="search" id="sf" role="search">
+   <label class="fld"><svg class="i"><use href="#search"/></svg><input id="q" type="search" placeholder="Search rice, phones, shoes" aria-label="Search products, shops or markets"></label>
+   <label class="fld"><svg class="i"><use href="#pin"/></svg><select id="st" aria-label="Choose a state"><option value="">All of Nigeria</option></select></label>
    <button class="btn pri" type="submit">Search</button>
   </form>
-  <div class="cta"><a class="btn gold" href="marketplace.html">Explore marketplace</a><button class="btn o" data-open="sell">Start selling</button></div>
-  <div class="trust"><span><svg class="i"><use href="#map"/></svg>All 36 states and FCT</span><span><svg class="i"><use href="#chat"/></svg>Chat with sellers</span><span><svg class="i"><use href="#shield"/></svg>Report and safety tools</span></div>
+  <div class="chips"><span>Popular:</span><a class="chip" href="marketplace.html?q=rice">Rice</a><a class="chip" href="marketplace.html?q=phone">Phones</a><a class="chip" href="marketplace.html?q=shoes">Shoes</a><a class="chip" href="marketplace.html?q=cement">Building materials</a></div>
+  <div class="cta"><a class="btn gold" href="marketplace.html">Explore marketplace</a><a class="btn o" href="auth.html?role=seller">Start selling</a></div>
  </div>
-</section>
+ <div class="stall" aria-hidden="true" id="scene"></div>
+</div></section>
+
+<div class="wrap"><div class="trust">
+ <div class="tr"><span class="ic"><svg class="i"><use href="#shield"/></svg></span><div><b>Reviewed sellers</b><span>Our team checks every seller before they can post.</span></div></div>
+ <div class="tr"><span class="ic"><svg class="i"><use href="#chat"/></svg></span><div><b>Direct conversations</b><span>Message sellers and agree details yourselves.</span></div></div>
+ <div class="tr"><span class="ic"><svg class="i"><use href="#map"/></svg></span><div><b>All 36 states and FCT</b><span>Browse by state, city and market.</span></div></div>
+ <div class="tr"><span class="ic"><svg class="i"><use href="#flag"/></svg></span><div><b>Report and safety tools</b><span>Flag suspicious listings and accounts.</span></div></div>
+</div></div>
 
 <section id="categories"><div class="wrap">
- <div class="eyebrow">Browse</div><h2>Shop by category</h2>
- <div class="tiles">
-  <a class="tile" href="#featured"><span class="ic"><svg class="i"><use href="#shirt"/></svg></span><span>Fashion<small>Clothing and more</small></span></a>
-  <a class="tile" href="#featured"><span class="ic"><svg class="i"><use href="#phone"/></svg></span><span>Phones<small>and electronics</small></span></a>
-  <a class="tile" href="#featured"><span class="ic"><svg class="i"><use href="#cart"/></svg></span><span>Food<small>and groceries</small></span></a>
-  <a class="tile" href="#featured"><span class="ic"><svg class="i"><use href="#home"/></svg></span><span>Home<small>and furniture</small></span></a>
- </div>
- <div class="chips" id="chips" aria-label="All categories"></div>
+ <div class="eb">Browse</div><h2>Shop by category</h2><p class="sub">Twelve categories, from fashion to building materials. Pick one to see what sellers list.</p>
+ <div class="cats" id="cats"></div>
+</div></section>
+
+<section id="states" style="padding-top:8px"><div class="wrap">
+ <div class="eb">Near you</div><h2>Browse by location</h2><p class="sub">Nigeria is big. Start with your state, then narrow to your city or market.</p>
+ <div class="states" id="stl"></div>
 </div></section>
 
 <section id="featured" style="padding-top:8px"><div class="wrap">
- <div class="eyebrow">Marketplace</div><h2>Featured products</h2>
- <span class="demo">Demo listings – not real sellers</span>
+ <div class="eb">Marketplace</div><h2>Featured products</h2>
+ <span class="demo">Sample listings – real products appear as sellers publish</span>
  <div class="grid" id="prods"></div>
+ <div class="more"><a class="btn" href="marketplace.html">View the marketplace <svg class="i"><use href="#arr"/></svg></a></div>
 </div></section>
 
-<section id="shops" style="padding-top:8px"><div class="wrap">
- <div class="eyebrow">Sellers</div><h2>Shops to follow</h2>
- <span class="demo">Demo shops – preview only</span>
- <div class="shops" id="shoplist"></div>
-</div></section>
-
+<div class="pat" aria-hidden="true"></div>
 <section class="how" id="how"><div class="wrap">
- <div class="eyebrow">Simple and clear</div><h2>How Naija Mart works</h2>
+ <div class="eb">Simple and clear</div><h2>How Naija Mart works</h2>
  <ol class="steps">
   <li><b>Discover</b><span>Find products and shops by item, market or state.</span></li>
-  <li><b>Compare</b><span>Check price, location and stock.</span></li>
+  <li><b>Compare</b><span>Check price, location and stock side by side.</span></li>
   <li><b>Contact</b><span>Message the seller on Naija Mart.</span></li>
   <li><b>Arrange</b><span>Agree payment, pickup or delivery with the seller.</span></li>
  </ol>
- <p class="note"><b>Good to know:</b> Naija Mart helps you find and contact sellers. It doesn’t take payment or guarantee delivery. A Verified badge means we reviewed the seller’s details, not that a sale is guaranteed. Read our <a href="#safety" style="text-decoration:underline">safety guidelines</a> before paying anyone.</p>
+ <p class="note"><b>Good to know:</b> Naija Mart helps you find and contact sellers. It doesn’t take payment or guarantee delivery. A Verified badge means we reviewed the seller’s details, not that any sale is guaranteed. Read our <a href="#faq" style="text-decoration:underline">FAQ</a> before paying anyone.</p>
 </div></section>
 
-<section style="padding-top:0"><div class="wrap">
- <div class="band"><h2>Sell on Naija Mart</h2><p>Apply for a seller account. Our team reviews every application before you can publish products.</p><button class="btn gold" data-open="sell">Apply to sell</button></div>
+<section><div class="wrap">
+ <div class="eb">For everyone</div><h2>Buy or sell, with one account</h2>
+ <div class="split">
+  <div class="pn b"><h3>For buyers</h3><ul><li><svg class="i"><use href="#chk"/></svg>Browse products from sellers across Nigeria</li><li><svg class="i"><use href="#chk"/></svg>Save items and follow the shops you like</li><li><svg class="i"><use href="#chk"/></svg>Message sellers and arrange pickup or delivery</li></ul><a class="btn pri" href="auth.html?role=buyer">Create buyer account</a></div>
+  <div class="pn s"><h3>For sellers</h3><ul><li><svg class="i"><use href="#chk"/></svg>Open a shop and tell us about your business</li><li><svg class="i"><use href="#chk"/></svg>Get reviewed by our team before you publish</li><li><svg class="i"><use href="#chk"/></svg>Reach buyers in your state and across Nigeria</li></ul><a class="btn gold" href="auth.html?role=seller">Apply to sell</a></div>
+ </div>
+</div></section>
+
+<section id="faq" style="padding-top:8px"><div class="wrap">
+ <div class="eb">Questions</div><h2>Good to know</h2>
+ <div style="margin-top:22px;max-width:780px">
+  <details><summary>Does Naija Mart process payments or deliver goods?</summary><p>No. Naija Mart helps you find products and contact sellers. You agree payment, pickup or delivery directly with the seller. Never pay in advance to someone you can’t verify.</p></details>
+  <details><summary>How do sellers get approved?</summary><p>Every seller applies with their details. Our team reviews each application, and only approved sellers can publish products.</p></details>
+  <details><summary>What does the Verified badge mean?</summary><p>It means our team reviewed that seller’s details. It is separate from Premium membership and is not a guarantee of any sale or product.</p></details>
+  <details><summary>Can I buy and sell with the same account?</summary><p>Yes. Create one account, then apply to sell from your account page. After approval you can use both.</p></details>
+  <details><summary>How do I report a suspicious listing or person?</summary><p>Use the report option on a product or profile. Reports are private and reviewed by our team.</p></details>
+ </div>
+</div></section>
+
+<section style="padding-top:8px"><div class="wrap">
+ <div class="band"><div class="orn" style="justify-content:center">&#10022;</div><h2>Ready to join Naija Mart?</h2><p>Discover products across Nigeria, or open your shop and reach more buyers.</p><div class="cta"><a class="btn w" href="auth.html?role=buyer">I’m a buyer</a><a class="btn gold" href="auth.html?role=seller">I’m a seller</a></div></div>
 </div></section>
 </main>
 
-<footer>
- <div class="wrap">
-  <div class="fg">
-   <div><a class="logo" href="#top" style="color:#fff"><i aria-hidden="true">N</i><span>Naija<b>Mart</b></span></a><p>A trusted place to discover products, connect with sellers, and grow businesses across Nigeria.</p></div>
-   <div><h3>Company</h3><a href="#about">About</a><a href="#contact">Contact support</a><a href="#help">Help center</a></div>
-   <div><h3>Guides</h3><a href="#buyers">Buyer guidelines</a><a href="#sellers">Seller guidelines</a><a href="#safety" id="safety">Safety and fraud prevention</a></div>
-   <div><h3>Legal</h3><a href="#privacy">Privacy policy</a><a href="#terms">Terms and conditions</a></div>
-  </div>
-  <div class="copy">© 2026 Naija Mart. All rights reserved.</div>
+<div class="pat" aria-hidden="true"></div>
+<footer><div class="wrap">
+ <div class="fg">
+  <div><a class="logo" href="#top" style="color:#fff"><i aria-hidden="true">N</i><span>Naija<b>Mart</b></span></a><p>A trusted place to discover products, connect with sellers, and grow businesses across Nigeria.</p></div>
+  <div><h3>Explore</h3><a href="marketplace.html">Marketplace</a><a href="#categories">Categories</a><a href="#states">Locations</a></div>
+  <div><h3>Account</h3><a href="auth.html">Sign in</a><a href="auth.html?role=buyer">Create account</a><a href="auth.html?role=seller">Apply to sell</a></div>
+  <div><h3>Help</h3><a href="#faq">FAQ</a><a href="#how">How it works</a><a href="#faq">Safety and fraud</a></div>
  </div>
-</footer>
-
-<div class="scrim" id="scrim"><div class="sheet" role="dialog" aria-modal="true" aria-labelledby="st">
- <div class="sh"><h2 id="st" style="font-size:1.5rem">Sign in</h2><button class="ib" id="cl" aria-label="Close"><svg class="i"><use href="#x"/></svg></button></div>
- <div class="seg" role="tablist" aria-label="Account type">
-  <button role="tab" id="tb" aria-selected="true"><svg class="i"><use href="#bag"/></svg>Buyer</button>
-  <button role="tab" id="ts" aria-selected="false"><svg class="i"><use href="#store"/></svg>Seller</button>
- </div>
- <p class="m" id="sd" style="margin:-6px 0 16px">Sign in to save items, follow shops and message sellers.</p>
- <div id="nm"><label class="f" for="fn">Full name</label><input class="in" id="fn" type="text" autocomplete="name"></div>
- <label class="f" for="em">Email address</label><input class="in" id="em" type="email" autocomplete="email" placeholder="name@email.com">
- <label class="f" for="pw">Password</label><input class="in" id="pw" type="password" autocomplete="current-password">
- <div class="row" id="fp"><a href="#forgot">Forgot password?</a></div>
- <button class="btn pri" id="go">Sign in as buyer</button>
- <p class="m" style="text-align:center;margin-top:14px" id="sw"></p>
- <div class="both"><svg class="i" style="margin-top:2px"><use href="#user"/></svg><span>Buy and sell with one account. After you’re approved as a seller, switch between Buyer and Seller mode any time.</span></div>
-</div></div>
+ <div class="copy">© 2026 Naija Mart. All rights reserved.</div>
+</div></footer>
 <div class="toast" id="toast" role="status"></div>
 
-<script>
-var $=function(i){return document.getElementById(i)};
-var CATS=["Fashion and clothing","Shoes and bags","Phones and electronics","Home and furniture","Beauty and personal care","Food and groceries","Health and wellness","Building materials","Automotive and spare parts","Sports and fitness","Books and education","Other products"];
-$("chips").innerHTML=CATS.map(function(c){return '<a class="chip" href="#featured">'+c+'</a>'}).join("");
-var chk='<svg class="i" style="width:1em;height:1em"><use href="#shield"/></svg>';
-var P=[["Smartphone, 128GB","₦185,000","Demo Mobile Hub",1,"Ikeja, Lagos","In stock"],["Leather sandals","₦12,500","Demo Footwear Co.",1,"Aba, Abia","In stock"],["Local rice, 50kg","₦78,000","Demo Grains Ltd",0,"Kano","In stock"],["Wooden dining set","₦260,000","Demo Home Studio",1,"Wuse, Abuja","Only 2 left"]];
-$("prods").innerHTML=P.map(function(p){return '<article class="card"><div class="ph"><svg class="i" style="width:1em;height:1em"><use href="#bag"/></svg><span class="tag">Demo</span><button class="save" aria-pressed="false" aria-label="Save '+p[0]+'"><svg class="i"><use href="#heart"/></svg></button></div><div class="cb"><h3>'+p[0]+'</h3><div class="price">'+p[1]+'</div><div class="m">'+p[2]+(p[3]?' <span class="vf">'+chk+'Verified</span>':'')+'</div><div class="m">'+p[4]+' · '+p[5]+'</div></div></article>'}).join("");
-document.querySelectorAll(".save").forEach(function(b){b.onclick=function(){b.setAttribute("aria-pressed",b.getAttribute("aria-pressed")!=="true")}});
-var S=[["DF","Demo Fashion House","Lagos · Fashion",1],["DE","Demo Electronics Hub","Abuja · Electronics",1],["FF","Demo Farm Fresh","Kaduna · Groceries",0]];
-$("shoplist").innerHTML=S.map(function(s){return '<div class="shop"><div class="av">'+s[0]+'</div><div><b>'+s[1]+'</b><div class="m">'+s[2].replace(" · ",", ")+'</div>'+(s[3]?'<span class="vf">'+chk+'Verified seller</span>':'')+'</div><button class="btn sm">Follow</button></div>'}).join("");
-var mb=$("mb"),dr=$("dr");
-mb.onclick=function(){var o=dr.classList.toggle("open");mb.setAttribute("aria-expanded",o);mb.setAttribute("aria-label",o?"Close menu":"Open menu")};
-var mode="b",up=false;
-function paint(){
- var b=mode==="b";
- $("tb").setAttribute("aria-selected",b);$("ts").setAttribute("aria-selected",!b);
- $("st").textContent=up?(b?"Create buyer account":"Apply to sell"):(b?"Buyer sign in":"Seller sign in");
- $("sd").textContent=up?(b?"Join to save items, follow shops and message sellers.":"Tell us about your shop. Our team reviews every application before you can publish."):(b?"Sign in to save items, follow shops and message sellers.":"Manage your shop, products and messages.");
- $("nm").style.display=up?"block":"none";$("fp").style.display=up?"none":"flex";
- $("go").textContent=up?(b?"Create account":"Submit application"):(b?"Sign in as buyer":"Sign in as seller");
- $("sw").innerHTML=up?'Already have an account? <a href="#" data-sw="in" style="color:var(--gr);font-weight:700">Sign in</a>':(b?'New here? <a href="#" data-sw="up" style="color:var(--gr);font-weight:700">Create account</a>':'No seller account? <a href="#" data-sw="up" style="color:var(--gr);font-weight:700">Apply to sell</a>');
-}
-function open(k){up=(k==="up"||k==="sell");if(k==="sell")mode="s";else if(k==="in"||k==="up")mode=mode;paint();$("scrim").classList.add("open");document.body.style.overflow="hidden";dr.classList.remove("open");$("em").focus()}
-function close(){$("scrim").classList.remove("open");document.body.style.overflow=""}
-document.addEventListener("click",function(e){
- var o=e.target.closest("[data-open]");if(o){e.preventDefault();return open(o.dataset.open)}
- var w=e.target.closest("[data-sw]");if(w){e.preventDefault();up=w.dataset.sw==="up";return paint()}
- if(e.target===$("scrim")||e.target.closest("#cl"))close();
-});
-$("tb").onclick=function(){mode="b";paint()};$("ts").onclick=function(){mode="s";paint()};
-document.addEventListener("keydown",function(e){if(e.key==="Escape")close()});
-$("go").onclick=function(){location.href="auth.html"};
+<script type="module">
+const $=i=>document.getElementById(i);
+const STATES=["Abia","Adamawa","Akwa Ibom","Anambra","Bauchi","Bayelsa","Benue","Borno","Cross River","Delta","Ebonyi","Edo","Ekiti","Enugu","FCT (Abuja)","Gombe","Imo","Jigawa","Kaduna","Kano","Katsina","Kebbi","Kogi","Kwara","Lagos","Nasarawa","Niger","Ogun","Ondo","Osun","Oyo","Plateau","Rivers","Sokoto","Taraba","Yobe","Zamfara"];
+const CATS=[["Fashion and clothing","Dresses, wear, fabrics"],["Shoes and bags","Footwear and accessories"],["Phones and electronics","Phones, laptops, gadgets"],["Home and furniture","Furniture and household"],["Beauty and personal care","Skin, hair, cosmetics"],["Food and groceries","Grains, produce, provisions"],["Health and wellness","Care and wellbeing"],["Building materials","Cement, tiles, tools"],["Automotive and spare parts","Parts and car care"],["Sports and fitness","Gear and equipment"],["Books and education","Books and learning"],["Other products","Everything else"]];
+const ic=n=>'<svg class="i"><use href="#'+n+'"/></svg>';
+const TILE=["#E7F0E9","#FBF1D6","#E3EEF1","#F8E6DE"];
+const ART=[
+'<path d="M24 8h16l-3 12 9 34H18l9-34z" fill="#D9774B"/><path d="M25 22h14l1 5H24z" fill="#C7A64A"/><circle cx="26" cy="40" r="2" fill="#FFF6E0"/><circle cx="37" cy="46" r="2" fill="#FFF6E0"/><circle cx="31" cy="34" r="2" fill="#FFF6E0"/>',
+'<path d="M6 38c0-4 3-6 7-6l8 2c4 1 6-1 8-4l4 3c3 2 7 3 11 4 6 1 12 3 12 9v5H6z" fill="#0F3D2E"/><path d="M6 47h52v5H6z" fill="#C7A64A"/><path d="M24 36l4 3M30 37l4 3" stroke="#FFF6E0" stroke-width="2" stroke-linecap="round"/>',
+'<rect x="19" y="6" width="26" height="52" rx="5" fill="#0F3D2E"/><rect x="22" y="12" width="20" height="36" rx="2" fill="#7FB7BE"/><circle cx="32" cy="53" r="2" fill="#C7A64A"/><circle cx="32" cy="26" r="6" fill="#F2C14E"/>',
+'<rect x="14" y="16" width="36" height="14" rx="5" fill="#E58A5A"/><rect x="10" y="26" width="44" height="18" rx="5" fill="#D9774B"/><rect x="6" y="30" width="10" height="18" rx="4" fill="#C0623A"/><rect x="48" y="30" width="10" height="18" rx="4" fill="#C0623A"/><path d="M14 46v8M50 46v8" stroke="#0F3D2E" stroke-width="3" stroke-linecap="round"/>',
+'<rect x="14" y="30" width="14" height="24" rx="2" fill="#C7A64A"/><rect x="15" y="18" width="12" height="14" rx="2" fill="#E58A8A"/><path d="M15 18l6-8 6 8z" fill="#E58A8A"/><rect x="34" y="38" width="20" height="16" rx="4" fill="#7FB7BE"/><rect x="36" y="32" width="16" height="6" rx="2" fill="#0F3D2E"/>',
+'<path d="M10 30h44l-5 24H15z" fill="#C79A52"/><path d="M10 30h44" stroke="#A97C3A" stroke-width="3"/><circle cx="22" cy="24" r="7" fill="#D9774B"/><circle cx="34" cy="22" r="7" fill="#F2C14E"/><circle cx="45" cy="25" r="6" fill="#185541"/><path d="M20 40h24M18 47h28" stroke="#A97C3A" stroke-width="2"/>',
+'<circle cx="32" cy="32" r="22" fill="#185541"/><path d="M32 20v24M20 32h24" stroke="#fff" stroke-width="6" stroke-linecap="round"/><circle cx="48" cy="14" r="5" fill="#F2C14E"/>',
+'<rect x="8" y="14" width="22" height="12" rx="2" fill="#D9774B"/><rect x="32" y="14" width="24" height="12" rx="2" fill="#C0623A"/><rect x="8" y="28" width="12" height="12" rx="2" fill="#C0623A"/><rect x="22" y="28" width="22" height="12" rx="2" fill="#D9774B"/><rect x="46" y="28" width="10" height="12" rx="2" fill="#C0623A"/><rect x="8" y="42" width="22" height="12" rx="2" fill="#D9774B"/><rect x="32" y="42" width="24" height="12" rx="2" fill="#C0623A"/>',
+'<circle cx="32" cy="32" r="24" fill="#0F3D2E"/><circle cx="32" cy="32" r="15" fill="#C7A64A"/><circle cx="32" cy="32" r="5" fill="#0F3D2E"/><path d="M32 17v10M32 37v10M17 32h10M37 32h10" stroke="#0F3D2E" stroke-width="3"/>',
+'<circle cx="32" cy="32" r="22" fill="#F2C14E"/><path d="M10 32c8-6 16-6 22 0s14 6 22 0M32 10c-6 8-6 16 0 22s6 14 0 22" stroke="#0F3D2E" stroke-width="2.5" fill="none"/>',
+'<rect x="8" y="40" width="48" height="12" rx="2" fill="#0F3D2E"/><rect x="12" y="28" width="42" height="12" rx="2" fill="#D9774B"/><rect x="10" y="16" width="40" height="12" rx="2" fill="#7FB7BE"/><path d="M14 46h40M18 34h30M16 22h26" stroke="#FFF6E0" stroke-width="2"/>',
+'<rect x="10" y="26" width="44" height="28" rx="3" fill="#E58A8A"/><rect x="8" y="20" width="48" height="10" rx="3" fill="#D86F6F"/><path d="M32 20v34" stroke="#C7A64A" stroke-width="6"/><path d="M32 20c-6-10-14-4-8 0zM32 20c6-10 14-4 8 0z" fill="#C7A64A"/>'];
+const art=i=>'<svg class="art" viewBox="0 0 64 64" role="img" aria-hidden="true">'+ART[i%12]+'</svg>';
+const HERO=()=>{let s='<svg class="hs" viewBox="0 0 440 320" role="img" aria-label="A friendly Nigerian market stall"><rect width="440" height="320" rx="28" fill="#FFF6E0"/><circle cx="366" cy="58" r="32" fill="#F2C14E"/><path d="M0 276h440v44H0z" fill="#E9DDB8"/><path d="M14 26Q220 84 426 26" fill="none" stroke="#0F3D2E" stroke-width="2"/>';
+ [[48,"#185541"],[96,"#D9774B"],[144,"#C7A64A"],[192,"#185541"],[240,"#D9774B"],[288,"#C7A64A"],[336,"#185541"],[384,"#D9774B"]].forEach((f,i)=>{s+='<path d="M'+(f[0]-9)+' '+(38+Math.round(18*Math.sin((i+.5)/8*Math.PI)))+'l18 0-9 20z" fill="'+f[1]+'"/>'});
+ s+='<rect x="144" y="66" width="152" height="34" rx="9" fill="#0F3D2E" stroke="#C7A64A" stroke-width="2"/><text x="220" y="89" text-anchor="middle" font-family="Georgia,serif" font-weight="700" font-size="18" fill="#C7A64A">NAIJA MART</text><rect x="52" y="104" width="336" height="12" rx="6" fill="#C7A64A"/>';
+ for(let i=0;i<7;i++)s+='<path d="M'+(52+i*48)+' 116h48v26a24 14 0 0 1-48 0z" fill="'+(i%2?"#FFFFFF":"#0F3D2E")+'"/>';
+ s+='<rect x="58" y="120" width="8" height="156" fill="#8A6F1F"/><rect x="374" y="120" width="8" height="156" fill="#8A6F1F"/>';
+ [[78,5],[152,2],[226,1],[300,0]].forEach(a=>{s+='<g transform="translate('+a[0]+' 148)">'+ART[a[1]]+'</g>'});
+ s+='<rect x="40" y="210" width="360" height="14" rx="7" fill="#C7A64A"/><rect x="48" y="224" width="344" height="52" rx="8" fill="#185541"/>';
+ for(let i=0;i<11;i++)s+='<path d="M'+(70+i*30)+' 238l8 8-8 8-8-8z" fill="#C7A64A"/>';
+ return s+'</svg>'};
+
+$("scene").innerHTML=HERO();
+$("st").innerHTML+=STATES.map(s=>"<option>"+s+"</option>").join("");
+$("cats").innerHTML=CATS.map((c,i)=>'<a class="cat" href="marketplace.html?cat='+encodeURIComponent(c[0])+'"><span class="at" style="--t:'+TILE[i%4]+'">'+art(i)+'</span><b>'+c[0]+'</b><small>'+c[1]+'</small>'+ic("arr")+'</a>').join("");
+$("stl").innerHTML=["Lagos","FCT (Abuja)","Rivers","Kano","Anambra","Abia","Enugu","Oyo","Ogun","Kaduna","Delta","Imo"].map(s=>'<a class="st" href="marketplace.html?state='+encodeURIComponent(s)+'">'+s+'</a>').join("")+'<a class="st all" href="marketplace.html">All 36 states and FCT</a>';
+const P=[["Smartphone, 128GB","₦185,000","Demo Mobile Hub",1,"Ikeja, Lagos","In stock"],["Leather sandals","₦12,500","Demo Footwear Co.",1,"Aba, Abia","In stock"],["Local rice, 50kg","₦78,000","Demo Grains Ltd",0,"Kano","In stock"],["Wooden dining set","₦260,000","Demo Home Studio",1,"Wuse, Abuja","Only 2 left"]];
+$("prods").innerHTML=P.map((p,i)=>'<article class="card"><div class="ph" style="--t:'+TILE[[2,1,5,3][i]%4]+'">'+art([2,1,5,3][i])+'<span class="tag">Sample</span><button class="save" aria-pressed="false" aria-label="Save '+p[0]+'">'+ic("heart")+'</button></div><div class="cb"><h3>'+p[0]+'</h3><div class="price">'+p[1]+'</div><div class="m">'+p[2]+(p[3]?' <span class="vf">'+ic("shield")+'Verified</span>':'')+'</div><div class="m">'+p[4]+' · '+p[5]+'</div></div></article>').join("");
+document.querySelectorAll(".save").forEach(b=>b.onclick=()=>{const t=$("toast");t.textContent="Sign in to save items. Saving is coming soon.";t.style.display="block";clearTimeout(b.t);b.t=setTimeout(()=>t.style.display="none",2400)});
+$("sf").onsubmit=e=>{e.preventDefault();const q=$("q").value.trim(),s=$("st").value,p=new URLSearchParams();if(q)p.set("q",q);if(s)p.set("state",s);location.href="marketplace.html"+(p.toString()?"?"+p:"")};
+const mb=$("mb"),dr=$("dr");
+mb.onclick=()=>{const o=dr.classList.toggle("open");mb.setAttribute("aria-expanded",o);mb.setAttribute("aria-label",o?"Close menu":"Open menu")};
+
+// If the visitor is already signed in, the header shows "My account" instead.
+import("https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js").then(async a=>{
+ const au=await import("https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js");
+ const app=a.initializeApp({apiKey:"AIzaSyCRQapXUQ32P4tpKaMiS11uccUc-z5k9yg",authDomain:"naija-mart-35ba6.firebaseapp.com",projectId:"naija-mart-35ba6",appId:"1:761759831734:web:2780ba182d5947d0cff817"});
+ au.onAuthStateChanged(au.getAuth(app),u=>{if(u){$("si").textContent="My account";$("si").href="account.html";$("ca").style.display="none"}});
+}).catch(()=>{});
 </script>
 </body>
 </html>
