@@ -96,6 +96,7 @@ const app=initializeApp(firebaseConfig),auth=getAuth(app),db=getFirestore(app);
 const $=i=>document.getElementById(i);
 let role=sessionStorage.getItem("nm_role")||"buyer",busy=false;
 const next=new URLSearchParams(location.search).get("next");
+const pr=new URLSearchParams(location.search).get("role");
 const dest=()=>next==="admin.html"?"admin.html":role==="seller"?"seller.html":"account.html";
 const say=(t,k)=>{const m=$("msg");m.textContent=t;m.className="msg "+k};
 const clear=()=>{$("msg").className="msg"};
@@ -144,6 +145,7 @@ $("f-fp").onsubmit=e=>{e.preventDefault();run($("b-fp"),async()=>{
  say("If that email has an account, a reset link is on its way. Check your spam folder too.","ok");
 })};
 onAuthStateChanged(auth,u=>{if(u&&!busy)location.replace(dest())});
+if(pr==="seller"||pr==="buyer")choose(pr);
 </script>
 </body>
 </html>
