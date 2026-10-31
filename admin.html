@@ -4,86 +4,280 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="robots" content="noindex">
-<title>Admin check – Naija Mart</title>
+<meta name="color-scheme" content="light">
+<title>Admin Control Center – Naija Mart</title>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@500;600;700;800&display=swap" rel="stylesheet">
 <style>
+:root{--g1:#103D2E;--g2:#176B45;--gold:#D4AF55;--bg:#F5F7F5;--sf:#fff;--tx:#202722;--mu:#6B756E;--ln:#E2E8E3;--ok:#1E7A4C;--wn:#B7791F;--er:#B3261E;--sw:248px}
 *{box-sizing:border-box}
-body{margin:0;background:#FBFAF6;color:#1D2822;font:500 17px/1.55 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;padding:env(safe-area-inset-top,0) 0 env(safe-area-inset-bottom,0)}
-.w{max-width:520px;margin:0 auto;padding:20px 18px 50px}
-h1{font-size:1.5rem;margin:0 0 4px}.mu{color:#68756E;font-size:.95rem}
-.row{display:flex;gap:12px;align-items:flex-start;background:#fff;border:1px solid #E5E9E2;border-radius:16px;padding:14px;margin:10px 0}
-.d{width:26px;height:26px;border-radius:50%;flex:none;display:grid;place-items:center;font-weight:800;color:#fff;margin-top:2px}
-.ok{background:#1E7A4C}.no{background:#B3261E}.wt{background:#B7791F}
-.row b{display:block}.row small{color:#68756E;display:block;overflow-wrap:anywhere}
-input{width:100%;min-height:50px;border-radius:12px;border:1.5px solid #E5E9E2;padding:0 14px;margin:6px 0 10px;font:inherit}
-button{min-height:50px;border-radius:12px;border:0;background:#0F3D2E;color:#fff;font:inherit;font-weight:700;padding:0 20px;cursor:pointer;width:100%}
-button.o{background:none;border:1.5px solid #0F3D2E;color:#0F3D2E;margin-top:8px}
-.box{background:#fff;border:1px solid #E5E9E2;border-radius:16px;padding:16px;margin:12px 0}
-.sum{border-radius:16px;padding:16px;margin:14px 0;font-weight:700}
-.sum.g{background:#D8EFE2;color:#145C38}.sum.r{background:#F8D9D6;color:#8A1C14}
+html,body{margin:0;height:100%}
+body{background:var(--bg);color:var(--tx);font:500 15px/1.5 Manrope,Inter,system-ui,sans-serif;-webkit-text-size-adjust:100%}
+svg.i{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;flex:none}
+button,input,select{font:inherit;color:inherit}
+:focus-visible{outline:3px solid var(--gold);outline-offset:2px}
+.side{position:fixed;inset:0 auto 0 0;width:var(--sw);background:var(--g1);color:#D6E4DB;display:flex;flex-direction:column;z-index:50;transform:translateX(-100%);transition:transform .2s;padding:env(safe-area-inset-top,0) 0 env(safe-area-inset-bottom,0)}
+.side.open{transform:none}
+.brand{display:flex;align-items:center;gap:10px;padding:18px 18px 8px;color:#fff;font-weight:800;font-size:1.15rem}
+.brand i{width:36px;height:36px;border-radius:10px;background:#fff;color:var(--g1);display:grid;place-items:center;font-style:normal;box-shadow:0 0 0 1px var(--gold)}
+.brand b{color:var(--gold)}
+.sub{padding:0 18px 10px;font-size:.78rem;color:#9DB8A9;font-weight:600}
+.nav{flex:1;overflow:auto;padding:4px 10px}
+.gl{font-size:.7rem;font-weight:800;letter-spacing:.06em;color:#7FA08D;padding:14px 10px 4px;text-transform:uppercase}
+.nav button{display:flex;align-items:center;gap:12px;width:100%;min-height:44px;padding:0 12px;border:0;border-radius:11px;background:none;color:#D6E4DB;cursor:pointer;text-align:left;font-weight:600}
+.nav button:hover{background:rgba(255,255,255,.07)}
+.nav button[aria-current=true]{background:var(--g2);color:#fff;box-shadow:inset 3px 0 0 var(--gold)}
+.nav .bd{margin-left:auto;background:var(--gold);color:#1D2822;border-radius:99px;font-size:.72rem;font-weight:800;padding:0 8px}
+.nav .pl{margin-left:auto;font-size:.65rem;color:#7FA08D;font-weight:700}
+.out{margin:8px 10px 14px;display:flex;gap:12px;align-items:center;min-height:46px;border:0;border-radius:11px;background:rgba(255,255,255,.08);color:#fff;padding:0 14px;cursor:pointer;font-weight:700}
+.scrim{position:fixed;inset:0;background:rgba(0,0,0,.45);z-index:40;display:none}.scrim.open{display:block}
+.main{min-height:100%}
+.top{position:sticky;top:0;z-index:30;background:var(--sf);border-bottom:1px solid var(--ln);display:flex;align-items:center;gap:10px;padding:calc(8px + env(safe-area-inset-top,0)) 14px 8px}
+.ib{width:44px;height:44px;border:0;background:none;border-radius:12px;display:grid;place-items:center;cursor:pointer;position:relative;color:var(--tx)}
+.ib .n{position:absolute;top:5px;right:4px;background:var(--er);color:#fff;border-radius:99px;font-size:.65rem;min-width:17px;height:17px;display:grid;place-items:center;font-weight:800}
+.top h1{font-size:1.1rem;margin:0;flex:1;letter-spacing:-.01em;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.srch{display:none;align-items:center;gap:8px;background:var(--bg);border-radius:12px;padding:0 12px;min-height:44px;width:300px;color:var(--mu)}
+.srch input{border:0;background:none;outline:0;flex:1;min-width:0}
+.me{display:none;align-items:center;gap:10px;line-height:1.2}
+.me .av{width:38px;height:38px;border-radius:50%;background:var(--g1);color:var(--gold);display:grid;place-items:center;font-weight:800}
+.me small{display:block;color:var(--mu);font-size:.75rem}
+.wrap{padding:16px 14px 60px;max-width:1280px;margin:0 auto}
+.head{display:flex;flex-wrap:wrap;gap:10px;align-items:center;justify-content:space-between;margin-bottom:14px}
+.head h2{margin:0;font-size:1.35rem;letter-spacing:-.02em}.head p{margin:0;color:var(--mu)}
+select.f,input.f{min-height:44px;border-radius:12px;border:1.5px solid var(--ln);background:var(--sf);padding:0 12px}
+.stats{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.stat{background:var(--sf);border:1px solid var(--ln);border-radius:16px;padding:14px;box-shadow:0 1px 2px rgba(16,61,46,.04)}
+.stat .l{color:var(--mu);font-size:.82rem;font-weight:700}.stat b{display:block;font-size:1.7rem;letter-spacing:-.02em;line-height:1.2;margin:2px 0}
+.stat .s{height:26px}.stat .d{font-size:.78rem;color:var(--mu)}
+.panels{display:grid;gap:12px;margin-top:12px}
+.pn{background:var(--sf);border:1px solid var(--ln);border-radius:16px;padding:16px;box-shadow:0 1px 2px rgba(16,61,46,.04);min-width:0}
+.pn h3{margin:0 0 2px;font-size:1rem}.pn .mu{color:var(--mu);font-size:.85rem}
+.lg{display:flex;gap:14px;font-size:.8rem;color:var(--mu);margin:6px 0;flex-wrap:wrap}.lg i{display:inline-block;width:10px;height:10px;border-radius:3px;margin-right:5px}
+.tabs{display:flex;gap:6px;overflow-x:auto;padding:2px 0 10px}
+.tabs button{flex:none;min-height:40px;padding:0 16px;border:0;background:none;border-radius:10px;font-weight:700;color:var(--mu);cursor:pointer}
+.tabs button[aria-pressed=true]{background:#E3F0E8;color:var(--g1)}
+.tw{background:var(--sf);border:1px solid var(--ln);border-radius:16px;overflow:hidden}
+table{width:100%;border-collapse:collapse}
+th{text-align:left;font-size:.78rem;color:var(--mu);font-weight:700;padding:11px 14px;background:#FAFBFA;border-bottom:1px solid var(--ln)}
+td{padding:12px 14px;border-bottom:1px solid var(--ln);vertical-align:middle}
+tr:last-child td{border-bottom:0}
+.shop{display:flex;align-items:center;gap:10px;font-weight:700}.shop small{display:block;color:var(--mu);font-weight:500}
+.lo{width:38px;height:38px;border-radius:10px;background:var(--g1);color:var(--gold);display:grid;place-items:center;font-weight:800;font-size:.85rem;flex:none}
+.pill{display:inline-flex;gap:5px;align-items:center;border-radius:8px;padding:2px 10px;font-size:.78rem;font-weight:800;white-space:nowrap}
+.pill.pending{background:#FCEFD0;color:#7A5200}.pill.approved{background:#D8EFE2;color:#145C38}.pill.rejected,.pill.suspended{background:#F8D9D6;color:#8A1C14}.pill.vf{background:#F6EACB;color:#7A5A00}.pill.no{background:#EDF0EE;color:#5E6962}
+.btn{min-height:44px;padding:0 16px;border-radius:11px;border:1.5px solid var(--g1);background:none;color:var(--g1);font-weight:700;cursor:pointer}
+.btn.p{background:var(--g1);color:#fff}.btn.r{border-color:var(--er);color:var(--er)}.btn.g{background:var(--gold);border-color:var(--gold);color:#1D2822}.btn.s{min-height:38px;padding:0 14px}
+.btn:disabled{opacity:.5}
+.empty{text-align:center;padding:36px 16px;color:var(--mu)}.empty h3{color:var(--tx);margin:6px 0 4px}
+.msg{border-radius:12px;padding:12px 14px;margin:0 0 12px;display:none}.msg.ok{display:block;background:#D8EFE2;color:#145C38}.msg.err{display:block;background:#F8D9D6;color:#8A1C14}
+dialog{border:0;border-radius:20px;padding:0;max-width:540px;width:calc(100% - 28px);color:var(--tx);background:var(--sf);box-shadow:0 20px 60px rgba(0,0,0,.3)}
+dialog::backdrop{background:rgba(0,0,0,.5)}
+.dp{padding:20px;max-height:86vh;overflow:auto}
+dl{display:grid;grid-template-columns:auto 1fr;gap:6px 14px;margin:12px 0}dt{color:var(--mu)}dd{margin:0;font-weight:600;overflow-wrap:anywhere}
+.dp input{width:100%;min-height:46px;border-radius:12px;border:1.5px solid var(--ln);padding:0 12px;margin:6px 0 12px}
+.row{display:flex;gap:8px;flex-wrap:wrap}.row .btn{flex:1}
+.pl2{border:1.5px dashed var(--ln);border-radius:16px;padding:30px 16px;text-align:center;color:var(--mu);background:var(--sf)}
 [hidden]{display:none!important}
+@media (max-width:719px){
+ table,thead,tbody,tr,td{display:block}thead{display:none}
+ tr{padding:12px 14px;border-bottom:1px solid var(--ln)}tr:last-child{border-bottom:0}
+ td{border:0;padding:3px 0}td[data-l]::before{content:attr(data-l)": ";color:var(--mu);font-size:.8rem;font-weight:700}
+ td.sh::before{content:none}
+}
+@media (min-width:720px){.stats{grid-template-columns:repeat(3,minmax(0,1fr))}.wrap{padding:20px 22px 60px}.srch{display:flex}}
+@media (min-width:1000px){
+ .side{transform:none}.main{margin-left:var(--sw)}.mb,.scrim{display:none!important}
+ .stats{grid-template-columns:repeat(3,minmax(0,1fr))}.panels.two{grid-template-columns:2fr 1fr}.panels.eq{grid-template-columns:1fr 1fr}.me{display:flex}
+}
+@media (min-width:1300px){.stats{grid-template-columns:repeat(6,minmax(0,1fr))}}
 </style>
 </head>
 <body>
-<div class="w">
- <h1>Naija Mart admin check</h1>
- <p class="mu">This page tests everything your admin dashboard needs, and tells you in plain words what to fix.</p>
-
- <div class="box" id="login" hidden>
-  <b>Step 1: Sign in with your admin email</b>
-  <input id="e" type="email" placeholder="Email address" autocomplete="email">
-  <input id="p" type="password" placeholder="Password" autocomplete="current-password">
-  <button id="go">Sign in</button>
-  <p class="mu" id="le" style="color:#B3261E"></p>
- </div>
-
- <div id="res" hidden>
-  <div id="sum" class="sum" hidden></div>
-  <div id="list"></div>
-  <button class="o" id="out">Sign out</button>
+<aside class="side" id="side" aria-label="Admin navigation">
+ <div class="brand"><i>N</i><span>Naija<b>Mart</b></span></div>
+ <div class="sub">Admin Control Center</div>
+ <nav class="nav" id="nav"></nav>
+ <button class="out" id="out"><svg class="i"><use href="#i-logout"/></svg>Log out</button>
+</aside>
+<div class="scrim" id="scrim"></div>
+<div class="main">
+ <header class="top">
+  <button class="ib mb" id="mb" aria-label="Open menu"><svg class="i"><use href="#i-menu"/></svg></button>
+  <h1 id="pt">Overview</h1>
+  <label class="srch"><svg class="i"><use href="#i-search"/></svg><input id="q" placeholder="Search shops, people, emails" aria-label="Search"></label>
+  <button class="ib" id="bell" aria-label="Pending applications"><svg class="i"><use href="#i-bell"/></svg><span class="n" id="bn" hidden></span></button>
+  <div class="me"><div class="av" id="mav">A</div><div><b id="mn">Admin</b><small id="mr">Administrator</small></div></div>
+ </header>
+ <div class="wrap">
+  <div id="load" style="color:var(--mu)">Checking your access…</div>
+  <div id="deny" hidden class="pn"><h3 id="dt">Access denied</h3><p class="mu" id="dm2">This area is only for authorized administrators.</p><p class="mu" id="dg" style="overflow-wrap:anywhere;font-size:.85rem"></p><div class="row" style="display:flex;gap:8px;flex-wrap:wrap"><button class="btn p" id="so2">Sign out and try another account</button><a class="btn" style="display:inline-flex;align-items:center;text-decoration:none" href="index.html">Go to Naija Mart</a></div></div>
+  <div id="msg" class="msg" role="alert"></div>
+  <div id="view" hidden></div>
  </div>
 </div>
+<dialog id="dm"><div class="dp" id="dmb"></div></dialog>
+<dialog id="cf"><div class="dp"><h3 id="cft" style="margin:0 0 6px"></h3><p id="cfm" style="color:var(--mu);margin:0 0 16px"></p><div class="row"><button class="btn" id="cn">Cancel</button><button class="btn p" id="cy">Confirm</button></div></div></dialog>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
+<symbol id="i-grid" viewBox="0 0 24 24"><path d="M4 4h7v7H4zM13 4h7v7h-7zM4 13h7v7H4zM13 13h7v7h-7z"/></symbol>
+<symbol id="i-chk" viewBox="0 0 24 24"><path d="M9 11a4 4 0 1 0 0-8 4 4 0 0 0 0 8zM2 21c0-4 3-6 7-6s7 2 7 6M17 11l2 2 4-4"/></symbol>
+<symbol id="i-store" viewBox="0 0 24 24"><path d="M4 9l1-5h14l1 5M4 9v11h16V9M4 9a3 3 0 0 0 5.3 1.9A3 3 0 0 0 14.7 10.9 3 3 0 0 0 20 9M9 20v-5h6v5"/></symbol>
+<symbol id="i-users" viewBox="0 0 24 24"><path d="M9 11a4 4 0 1 0 0-8 4 4 0 0 0 0 8zM2 21c0-4 3-6 7-6s7 2 7 6M17 4a4 4 0 0 1 0 7M22 21c0-3-2-5-4-5.5"/></symbol>
+<symbol id="i-bag" viewBox="0 0 24 24"><path d="M6 8h12l1 12H5zM9 8a3 3 0 0 1 6 0"/></symbol>
+<symbol id="i-pin" viewBox="0 0 24 24"><path d="M12 21s7-6.2 7-11a7 7 0 1 0-14 0c0 4.8 7 11 7 11z"/><circle cx="12" cy="10" r="2.5"/></symbol>
+<symbol id="i-crown" viewBox="0 0 24 24"><path d="M3 8l4 4 5-7 5 7 4-4-2 11H5z"/></symbol>
+<symbol id="i-card" viewBox="0 0 24 24"><path d="M3 6h18v12H3zM3 10h18"/></symbol>
+<symbol id="i-flag" viewBox="0 0 24 24"><path d="M5 21V4h12l-2 4 2 4H5"/></symbol>
+<symbol id="i-chat" viewBox="0 0 24 24"><path d="M4 5h16v11H9l-5 4z"/></symbol>
+<symbol id="i-chart" viewBox="0 0 24 24"><path d="M4 20V10M10 20V4M16 20v-8M22 20H2"/></symbol>
+<symbol id="i-shield" viewBox="0 0 24 24"><path d="M12 3 4 6v6c0 5 3.4 8 8 9 4.6-1 8-4 8-9V6z"/></symbol>
+<symbol id="i-list" viewBox="0 0 24 24"><path d="M8 6h13M8 12h13M8 18h13M3 6h.01M3 12h.01M3 18h.01"/></symbol>
+<symbol id="i-gear" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M12 3v3M12 18v3M3 12h3M18 12h3M5.6 5.6l2.1 2.1M16.3 16.3l2.1 2.1M5.6 18.4l2.1-2.1M16.3 7.7l2.1-2.1"/></symbol>
+<symbol id="i-logout" viewBox="0 0 24 24"><path d="M9 4H5v16h4M16 8l4 4-4 4M20 12H9"/></symbol>
+<symbol id="i-menu" viewBox="0 0 24 24"><path d="M4 7h16M4 12h16M4 17h16"/></symbol>
+<symbol id="i-search" viewBox="0 0 24 24"><path d="M11 18a7 7 0 1 0 0-14 7 7 0 0 0 0 14zM20 20l-4-4"/></symbol>
+<symbol id="i-bell" viewBox="0 0 24 24"><path d="M6 17V11a6 6 0 0 1 12 0v6l2 2H4zM10 21h4"/></symbol>
+</defs></svg>
+
 <script type="module">
 const firebaseConfig={apiKey:"AIzaSyCRQapXUQ32P4tpKaMiS11uccUc-z5k9yg",authDomain:"naija-mart-35ba6.firebaseapp.com",projectId:"naija-mart-35ba6",appId:"1:761759831734:web:2780ba182d5947d0cff817"};
 import {initializeApp} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-import {getAuth,onAuthStateChanged,signInWithEmailAndPassword,signOut} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
-import {getFirestore,doc,getDoc,getDocs,collection} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+import {getAuth,onAuthStateChanged,signOut} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+import {getFirestore,doc,getDoc,getDocs,collection,writeBatch,serverTimestamp} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 const app=initializeApp(firebaseConfig),auth=getAuth(app),db=getFirestore(app);
 const $=i=>document.getElementById(i);
 const esc=s=>String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
-const add=(st,t,s)=>{$("list").insertAdjacentHTML("beforeend",'<div class="row"><span class="d '+st+'">'+(st==="ok"?"✓":st==="no"?"✕":"…")+'</span><div><b>'+t+'</b><small>'+s+'</small></div></div>')};
-$("go").onclick=async()=>{
- $("le").textContent="";
- try{await signInWithEmailAndPassword(auth,$("e").value.trim(),$("p").value)}
- catch(e){$("le").textContent=e.code==="auth/invalid-credential"?"Wrong email or password. If you forgot it, use Forgot password on the sign-in page.":"Couldn’t sign in ("+(e.code||"error")+"). Check your internet."}
-};
-$("out").onclick=()=>signOut(auth);
+const ic=n=>'<svg class="i"><use href="#i-'+n+'"/></svg>';
+const NAV=[["Main",[["overview","Overview","grid"],["apps","Seller Applications","chk"],["sellers","Seller Management","store"],["buyers","Buyer Management","users"]]],
+["Marketplace",[["products","Product Management","bag",1],["cats","Categories and Locations","pin",1]]],
+["Money",[["premium","Premium Management","crown",1],["pay","Payments and Transactions","card",1]]],
+["Support",[["reports","Reports and Complaints","flag",1],["msgs","Messaging and Support","chat",1]]],
+["System",[["analytics","Analytics and Reports","chart",1],["admins","Admin Users and Permissions","shield",1],["logs","Audit Logs and Security","list"],["settings","Settings","gear",1]]]];
+const TITLES={};NAV.forEach(g=>g[1].forEach(n=>TITLES[n[0]]=n[1]));
+const S={page:"overview",st:"all",q:"",range:30,users:[],apps:[],logs:[],err:{},me:null,role:""};
+const say=(t,k)=>{const m=$("msg");m.textContent=t;m.className="msg "+k;window.scrollTo({top:0,behavior:"smooth"})};
+const sec=t=>t?.seconds||0;
+const fd=t=>sec(t)?new Date(sec(t)*1000).toLocaleDateString("en-NG",{day:"numeric",month:"short",year:"numeric"}):"–";
+const ini=s=>(String(s||"?").trim().split(/\s+/).slice(0,2).map(w=>w[0]).join("")||"?").toUpperCase();
+const LABEL={pending:"Pending",approved:"Approved",rejected:"Rejected",suspended:"Suspended"};
+
+/* ---------- charts (plain SVG, real data only) ---------- */
+function bucket(items,days){const now=Date.now(),a=new Array(days).fill(0);items.forEach(x=>{const d=Math.floor((now-sec(x.createdAt)*1000)/864e5);if(sec(x.createdAt)&&d>=0&&d<days)a[days-1-d]++});return a}
+function line(series,w,h,pad){const mx=Math.max(1,...series.flatMap(s=>s.v)),n=series[0].v.length;
+ const X=i=>pad+(n===1?0:i*(w-2*pad)/(n-1)),Y=v=>h-pad-(v/mx)*(h-2*pad);
+ return series.map(s=>{const p=s.v.map((v,i)=>X(i)+","+Y(v)).join(" ");return '<polyline fill="none" stroke="'+s.c+'" stroke-width="2.5" stroke-linejoin="round" points="'+p+'"/>'+(s.fill?'<polygon fill="'+s.c+'" opacity=".12" points="'+X(0)+","+(h-pad)+" "+p+" "+X(n-1)+","+(h-pad)+'"/>':'')}).join("")+'<line x1="'+pad+'" x2="'+(w-pad)+'" y1="'+(h-pad)+'" y2="'+(h-pad)+'" stroke="#E2E8E3"/><text x="'+pad+'" y="'+(h-1)+'" font-size="10" fill="#6B756E">'+n+' days ago</text><text x="'+(w-pad)+'" y="'+(h-1)+'" font-size="10" fill="#6B756E" text-anchor="end">Today</text><text x="'+pad+'" y="12" font-size="10" fill="#6B756E">max '+mx+'</text>'}
+const spark=(v,c)=>'<svg class="s" viewBox="0 0 100 26" preserveAspectRatio="none" width="100%" height="26">'+(v.some(x=>x)?line([{v,c,fill:1}],100,26,2).replace(/<text[^>]*>.*?<\/text>/g,"").replace(/<line[^>]*>/,""):'<line x1="0" x2="100" y1="24" y2="24" stroke="#E2E8E3" stroke-width="2"/>')+'</svg>';
+function donut(parts){const t=parts.reduce((a,p)=>a+p.v,0);if(!t)return '<div class="empty">No applications yet.</div>';let o=0;const R=42,C=2*Math.PI*R;
+ return '<svg viewBox="0 0 120 120" width="150" height="150" role="img" aria-label="Applications by status" style="display:block;margin:8px auto"><g transform="rotate(-90 60 60)">'+parts.map(p=>{const l=p.v/t*C,s='<circle cx="60" cy="60" r="'+R+'" fill="none" stroke="'+p.c+'" stroke-width="16" stroke-dasharray="'+l+' '+(C-l)+'" stroke-dashoffset="'+(-o)+'"/>';o+=l;return s}).join("")+'</g><text x="60" y="58" text-anchor="middle" font-size="20" font-weight="800" fill="#202722">'+t+'</text><text x="60" y="74" text-anchor="middle" font-size="9" fill="#6B756E">applications</text></svg><div class="lg" style="justify-content:center">'+parts.map(p=>'<span><i style="background:'+p.c+'"></i>'+p.n+' '+p.v+'</span>').join("")+'</div>'}
+
+/* ---------- views ---------- */
+function overview(){
+ const A=S.apps,U=S.users,n=k=>A.filter(a=>a.status===k).length,days=S.range,ub=bucket(U,days),ab=bucket(A,days);
+ const inR=(arr)=>arr.reduce((a,b)=>a+b,0);
+ const card=(l,v,d,sp)=>'<div class="stat"><div class="l">'+l+'</div><b>'+v+'</b>'+(sp||'<div class="s"></div>')+'<div class="d">'+d+'</div></div>';
+ const rec=[...A].sort((a,b)=>sec(b.createdAt)-sec(a.createdAt)).slice(0,5);
+ const lg=S.logs.slice(0,5);
+ return '<div class="head"><div><h2>Marketplace overview</h2><p>Live numbers from your database.</p></div><select class="f" id="rg" aria-label="Date range"><option value="7">Last 7 days</option><option value="30">Last 30 days</option><option value="90">Last 90 days</option></select></div>'+
+ (S.err.users?'<div class="msg err" style="display:block">Couldn’t read user records. Publish the updated Firestore rules, then reload.</div>':'')+
+ '<div class="stats">'+
+ card("Registered users",S.err.users?"–":U.length,inR(ub)+" new in range",spark(ub,"#176B45"))+
+ card("Seller applications",A.length,inR(ab)+" new in range",spark(ab,"#D4AF55"))+
+ card("Pending review",n("pending"),"Need your decision")+
+ card("Approved sellers",n("approved"),"Can publish products")+
+ card("Suspended / rejected",n("suspended")+n("rejected"),"Not selling")+
+ card("Verified sellers",A.filter(a=>a.status==="approved"&&a.verified).length,"Badge granted by you")+'</div>'+
+ '<div class="panels two"><div class="pn"><h3>Sign-ups and applications</h3><div class="mu">Last '+days+' days</div><div class="lg"><span><i style="background:#176B45"></i>New users</span><span><i style="background:#D4AF55"></i>Seller applications</span></div>'+
+ ((inR(ub)||inR(ab))?'<svg viewBox="0 0 600 190" width="100%" role="img" aria-label="Sign-ups and applications over time">'+line([{v:ub,c:"#176B45",fill:1},{v:ab,c:"#D4AF55"}],600,190,14)+'</svg>':'<div class="empty"><h3>No activity in this period</h3><p>Charts fill in as people join.</p></div>')+'</div>'+
+ '<div class="pn"><h3>Applications by status</h3>'+donut([{n:"Pending",v:n("pending"),c:"#D4AF55"},{n:"Approved",v:n("approved"),c:"#176B45"},{n:"Rejected",v:n("rejected"),c:"#B3261E"},{n:"Suspended",v:n("suspended"),c:"#8A8F8C"}])+'</div></div>'+
+ '<div class="panels eq"><div class="pn"><h3>Recent seller applications</h3>'+(rec.length?rec.map(a=>'<div class="shop" style="padding:10px 0;border-top:1px solid var(--ln)"><div class="lo">'+ini(a.shopName)+'</div><div style="flex:1;min-width:0">'+esc(a.shopName)+'<small>'+esc(a.name)+' · '+fd(a.createdAt)+'</small></div><span class="pill '+esc(a.status)+'">'+(LABEL[a.status]||esc(a.status))+'</span></div>').join(""):'<div class="empty">No applications yet.</div>')+'</div>'+
+ '<div class="pn"><h3>Recent admin activity</h3>'+(lg.length?lg.map(l=>'<div style="padding:10px 0;border-top:1px solid var(--ln)"><b>'+esc(l.action)+'</b> <span class="mu">on '+esc(shopOf(l.target))+'</span><div class="mu">'+esc(l.actorEmail)+' · '+fd(l.at)+'</div></div>').join(""):'<div class="empty">No admin actions yet.</div>')+'</div></div>'+
+ '<p class="mu" style="margin-top:14px">Products, Premium, payments and complaints will appear here once those features are built. Nothing on this page is demo data.</p>';
+}
+const shopOf=uid=>(S.apps.find(a=>a.uid===uid)||{}).shopName||uid;
+function tabsHtml(list,withAll){return '<div class="tabs">'+["all","pending","approved","rejected","suspended"].map(k=>'<button data-st="'+k+'" aria-pressed="'+(S.st===k)+'">'+(k==="all"?"All":LABEL[k])+' ('+(k==="all"?list.length:list.filter(a=>a.status===k).length)+')</button>').join("")+'</div>'}
+function match(a){const q=S.q.toLowerCase();return !q||[a.shopName,a.name,a.email,a.state,a.city,a.category].join(" ").toLowerCase().indexOf(q)>-1}
+function sellerTable(list,mode){
+ const L=list.filter(a=>(S.st==="all"||a.status===S.st)&&match(a));
+ if(!L.length)return '<div class="tw"><div class="empty"><h3>Nothing to show</h3><p>'+(S.q?"No results for “"+esc(S.q)+"”.":"No seller applications here yet.")+'</p></div></div>';
+ return '<div class="tw"><table><thead><tr><th>Shop</th><th>Category</th><th>Location</th><th>Submitted</th><th>Status</th><th>Badge</th><th></th></tr></thead><tbody>'+L.map(a=>'<tr><td class="sh"><div class="shop"><div class="lo">'+ini(a.shopName)+'</div><div>'+esc(a.shopName)+'<small>'+esc(a.name)+'</small></div></div></td><td data-l="Category">'+esc(a.category)+'</td><td data-l="Location">'+esc(a.city)+', '+esc(a.state)+'</td><td data-l="Submitted">'+fd(a.createdAt)+'</td><td data-l="Status"><span class="pill '+esc(a.status)+'">'+(LABEL[a.status]||esc(a.status))+'</span></td><td data-l="Badge">'+(a.verified?'<span class="pill vf">Verified</span>':'<span class="pill no">Not verified</span>')+'</td><td><button class="btn s p" data-o="'+esc(a.uid)+'">'+(mode==="m"?"Manage":"Review")+'</button></td></tr>').join("")+'</tbody></table></div>';
+}
+function apps(){return '<div class="head"><div><h2>Seller applications</h2><p>Review every applicant before they can publish.</p></div></div>'+tabsHtml(S.apps)+sellerTable(S.apps,"a")}
+function sellers(){const l=S.apps.filter(a=>a.status==="approved"||a.status==="suspended");return '<div class="head"><div><h2>Seller management</h2><p>Approved and suspended sellers. Verification is separate from Premium.</p></div></div>'+tabsHtml(l)+sellerTable(l,"m")}
+function buyers(){
+ if(S.err.users)return '<div class="msg err" style="display:block">Couldn’t read user records. Publish the updated Firestore rules, then reload.</div>';
+ const q=S.q.toLowerCase(),L=S.users.filter(u=>!q||[u.name,u.email,u.phone].join(" ").toLowerCase().indexOf(q)>-1).sort((a,b)=>sec(b.createdAt)-sec(a.createdAt));
+ return '<div class="head"><div><h2>Buyer management</h2><p>'+S.users.length+' registered account'+(S.users.length===1?"":"s")+'. Passwords are never shown.</p></div></div>'+(L.length?'<div class="tw"><table><thead><tr><th>Name</th><th>Email</th><th>Phone</th><th>Joined</th><th>Seller</th></tr></thead><tbody>'+L.map(u=>{const a=S.apps.find(x=>x.uid===u.uid);return '<tr><td class="sh"><div class="shop"><div class="lo">'+ini(u.name)+'</div><div>'+esc(u.name)+'</div></div></td><td data-l="Email">'+esc(u.email)+'</td><td data-l="Phone">'+esc(u.phone||"–")+'</td><td data-l="Joined">'+fd(u.createdAt)+'</td><td data-l="Seller">'+(a?'<span class="pill '+esc(a.status)+'">'+(LABEL[a.status]||"")+'</span>':'<span class="pill no">Buyer only</span>')+'</td></tr>'}).join("")+'</tbody></table></div>':'<div class="tw"><div class="empty"><h3>No accounts found</h3></div></div>');
+}
+function logs(){return '<div class="head"><div><h2>Audit logs</h2><p>Every admin action is recorded and can’t be edited or deleted.</p></div></div>'+(S.err.logs?'<div class="msg err" style="display:block">Couldn’t read the audit log.</div>':S.logs.length?'<div class="tw"><table><thead><tr><th>When</th><th>Administrator</th><th>Action</th><th>Record</th></tr></thead><tbody>'+S.logs.map(l=>'<tr><td data-l="When">'+fd(l.at)+'</td><td data-l="By">'+esc(l.actorEmail)+'</td><td data-l="Action"><span class="pill no">'+esc(l.action)+'</span></td><td data-l="Record">'+esc(shopOf(l.target))+'</td></tr>').join("")+'</tbody></table></div>':'<div class="tw"><div class="empty"><h3>No actions yet</h3><p>Approvals, rejections and badge changes will be listed here.</p></div></div>')}
+function planned(){return '<div class="head"><div><h2>'+TITLES[S.page]+'</h2></div></div><div class="pl2"><h3 style="color:var(--tx);margin:0 0 6px">Planned feature</h3><p style="margin:0">This section isn’t built yet, and there’s no data behind it. It will be added in a later stage, after the marketplace features it depends on.</p></div>'}
+const V={overview,apps,sellers,buyers,logs};
+
+/* ---------- shell ---------- */
+function nav(){const p=S.apps.filter(a=>a.status==="pending").length;
+ $("nav").innerHTML=NAV.map(g=>'<div class="gl">'+g[0]+'</div>'+g[1].map(n=>'<button data-p="'+n[0]+'"'+(S.page===n[0]?' aria-current="true"':'')+'>'+ic(n[2])+n[1]+(n[0]==="apps"&&p?'<span class="bd">'+p+'</span>':n[3]?'<span class="pl">Planned</span>':'')+'</button>').join("")).join("");
+ $("bn").hidden=!p;$("bn").textContent=p;
+}
+function render(){nav();$("pt").textContent=TITLES[S.page];$("view").innerHTML=(V[S.page]||planned)();const r=$("rg");if(r){r.value=S.range}$("q").placeholder=["apps","sellers","buyers"].includes(S.page)?"Search this list":"Search shops, people, emails"}
+function go(p){S.page=p;S.st="all";S.q="";$("q").value="";closeNav();render();window.scrollTo(0,0)}
+const openNav=()=>{$("side").classList.add("open");$("scrim").classList.add("open")},closeNav=()=>{$("side").classList.remove("open");$("scrim").classList.remove("open")};
+$("mb").onclick=openNav;$("scrim").onclick=closeNav;
+$("bell").onclick=()=>{go("apps");S.st="pending";render()};
+$("q").oninput=e=>{S.q=e.target.value;if(["apps","sellers","buyers"].includes(S.page))render()};
+$("out").onclick=()=>signOut(auth).then(()=>location.replace("auth.html"));
+$("so2").onclick=()=>signOut(auth).then(()=>location.replace("auth.html?next=admin.html"));
+
+/* ---------- review dialog + actions ---------- */
+function ask(t,m){return new Promise(r=>{$("cft").textContent=t;$("cfm").textContent=m;$("cf").showModal();$("cy").onclick=()=>{$("cf").close();r(true)};$("cn").onclick=()=>{$("cf").close();r(false)}})}
+function open(uid){
+ const a=S.apps.find(x=>x.uid===uid);if(!a)return;const s=a.status;
+ let b="";
+ if(s==="pending")b='<button class="btn p" data-a="approve">Approve</button><button class="btn r" data-a="reject">Reject</button>';
+ else if(s==="approved")b=(a.verified?'<button class="btn" data-a="unverify">Revoke badge</button>':'<button class="btn g" data-a="verify">Grant Verified badge</button>')+'<button class="btn r" data-a="suspend">Suspend</button>';
+ else b='<button class="btn p" data-a="approve">'+(s==="suspended"?"Reinstate":"Approve instead")+'</button>';
+ $("dmb").dataset.u=uid;
+ $("dmb").innerHTML='<div class="shop"><div class="lo" style="width:48px;height:48px">'+ini(a.shopName)+'</div><div style="flex:1"><h3 style="margin:0;font-size:1.15rem">'+esc(a.shopName)+'</h3><span class="pill '+esc(s)+'">'+(LABEL[s]||esc(s))+'</span> '+(a.verified?'<span class="pill vf">Verified</span>':'')+'</div><button class="btn s" data-a="close" aria-label="Close">Close</button></div>'+
+ '<dl><dt>Owner</dt><dd>'+esc(a.name)+'</dd><dt>Email</dt><dd>'+esc(a.email)+'</dd><dt>Phone</dt><dd>'+esc(a.phone||"–")+'</dd><dt>Category</dt><dd>'+esc(a.category)+'</dd><dt>Location</dt><dd>'+esc(a.area)+', '+esc(a.city)+', '+esc(a.state)+'</dd><dt>Address</dt><dd>'+esc(a.address)+'</dd><dt>About</dt><dd>'+esc(a.description)+'</dd><dt>Submitted</dt><dd>'+fd(a.createdAt)+'</dd>'+(a.reason?'<dt>Last reason</dt><dd>'+esc(a.reason)+'</dd>':'')+'</dl>'+
+ ((s==="pending"||s==="approved")?'<label for="dr" style="font-weight:700;font-size:.9rem">Reason (required to reject or suspend)</label><input id="dr" maxlength="300">':'')+'<div class="row">'+b+'</div><p class="mu" style="font-size:.82rem;margin:12px 0 0">Verification is separate from Premium. Every action is saved in the audit log.</p>';
+ $("dm").showModal();
+}
+async function act(uid,a){
+ const r=($("dr")?.value||"").trim(),shop=shopOf(uid);
+ const M={approve:{status:"approved",reason:"",verified:false},reject:{status:"rejected",reason:r,verified:false},suspend:{status:"suspended",reason:r,verified:false},verify:{verified:true},unverify:{verified:false}}[a];
+ if((a==="reject"||a==="suspend")&&r.length<3)return say("Please write a short reason first.","err");
+ const W={approve:["Approve "+shop+"?","They’ll be able to use seller features."],reject:["Reject "+shop+"?","They’ll see your reason."],suspend:["Suspend "+shop+"?","Their seller features will be locked."],verify:["Grant Verified badge?","Shows a Verified badge on "+shop+"."],unverify:["Revoke Verified badge?","The badge will be removed."]}[a];
+ if(!await ask(W[0],W[1]))return;
+ if(!navigator.onLine)return say("No connection. Try again when you’re online.","err");
+ const b=writeBatch(db);
+ b.update(doc(db,"sellerApplications",uid),{...M,reviewedAt:serverTimestamp(),reviewedBy:S.me.uid});
+ b.set(doc(collection(db,"auditLogs")),{actor:S.me.uid,actorEmail:S.me.email,action:a,target:uid,at:serverTimestamp()});
+ try{await b.commit();$("dm").close();say("Done. Saved and recorded in the audit log.","ok");await load();render()}catch(e){say("That didn’t go through, nothing was changed. Please try again.","err")}
+}
+document.addEventListener("click",e=>{
+ const t=e.target.closest("[data-p],[data-st],[data-o],[data-a]");if(!t)return;
+ if(t.dataset.p)return go(t.dataset.p);
+ if(t.dataset.st){S.st=t.dataset.st;return render()}
+ if(t.dataset.o)return open(t.dataset.o);
+ if(t.dataset.a==="close")return $("dm").close();
+ if(t.closest("#dm")){t.disabled=true;act($("dmb").dataset.u,t.dataset.a).finally(()=>t.disabled=false)}
+});
+document.addEventListener("change",e=>{if(e.target.id==="rg"){S.range=+e.target.value;render()}});
+
+async function load(){
+ S.err={};
+ try{S.apps=(await getDocs(collection(db,"sellerApplications"))).docs.map(d=>d.data())}catch(e){S.err.apps=1}
+ try{S.users=(await getDocs(collection(db,"users"))).docs.map(d=>({uid:d.id,...d.data()}))}catch(e){S.err.users=1}
+ try{S.logs=(await getDocs(collection(db,"auditLogs"))).docs.map(d=>d.data()).sort((a,b)=>sec(b.at)-sec(a.at)).slice(0,100)}catch(e){S.err.logs=1}
+}
 onAuthStateChanged(auth,async u=>{
- $("login").hidden=!!u;$("res").hidden=!u;$("list").innerHTML="";$("sum").hidden=true;
- if(!u)return;
- let fail=[];
- add("ok","Signed in","Email: "+esc(u.email)+" · Account ID: "+esc(u.uid));
- // admin entry
- let isAdmin=false;
- try{const a=await getDoc(doc(db,"admins",u.uid));
-  if(a.exists()){isAdmin=true;add("ok","Your admin entry exists","The admins collection has your account ID. Role: "+esc(a.data().role))}
-  else{add("no","No admin entry for this account","This account ID isn’t in the admins collection. If this isn’t ikechiking005@gmail.com, sign out and use that one. Otherwise add this exact ID as a document in admins.");fail.push("Wrong account or missing admin entry.")}
- }catch(e){add("no","Couldn’t read the admins collection","Firebase refused ("+esc(e.code||"error")+"). The new security rules are probably not published. Open Firestore, then Rules, paste the latest rules and tap Publish.");fail.push("Publish the latest Firestore rules.")}
- // sellerApplications
- try{const s=await getDocs(collection(db,"sellerApplications"));add("ok","Can read seller applications","Found "+s.size+" application(s).")}
- catch(e){add("no","Can’t read seller applications","Error: "+esc(e.code||"error")+". "+(isAdmin?"Publish the latest rules.":"Expected, because this account isn’t an admin."));fail.push("Seller applications blocked.")}
- // users
- try{const s=await getDocs(collection(db,"users"));add("ok","Can read user accounts","Found "+s.size+" account(s).")}
- catch(e){add("no","Can’t read user accounts","Error: "+esc(e.code||"error")+". The latest rules let admins read this.");fail.push("User accounts blocked.")}
- // live admin.html version
- try{const t=await (await fetch("admin.html?"+Date.now())).text();
-  if(t.indexOf('id="so2"')>-1)add("ok","Latest admin.html is uploaded","Your site has the newest admin page.");
-  else{add("no","Old admin.html is on your site","Upload the newest admin.html from our chat to GitHub (Add file, then Upload files).");fail.push("Upload the newest admin.html.")}
- }catch(e){add("no","admin.html not found on your site","Upload admin.html to GitHub, then reload this page.");fail.push("admin.html missing.")}
- const s=$("sum");s.hidden=false;
- if(!fail.length){s.className="sum g";s.innerHTML="Everything is ready. Open admin.html on your site and you will see your dashboard."}
- else{s.className="sum r";s.innerHTML="Fix this first: "+esc(fail[0])}
+ if(!u)return location.replace("auth.html?next=admin.html");
+ S.me=u;
+ try{
+  const ad=await getDoc(doc(db,"admins",u.uid));$("load").hidden=true;
+  if(!ad.exists()){$("dg").textContent="Signed in as "+u.email+". Account ID: "+u.uid+". An entry with exactly this ID must exist in the admins collection in Firestore.";$("deny").hidden=false;return}
+  const d=ad.data();S.role=d.role==="owner"?"Owner":(d.role||"Administrator");
+  $("mn").textContent=u.displayName||u.email;$("mr").textContent=S.role;$("mav").textContent=ini(u.displayName||u.email);
+  await load();$("view").hidden=false;render();
+ }catch(e){$("load").hidden=true;$("dt").textContent="Couldn’t check your access";$("dm2").textContent=(e&&e.code==="permission-denied")?"Firestore refused the request. Publish the latest security rules in Firebase (Firestore → Rules), then reload this page.":"Check your internet connection and reload.";$("dg").textContent="Signed in as "+u.email+". Error: "+((e&&e.code)||"unknown");$("deny").hidden=false}
 });
 </script>
 </body>
-  </html>
-  
+</html>
