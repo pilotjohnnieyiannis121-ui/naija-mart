@@ -123,6 +123,7 @@ dl{display:grid;grid-template-columns:auto 1fr;gap:6px 14px;margin:0}dt{color:va
 .cat>svg{position:absolute;right:14px;top:18px;color:var(--gold)}
 .cat:hover{box-shadow:0 12px 26px rgba(15,61,46,.12)}
 @media (min-width:760px){.stall{margin-top:0}}
+.pimg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}.pimg2{width:100%;height:100%;object-fit:cover;border-radius:14px}
 </style>
 </head>
 <body>
@@ -151,7 +152,7 @@ dl{display:grid;grid-template-columns:auto 1fr;gap:6px 14px;margin:0}dt{color:va
  <div class="crumb"><a href="index.html">Home</a> › Marketplace</div>
  <h1>Marketplace</h1>
  <p>Find products from sellers across Nigeria. Message sellers and follow the shops you like.</p>
- <span class="demo">Sample listings – real products appear as sellers publish</span>
+ <span class="demo" id="dm">Sample listings – real products appear as sellers publish</span>
  <form class="search" id="sf" role="search">
   <label class="fld"><svg class="i"><use href="#search"/></svg><input id="q" type="search" placeholder="Search products, shops or markets" aria-label="Search"></label>
   <label class="fld"><svg class="i"><use href="#pin"/></svg><select id="hs" aria-label="State"><option value="">All of Nigeria</option></select></label>
@@ -257,7 +258,7 @@ function list(){
  const o=$("so").value;r.sort((x,y)=>o==="lo"?x[2]-y[2]:o==="hi"?y[2]-x[2]:x[10]-y[10]);return r}
 function card(p){
  const st=ST[p[9]],f=fol.indexOf(p[4])>-1,sv=sav.indexOf(p[0])>-1,c=cmp.indexOf(p[0])>-1;
- return '<article class="card"><button class="ph" style="--c:'+TINT[p[3]%4]+'" data-v="'+p[0]+'" aria-label="View '+p[1]+'">'+art(p[3])+'<span class="tg">Sample</span><span class="hv" role="button" tabindex="0" data-sv="'+p[0]+'" aria-pressed="'+sv+'" aria-label="Save '+p[1]+'">'+ic("heart")+'</span></button>'+
+ return '<article class="card"><button class="ph" style="--c:'+TINT[p[3]%4]+'" data-v="'+p[0]+'" aria-label="View '+p[1]+'">'+(p[14]?'<img class="pimg" src="'+p[14]+'" alt="">':art(p[3]))+(p[15]?'':'<span class="tg">Sample</span>')+'<span class="hv" role="button" tabindex="0" data-sv="'+p[0]+'" aria-pressed="'+sv+'" aria-label="Save '+p[1]+'">'+ic("heart")+'</span></button>'+
  '<div class="cb"><h3 data-v="'+p[0]+'">'+p[1]+'</h3><div class="pr">'+N(p[2])+'</div><div class="shop">'+p[4]+(p[5]?'<span class="vf">'+ic("shield")+'Verified</span>':'')+'</div><div class="m">'+ic("pin")+' '+p[7]+', '+p[6]+'</div><div><span class="'+st[1]+'">'+st[0]+'</span> <span class="m">· Updated '+when(p[10])+'</span></div>'+
  '<div class="ca"><button class="btn pri sm" data-msg="'+p[0]+'">'+ic("chat")+'Message</button><button class="btn sm" data-fol="'+p[0]+'" aria-pressed="'+f+'">'+(f?ic("chk")+"Following":ic("plus")+"Follow")+'</button></div>'+
  '<button class="cmpb" data-cmp="'+p[0]+'" aria-pressed="'+c+'">'+(c?"✓ Added to compare":"+ Compare")+'</button></div></article>'}
@@ -287,7 +288,7 @@ function seller(p){const f=fol.indexOf(p[4])>-1;return '<div class="sel"><div cl
 function view(id){
  const p=byId(id),st=ST[p[9]];rec=[id].concat(rec.filter(x=>x!==id)).slice(0,6);ls.set("nm_rec",rec);
  const more=P.filter(x=>x[4]===p[4]&&x[0]!==id);
- $("dp").innerHTML='<div class="dh"><b>Product details</b><button class="btn sm" data-close="1">Close</button></div><div class="di"><div class="gal" style="--c:'+TINT[p[3]%4]+'" aria-hidden="true"><div>'+art(p[3])+'</div><div>'+art(p[3])+'</div><div>'+art(p[3])+'</div><div>'+art(p[3])+'</div></div>'+
+ $("dp").innerHTML='<div class="dh"><b>Product details</b><button class="btn sm" data-close="1">Close</button></div><div class="di"><div class="gal" id="gal" style="--c:'+TINT[p[3]%4]+'" aria-hidden="true"><div>'+art(p[3])+'</div><div>'+art(p[3])+'</div><div>'+art(p[3])+'</div><div>'+art(p[3])+'</div></div>'+
  '<h2 style="font-size:1.6rem">'+p[1]+'</h2><div class="pr" style="font-size:1.7rem">'+N(p[2])+'</div><div><span class="'+st[1]+'">'+st[0]+'</span> <span class="m">· Updated '+when(p[10])+'</span></div><p style="margin:0">'+p[13]+'</p>'+
  (p[12]?'<div><b>Options</b><div class="pills" style="margin-top:6px">'+p[12].split(", ").map(v=>'<span class="pill">'+v+'</span>').join("")+'</div></div>':'')+
  seller(p)+'<dl><dt>Location</dt><dd>'+p[7]+', '+p[6]+'</dd><dt>Condition</dt><dd>'+p[8]+'</dd><dt>Category</dt><dd>'+CATS[p[3]]+'</dd><dt>Pickup / delivery</dt><dd>'+p[11]+'</dd></dl>'+
@@ -295,7 +296,7 @@ function view(id){
  '<div class="ca"><button class="btn sm" data-share="'+p[0]+'">'+ic("share")+'Share</button><button class="btn sm" data-rep="1">'+ic("flag")+'Report listing</button></div>'+
  '<div class="note">Naija Mart doesn’t take payment or guarantee delivery. Confirm price and stock with the seller, and never pay in advance to someone you can’t verify.</div>'+
  (more.length?'<div><b>More from this shop</b><div class="rvr" style="margin-top:6px">'+more.map(x=>'<button data-v="'+x[0]+'"><b>'+x[1]+'</b><span>'+N(x[2])+'</span></button>').join("")+'</div></div>':'')+'</div>';
- open();render()}
+ open();render();if(p[15])photosFor(p)}
 function open(){const d=$("dg");if(!d.open)d.showModal();$("dp").scrollTop=0}
 function msg(id){
  const p=byId(id);
@@ -328,7 +329,27 @@ const net=()=>$("off").style.display=navigator.onLine?"none":"block";addEventLis
  if(p.get("q"))$("q").value=p.get("q");
  if(STATES.indexOf(p.get("state"))>-1)$("fs").value=$("hs").value=p.get("state");
  const c=CATS.indexOf(p.get("cat"));if(c>-1){cat=String(c);document.querySelectorAll(".chip").forEach(x=>x.setAttribute("aria-pressed",x.dataset.c===cat))}})();
-load();
+boot();
+async function boot(){
+ try{
+  const a=await import("https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js");
+  const fs=await import("https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js");
+  const app=a.initializeApp({apiKey:"AIzaSyCRQapXUQ32P4tpKaMiS11uccUc-z5k9yg",authDomain:"naija-mart-35ba6.firebaseapp.com",projectId:"naija-mart-35ba6",appId:"1:761759831734:web:2780ba182d5947d0cff817"});
+  const db=fs.getFirestore(app);window.__db=db;window.__fs=fs;
+  const [ps,ss]=await Promise.all([fs.getDocs(fs.query(fs.collection(db,"products"),fs.where("status","==","active"))),fs.getDocs(fs.collection(db,"shops"))]);
+  const shops={};ss.docs.forEach(d=>shops[d.id]=d.data());
+  const days=t=>t&&t.seconds?Math.max(0,Math.floor((Date.now()/1000-t.seconds)/86400)):0;
+  const rows=ps.docs.map(d=>({id:d.id,...d.data()})).filter(p=>!shops[p.sellerId]||shops[p.sellerId].status==="approved").sort((x,y)=>(y.createdAt?.seconds||0)-(x.createdAt?.seconds||0))
+   .map((p,i)=>[i+1,p.name,p.price,p.cat,p.shopName,(shops[p.sellerId]&&shops[p.sellerId].verified===true)?1:0,p.state,p.area||p.city,p.cond,p.stock,days(p.createdAt),p.delivery,p.options||"",p.desc,p.thumb||"",p.id,p.sellerId]);
+  if(rows.length){P.length=0;rows.forEach(r=>P.push(r));const dm=$("dm");if(dm)dm.hidden=true}
+ }catch(e){}
+ load();
+}
+async function photosFor(p){
+ try{const fs=window.__fs,s=await fs.getDocs(fs.collection(window.__db,"products",p[15],"photos"));
+  const im=s.docs.map(d=>d.data()).sort((a,b)=>a.idx-b.idx).map(x=>x.data),g=$("gal");
+  if(g&&im.length)g.innerHTML=im.map((u,i)=>'<div><img class="pimg2" src="'+u+'" alt="Photo '+(i+1)+'"></div>').join("")}catch(e){}
+}
 
 // Show "My account" in the header when already signed in.
 import("https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js").then(async a=>{
