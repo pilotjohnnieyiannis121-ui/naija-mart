@@ -329,6 +329,8 @@ const net=()=>$("off").style.display=navigator.onLine?"none":"block";addEventLis
  if(p.get("q"))$("q").value=p.get("q");
  if(STATES.indexOf(p.get("state"))>-1)$("fs").value=$("hs").value=p.get("state");
  const c=CATS.indexOf(p.get("cat"));if(c>-1){cat=String(c);document.querySelectorAll(".chip").forEach(x=>x.setAttribute("aria-pressed",x.dataset.c===cat))}})();
+const E=s=>String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const safeImg=s=>/^data:image\/jpeg;base64,[A-Za-z0-9+\/=]+$/.test(s||"")?s:"";
 boot();
 async function boot(){
  try{
@@ -340,7 +342,7 @@ async function boot(){
   const shops={};ss.docs.forEach(d=>shops[d.id]=d.data());
   const days=t=>t&&t.seconds?Math.max(0,Math.floor((Date.now()/1000-t.seconds)/86400)):0;
   const rows=ps.docs.map(d=>({id:d.id,...d.data()})).filter(p=>!shops[p.sellerId]||shops[p.sellerId].status==="approved").sort((x,y)=>(y.createdAt?.seconds||0)-(x.createdAt?.seconds||0))
-   .map((p,i)=>[i+1,p.name,p.price,p.cat,p.shopName,(shops[p.sellerId]&&shops[p.sellerId].verified===true)?1:0,p.state,p.area||p.city,p.cond,p.stock,days(p.createdAt),p.delivery,p.options||"",p.desc,p.thumb||"",p.id,p.sellerId]);
+   .map((p,i)=>[i+1,E(p.name),Number(p.price)||0,(Number.isInteger(p.cat)&&p.cat>=0&&p.cat<12)?p.cat:11,E(p.shopName),(shops[p.sellerId]&&shops[p.sellerId].verified===true)?1:0,E(p.state),E(p.area||p.city),p.cond==="Used"?"Used":"New",["in","low","out"].indexOf(p.stock)>-1?p.stock:"in",days(p.createdAt),E(p.delivery),E(p.options||""),E(p.desc),safeImg(p.thumb),p.id,p.sellerId]);
   if(rows.length){P.length=0;rows.forEach(r=>P.push(r));const dm=$("dm");if(dm)dm.hidden=true}
  }catch(e){}
  load();
@@ -348,7 +350,7 @@ async function boot(){
 async function photosFor(p){
  try{const fs=window.__fs,s=await fs.getDocs(fs.collection(window.__db,"products",p[15],"photos"));
   const im=s.docs.map(d=>d.data()).sort((a,b)=>a.idx-b.idx).map(x=>x.data),g=$("gal");
-  if(g&&im.length)g.innerHTML=im.map((u,i)=>'<div><img class="pimg2" src="'+u+'" alt="Photo '+(i+1)+'"></div>').join("")}catch(e){}
+  if(g&&im.length)g.innerHTML=im.map((u,i)=>'<div><img class="pimg2" src="'+safeImg(u)+'" alt="Photo '+(i+1)+'"></div>').join("")}catch(e){}
 }
 
 // Show "My account" in the header when already signed in.
