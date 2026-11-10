@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Shop – Naija Mart</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700;800&family=Manrope:wght@500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{--g1:#0F3D2E;--g2:#185541;--gold:#C7A64A;--gold2:#E6CB7C;--bg:#FBF8F1;--sf:#fff;--tx:#1D2822;--mu:#6B756E;--ln:#E8E4D8;--ti:#F3EFE4;--rd:#B3261E;--ok:#1E7A4C}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html{background:var(--bg)}
+body{margin:0;background:var(--bg);color:var(--tx);font:500 16px/1.5 Manrope,Inter,system-ui,sans-serif;padding:env(safe-area-inset-top,0) 0 0;-webkit-text-size-adjust:100%}
+button,input,select,textarea{font:inherit;color:inherit}a{color:inherit;text-decoration:none}
+:focus-visible{outline:3px solid var(--gold);outline-offset:2px}
+svg.i{width:1.25em;height:1.25em;fill:none;stroke:currentColor;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round;flex:none;vertical-align:-.25em}
+h1,h2,h3{font-family:"Playfair Display",Georgia,serif;margin:0;line-height:1.15}
+.wrap{max-width:1000px;margin:0 auto;padding:0 14px}
+.logo{display:flex;align-items:center;gap:9px;font:800 1.25rem "Playfair Display",Georgia,serif;color:#fff}
+.logo i{width:36px;height:36px;border-radius:11px;background:var(--g1);color:var(--gold2);display:grid;place-items:center;font:800 1.1rem "Playfair Display",serif;font-style:normal;box-shadow:inset 0 0 0 1px var(--gold)}
+.logo b{color:var(--gold2)}
+.ib{width:44px;height:44px;border-radius:14px;border:1px solid rgba(255,255,255,.25);background:rgba(255,255,255,.12);color:#fff;display:grid;place-items:center;cursor:pointer;position:relative}
+.ib .n{position:absolute;top:-4px;right:-4px;background:var(--rd);color:#fff;border-radius:99px;font-size:.65rem;min-width:18px;height:18px;display:grid;place-items:center;font-weight:800}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:48px;padding:0 20px;border-radius:99px;border:1.5px solid var(--g1);background:none;color:var(--g1);font-weight:700;cursor:pointer}
+.btn.p{background:var(--g1);color:#fff}.btn.g{background:linear-gradient(90deg,var(--gold),var(--gold2));border-color:transparent;color:#1D2822}
+.btn.s{min-height:40px;padding:0 14px;font-size:.88rem}.btn.w{width:100%}.btn.r{border-color:var(--rd);color:var(--rd)}.btn[disabled]{opacity:.55;cursor:not-allowed}
+.btn[aria-pressed=true]{background:#E4EEE6}
+.card{background:var(--sf);border:1px solid var(--ln);border-radius:22px;padding:16px;margin:12px 0;box-shadow:0 6px 18px rgba(15,61,46,.05)}
+.mu{color:var(--mu);font-size:.92rem}.sp{flex:1;min-width:0}.row{display:flex;gap:10px;align-items:center}
+.sec{display:flex;align-items:baseline;justify-content:space-between;margin:22px 0 10px}.sec h2{font-size:1.3rem}.sec a{color:var(--g2);font-weight:700;font-size:.9rem}
+.chips{display:flex;gap:10px;overflow-x:auto;padding:2px 0 8px;scrollbar-width:none}.chips::-webkit-scrollbar{display:none}
+.cat{flex:none;width:84px;text-align:center;font-size:.78rem;font-weight:700;line-height:1.25}
+.cat span{display:grid;place-items:center;width:68px;height:68px;border-radius:22px;margin:0 auto 6px;box-shadow:0 4px 12px rgba(15,61,46,.08)}.cat .art{width:76%;max-width:none}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.pc{position:relative;background:var(--sf);border:1px solid var(--ln);border-radius:22px;overflow:hidden;box-shadow:0 6px 18px rgba(15,61,46,.06);display:flex;flex-direction:column}
+.im{aspect-ratio:1;display:grid;place-items:center;position:relative;overflow:hidden}.im img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}.im .art{width:62%;max-width:none}
+.hv{position:absolute;right:8px;top:8px;width:42px;height:42px;border-radius:50%;border:0;background:rgba(255,255,255,.94);color:var(--tx);display:grid;place-items:center;cursor:pointer;box-shadow:0 2px 8px rgba(0,0,0,.15)}
+.hv[aria-pressed=true]{color:var(--rd)}.hv[aria-pressed=true] svg{fill:currentColor}
+.pb{padding:10px 12px 12px;display:flex;flex-direction:column;gap:2px}
+.pb h3{font:700 .98rem Manrope,sans-serif;line-height:1.25;overflow-wrap:anywhere}
+.pr{font:800 1.2rem "Playfair Display",Georgia,serif;color:var(--g1)}.sh{font-weight:700;font-size:.86rem}.mt{color:var(--mu);font-size:.8rem;line-height:1.35}
+.vf{color:var(--ok);font-weight:800;font-size:.8rem;display:inline-flex;gap:2px;align-items:center}
+.ok{color:var(--ok);font-weight:800}.lo{color:#9A6B00;font-weight:800}.no{color:var(--rd);font-weight:800}
+.pill{display:inline-flex;gap:6px;align-items:center;border-radius:99px;padding:4px 12px;font-size:.8rem;font-weight:800;background:#F6E9B8;color:#5C4700}
+.pill.ok2{background:#D8EFE2;color:#145C38}
+.av{width:48px;height:48px;border-radius:50%;background:var(--g1);color:var(--gold2);display:grid;place-items:center;font-weight:800;flex:none;box-shadow:inset 0 0 0 1px var(--gold)}
+.in{width:100%;min-height:50px;border-radius:14px;border:1.5px solid var(--ln);background:#fff;padding:0 14px;margin-bottom:12px}textarea.in{padding:12px 14px;min-height:84px}
+label.f{display:block;font-weight:700;font-size:.9rem;margin-bottom:6px}
+.msg{border-radius:14px;padding:12px 14px;margin:10px 0;display:none}.msg.ok{display:block;background:#D8EFE2;color:#145C38}.msg.err{display:block;background:#F7D3D0;color:#7A1912}.msg.warn{display:block;background:#F6E9B8;color:#5C4700}
+.empty{text-align:center;padding:34px 12px;color:var(--mu)}.empty svg{font-size:2.2rem;color:var(--gold)}.empty h3{color:var(--tx);margin:6px 0 4px}
+.note{border-left:4px solid var(--gold);background:var(--ti);padding:10px 12px;border-radius:0 12px 12px 0;font-size:.88rem;color:var(--mu);margin:12px 0}
+.sk{height:200px;border-radius:22px;background:linear-gradient(90deg,var(--ti),var(--ln),var(--ti));background-size:200% 100%;animation:sh 1.2s infinite}@keyframes sh{to{background-position:-200% 0}}
+@media (prefers-reduced-motion:reduce){.sk{animation:none}}
+dialog{border:0;border-radius:24px;padding:0;width:calc(100% - 22px);max-width:520px;background:var(--sf);color:var(--tx);box-shadow:0 24px 60px rgba(0,0,0,.4)}dialog::backdrop{background:rgba(0,0,0,.55)}.dp{padding:18px}
+.toast{position:fixed;left:50%;bottom:calc(90px + env(safe-area-inset-bottom,0));transform:translateX(-50%);background:var(--tx);color:#fff;padding:12px 18px;border-radius:14px;font-weight:700;z-index:90;display:none;max-width:92%;text-align:center}
+@media (min-width:700px){.grid{grid-template-columns:repeat(3,1fr)}}@media (min-width:1000px){.grid{grid-template-columns:repeat(4,1fr)}}
+[hidden]{display:none!important}
+
+.h2{background:linear-gradient(165deg,#0F3D2E 0,#185541 100%);color:#fff;border-radius:0 0 30px 30px;padding:12px 0 22px;position:relative;overflow:hidden}
+.h2::after{content:"";position:absolute;right:-60px;top:-60px;width:210px;height:210px;border-radius:50%;border:1px solid rgba(199,166,74,.45)}
+.h2 .wrap{position:relative;z-index:1}.tp{display:flex;align-items:center;gap:10px}.tp .logo{flex:1}
+.lt{width:88px;height:88px;border-radius:50%;display:grid;place-items:center;flex:none;box-shadow:0 0 0 3px var(--gold),0 0 0 6px rgba(199,166,74,.3)}.lt .art{width:72%;max-width:none}
+.h2 h1{font-size:1.7rem;overflow-wrap:anywhere}.h2 .s{color:#CFE0D6;font-size:.92rem}
+.pl{display:inline-flex;gap:6px;align-items:center;border-radius:99px;padding:4px 12px;font-size:.8rem;font-weight:800;background:linear-gradient(90deg,var(--gold),var(--gold2));color:#1D2822}
+.acts{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:14px 0}.acts .full{grid-column:1/-1}
+.btn.lt2{border-color:#fff;color:#fff}
+</style>
+</head>
+<body>
+<div class="h2"><div class="wrap"><div class="tp"><a class="logo" href="index.html"><i>N</i><span>Naija<b>Mart</b></span></a><a class="ib" href="marketplace.html" aria-label="Marketplace"><svg class="i" viewBox="0 0 24 24"><path d="M11 18a7 7 0 1 0 0-14 7 7 0 0 0 0 14zM20 20l-4-4"/></svg></a></div><div id="hd" style="margin-top:16px"></div></div></div>
+<main class="wrap" id="m" style="padding-bottom:50px"><div class="sk" style="margin-top:16px"></div></main>
+<div class="toast" id="toast" role="status"></div>
+<script type="module">
+const firebaseConfig={apiKey:"AIzaSyCRQapXUQ32P4tpKaMiS11uccUc-z5k9yg",authDomain:"naija-mart-35ba6.firebaseapp.com",projectId:"naija-mart-35ba6",appId:"1:761759831734:web:2780ba182d5947d0cff817"};
+import {initializeApp} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+import {getAuth,onAuthStateChanged,signOut,sendEmailVerification,updateProfile} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+import {getFirestore,doc,getDoc,setDoc,updateDoc,deleteDoc,addDoc,collection,query,where,orderBy,limit,getDocs,writeBatch,onSnapshot,serverTimestamp,increment} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+const app=initializeApp(firebaseConfig),auth=getAuth(app),db=getFirestore(app);
+const $=i=>document.getElementById(i);
+const esc=s=>String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const N=n=>"₦"+Number(n||0).toLocaleString("en-NG");
+const sec=t=>t&&t.seconds?t.seconds:0;
+const ago=t=>{const s=sec(t);if(!s)return "just now";const d=Math.floor((Date.now()/1000-s)/86400);return d<=0?"today":d===1?"yesterday":d<30?d+" days ago":new Date(s*1000).toLocaleDateString("en-NG",{day:"numeric",month:"short",year:"numeric"})};
+const hm=t=>sec(t)?new Date(sec(t)*1000).toLocaleTimeString("en-NG",{hour:"2-digit",minute:"2-digit"}):"";
+const STATES=["Abia","Adamawa","Akwa Ibom","Anambra","Bauchi","Bayelsa","Benue","Borno","Cross River","Delta","Ebonyi","Edo","Ekiti","Enugu","FCT (Abuja)","Gombe","Imo","Jigawa","Kaduna","Kano","Katsina","Kebbi","Kogi","Kwara","Lagos","Nasarawa","Niger","Ogun","Ondo","Osun","Oyo","Plateau","Rivers","Sokoto","Taraba","Yobe","Zamfara"];
+const CATS=["Fashion and clothing","Shoes and bags","Phones and electronics","Home and furniture","Beauty and personal care","Food and groceries","Health and wellness","Building materials","Automotive and spare parts","Sports and fitness","Books and education","Other products"];
+const TILE=["#E7F0E9","#FBF1D6","#E3EEF1","#F8E6DE"];
+const ART=[
+'<path d="M24 8h16l-3 12 9 34H18l9-34z" fill="#D9774B"/><path d="M25 22h14l1 5H24z" fill="#C7A64A"/><circle cx="26" cy="40" r="2" fill="#FFF6E0"/><circle cx="37" cy="46" r="2" fill="#FFF6E0"/><circle cx="31" cy="34" r="2" fill="#FFF6E0"/>',
+'<path d="M6 38c0-4 3-6 7-6l8 2c4 1 6-1 8-4l4 3c3 2 7 3 11 4 6 1 12 3 12 9v5H6z" fill="#0F3D2E"/><path d="M6 47h52v5H6z" fill="#C7A64A"/><path d="M24 36l4 3M30 37l4 3" stroke="#FFF6E0" stroke-width="2" stroke-linecap="round"/>',
+'<rect x="19" y="6" width="26" height="52" rx="5" fill="#0F3D2E"/><rect x="22" y="12" width="20" height="36" rx="2" fill="#7FB7BE"/><circle cx="32" cy="53" r="2" fill="#C7A64A"/><circle cx="32" cy="26" r="6" fill="#F2C14E"/>',
+'<rect x="14" y="16" width="36" height="14" rx="5" fill="#E58A5A"/><rect x="10" y="26" width="44" height="18" rx="5" fill="#D9774B"/><rect x="6" y="30" width="10" height="18" rx="4" fill="#C0623A"/><rect x="48" y="30" width="10" height="18" rx="4" fill="#C0623A"/><path d="M14 46v8M50 46v8" stroke="#0F3D2E" stroke-width="3" stroke-linecap="round"/>',
+'<rect x="14" y="30" width="14" height="24" rx="2" fill="#C7A64A"/><rect x="15" y="18" width="12" height="14" rx="2" fill="#E58A8A"/><path d="M15 18l6-8 6 8z" fill="#E58A8A"/><rect x="34" y="38" width="20" height="16" rx="4" fill="#7FB7BE"/><rect x="36" y="32" width="16" height="6" rx="2" fill="#0F3D2E"/>',
+'<path d="M10 30h44l-5 24H15z" fill="#C79A52"/><path d="M10 30h44" stroke="#A97C3A" stroke-width="3"/><circle cx="22" cy="24" r="7" fill="#D9774B"/><circle cx="34" cy="22" r="7" fill="#F2C14E"/><circle cx="45" cy="25" r="6" fill="#185541"/><path d="M20 40h24M18 47h28" stroke="#A97C3A" stroke-width="2"/>',
+'<circle cx="32" cy="32" r="22" fill="#185541"/><path d="M32 20v24M20 32h24" stroke="#fff" stroke-width="6" stroke-linecap="round"/><circle cx="48" cy="14" r="5" fill="#F2C14E"/>',
+'<rect x="8" y="14" width="22" height="12" rx="2" fill="#D9774B"/><rect x="32" y="14" width="24" height="12" rx="2" fill="#C0623A"/><rect x="8" y="28" width="12" height="12" rx="2" fill="#C0623A"/><rect x="22" y="28" width="22" height="12" rx="2" fill="#D9774B"/><rect x="46" y="28" width="10" height="12" rx="2" fill="#C0623A"/><rect x="8" y="42" width="22" height="12" rx="2" fill="#D9774B"/><rect x="32" y="42" width="24" height="12" rx="2" fill="#C0623A"/>',
+'<circle cx="32" cy="32" r="24" fill="#0F3D2E"/><circle cx="32" cy="32" r="15" fill="#C7A64A"/><circle cx="32" cy="32" r="5" fill="#0F3D2E"/><path d="M32 17v10M32 37v10M17 32h10M37 32h10" stroke="#0F3D2E" stroke-width="3"/>',
+'<circle cx="32" cy="32" r="22" fill="#F2C14E"/><path d="M10 32c8-6 16-6 22 0s14 6 22 0M32 10c-6 8-6 16 0 22s6 14 0 22" stroke="#0F3D2E" stroke-width="2.5" fill="none"/>',
+'<rect x="8" y="40" width="48" height="12" rx="2" fill="#0F3D2E"/><rect x="12" y="28" width="42" height="12" rx="2" fill="#D9774B"/><rect x="10" y="16" width="40" height="12" rx="2" fill="#7FB7BE"/><path d="M14 46h40M18 34h30M16 22h26" stroke="#FFF6E0" stroke-width="2"/>',
+'<rect x="10" y="26" width="44" height="28" rx="3" fill="#E58A8A"/><rect x="8" y="20" width="48" height="10" rx="3" fill="#D86F6F"/><path d="M32 20v34" stroke="#C7A64A" stroke-width="6"/><path d="M32 20c-6-10-14-4-8 0zM32 20c6-10 14-4 8 0z" fill="#C7A64A"/>'];
+const art=i=>'<svg class="art" viewBox="0 0 64 64" role="img" aria-hidden="true">'+ART[i%12]+'</svg>';
+
+const catOf=p=>Number.isInteger(p.cat)&&p.cat>=0&&p.cat<12?p.cat:11;
+const safeImg=s=>/^data:image\/jpeg;base64,[A-Za-z0-9+\/=]+$/.test(s||"")?s:"";
+const PATHS={home:"M4 11 12 4l8 7v9H4z",search:"M11 18a7 7 0 1 0 0-14 7 7 0 0 0 0 14zM20 20l-4-4",heart:"M12 20s-7-4.4-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 10c0 5.6-7 10-7 10z",chat:"M4 5h16v11H9l-5 4z",user:"M12 12a4 4 0 1 0 0-8 4 4 0 0 0 0 8zM4 21c0-4 4-6 8-6s8 2 8 6",bell:"M6 17V11a6 6 0 0 1 12 0v6l2 2H4zM10 21h4",pin:"M12 21s7-6.2 7-11a7 7 0 1 0-14 0c0 4.8 7 11 7 11zM12 12.5a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5z",shield:"M12 3 4 6v6c0 5 3.4 8 8 9 4.6-1 8-4 8-9V6zM9 12l2 2 4-4",check:"m5 12 5 5 9-10",plus:"M12 5v14M5 12h14",back:"M15 5l-7 7 7 7",share:"M6 14a2.5 2.5 0 1 0 0-4 2.5 2.5 0 0 0 0 4zM18 8a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5zM18 21a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5zM8.2 10.9l7.6-4M8.2 13.1l7.6 4",flag:"M5 21V4h12l-2 4 2 4H5",store:"M4 9l1-5h14l1 5M4 9v11h16V9M4 9a3 3 0 0 0 5.3 1.9A3 3 0 0 0 14.7 10.9 3 3 0 0 0 20 9M9 20v-5h6v5",logout:"M9 4H5v16h4M16 8l4 4-4 4M20 12H9",gear:"M12 15a3 3 0 1 0 0-6 3 3 0 0 0 0 6zM12 2v3M12 19v3M2 12h3M19 12h3M5 5l2 2M17 17l2 2M5 19l2-2M17 7l2-2",help:"M12 21a9 9 0 1 0 0-18 9 9 0 0 0 0 18zM9.5 9.5a2.5 2.5 0 1 1 3.5 2.3c-.7.4-1 .9-1 1.7M12 17h.01",clock:"M12 21a9 9 0 1 0 0-18 9 9 0 0 0 0 18zM12 7v5l3 2",chev:"m9 5 7 7-7 7",box:"M4 8l8-4 8 4v8l-8 4-8-4zM4 8l8 4 8-4M12 12v8",send:"M4 12 20 4l-4 16-4-6z",x:"M6 6l12 12M18 6 6 18"};
+const I=n=>'<svg class="i" viewBox="0 0 24 24"><path d="'+PATHS[n]+'"/></svg>';
+const S={u:null,name:"",saves:new Set(),follows:new Map(),shops:{}};
+function toast(t){const e=$("toast");e.textContent=t;e.style.display="block";clearTimeout(toast.t);toast.t=setTimeout(()=>e.style.display="none",2800)}
+const need=()=>{toast("Sign in to continue");setTimeout(()=>location.href="auth.html",800)};
+const recGet=()=>{try{return JSON.parse(localStorage.getItem("nm_rec2")||"[]")}catch(e){return[]}};
+const recAdd=pid=>{try{localStorage.setItem("nm_rec2",JSON.stringify([pid].concat(recGet().filter(x=>x!==pid)).slice(0,12)))}catch(e){}};
+function norm(d){const x=d.data();return {id:d.id,sellerId:x.sellerId,shopName:x.shopName||"Shop",name:x.name||"Product",price:x.price,cat:x.cat,state:x.state||"",city:x.city||"",area:x.area||"",cond:x.cond,stock:x.stock,qty:x.qty,brand:x.brand||"",desc:x.desc||"",options:x.options||"",delivery:x.delivery||"",thumb:x.thumb||"",status:x.status,createdAt:x.createdAt}}
+async function loadShops(){const s=await getDocs(collection(db,"shops"));S.shops={};s.docs.forEach(d=>S.shops[d.id]=d.data())}
+async function loadSocial(){
+ const u=S.u;if(!u)return;
+ const [a,b,c]=await Promise.allSettled([getDocs(query(collection(db,"saves"),where("userId","==",u.uid))),getDocs(query(collection(db,"follows"),where("buyerId","==",u.uid))),getDoc(doc(db,"users",u.uid))]);
+ S.saves=new Set(a.status==="fulfilled"?a.value.docs.map(d=>d.data().pid):[]);
+ S.follows=new Map(b.status==="fulfilled"?b.value.docs.map(d=>[d.data().sellerId,d.data().shopName]):[]);
+ S.name=(c.status==="fulfilled"&&c.value.exists()?c.value.data().name:"")||u.displayName||"";
+}
+const cnt=(pid,n)=>updateDoc(doc(db,"products",pid),{saveCount:increment(n)}).catch(()=>{});
+async function toggleSave(pid){
+ if(!S.u){need();return false}
+ const id=S.u.uid+"_"+pid;
+ try{if(S.saves.has(pid)){await deleteDoc(doc(db,"saves",id));S.saves.delete(pid);cnt(pid,-1);toast("Removed from saved")}else{await setDoc(doc(db,"saves",id),{userId:S.u.uid,pid,createdAt:serverTimestamp()});S.saves.add(pid);cnt(pid,1);toast("Saved")}return true}
+ catch(e){toast("Couldn’t update. Please try again.");return false}
+}
+async function toggleFollow(sid,name){
+ if(!S.u){need();return false}
+ if(sid===S.u.uid){toast("This is your own shop.");return false}
+ const id=S.u.uid+"_"+sid;
+ try{if(S.follows.has(sid)){await deleteDoc(doc(db,"follows",id));S.follows.delete(sid);toast("Unfollowed "+name)}else{await setDoc(doc(db,"follows",id),{buyerId:S.u.uid,sellerId:sid,shopName:String(name).slice(0,80),createdAt:serverTimestamp()});S.follows.set(sid,name);toast("Following "+name)}return true}
+ catch(e){toast("Couldn’t update. Please try again.");return false}
+}
+function pcard(p){
+ const ci=catOf(p),v=S.shops[p.sellerId]&&S.shops[p.sellerId].verified===true,sv=S.saves.has(p.id),img=safeImg(p.thumb),href="product.html?id="+encodeURIComponent(p.id);
+ const st=p.stock==="out"?'<span class="no">Out of stock</span>':p.stock==="low"?'<span class="lo">Low stock</span>':'<span class="ok">In stock</span>';
+ return '<article class="pc"><a class="im" href="'+href+'" style="background:'+TILE[ci%4]+'" aria-label="View '+esc(p.name)+'">'+(img?'<img src="'+img+'" alt="" loading="lazy">':art(ci))+'</a><button class="hv" data-sv="'+esc(p.id)+'" aria-pressed="'+sv+'" aria-label="Save '+esc(p.name)+'">'+I("heart")+'</button><div class="pb"><a href="'+href+'"><h3>'+esc(p.name)+'</h3></a><div class="pr">'+N(p.price)+'</div><div class="sh"><a href="shop.html?id='+encodeURIComponent(p.sellerId)+'">'+esc(p.shopName)+'</a>'+(v?' <span class="vf">'+I("shield")+'Verified</span>':'')+'</div><div class="mt">'+I("pin")+' '+esc(p.city)+', '+esc(p.state)+'</div><div class="mt">'+st+' · '+ago(p.createdAt)+'</div></div></article>';
+}
+document.addEventListener("click",async e=>{
+ const t=e.target.closest("[data-sv],[data-fl]");if(!t)return;
+ e.preventDefault();
+ const ok=t.dataset.sv?await toggleSave(t.dataset.sv):await toggleFollow(t.dataset.fl,t.dataset.n||"");
+ if(ok&&typeof onSocial==="function")onSocial();
+});
+
+const id=new URLSearchParams(location.search).get("id"),M=$("m");
+let SH=null,L=[],booted=false;
+function gone(t){$("hd").innerHTML="";M.innerHTML='<div class="card empty" style="margin-top:20px">'+I("store")+'<h3>'+(t||"Shop not available")+'</h3><p>This shop may not be approved yet, or the link is wrong.</p><a class="btn p" href="marketplace.html">Back to marketplace</a></div>'}
+function paint(){
+ const v=SH.verified===true,fl=S.follows.has(id),own=S.u&&S.u.uid===id,ci=Math.max(0,CATS.indexOf(SH.category)),name=esc(SH.shopName);
+ $("hd").innerHTML='<div class="row" style="gap:14px"><div class="lt" style="background:'+TILE[ci%4]+'">'+art(ci)+'</div><div class="sp"><h1>'+name+'</h1><div class="s">'+I("pin")+' '+esc(SH.city)+', '+esc(SH.state)+'</div><div style="margin-top:8px">'+(v?'<span class="pl">'+I("shield")+' Verified seller</span>':'<span class="s">Not verified</span>')+'</div></div></div>';
+ M.innerHTML='<div class="acts">'+(own?'<a class="btn p full" href="seller.html">Open my seller dashboard</a>':'<button class="btn p" data-fl="'+esc(id)+'" data-n="'+name+'" aria-pressed="'+fl+'">'+(fl?"Following":"Follow")+'</button><a class="btn" href="chat.html?to='+encodeURIComponent(id)+'&shop='+encodeURIComponent(SH.shopName)+'">'+I("chat")+' Message</a>')+'<button class="btn full" id="sh">'+I("share")+' Share this shop</button></div>'+
+ '<div class="card"><dl style="display:grid;grid-template-columns:auto 1fr;gap:6px 14px;margin:0"><dt class="mu">Category</dt><dd style="margin:0;font-weight:600">'+esc(SH.category||"–")+'</dd><dt class="mu">Location</dt><dd style="margin:0;font-weight:600">'+esc(SH.area||"")+(SH.area?", ":"")+esc(SH.city)+', '+esc(SH.state)+'</dd><dt class="mu">Live products</dt><dd style="margin:0;font-weight:600">'+L.length+'</dd></dl></div>'+
+ '<div class="sec"><h2>Products</h2></div>'+(L.length?'<div class="grid">'+L.map(pcard).join("")+'</div>':'<div class="card empty">'+I("box")+'<h3>No products yet</h3><p>This seller hasn’t published any products.</p></div>')+
+ '<div class="note">Naija Mart doesn’t take payment or guarantee delivery. Confirm price and stock with the seller, and never pay in advance to someone you can’t verify.</div>';
+}
+async function boot(){
+ if(!id)return gone();
+ try{
+  const s=await getDoc(doc(db,"shops",id));
+  if(!s.exists()||s.data().status!=="approved")return gone();
+  SH=s.data();S.shops[id]=SH;document.title=SH.shopName+" – Naija Mart";
+  const p=await getDocs(query(collection(db,"products"),where("sellerId","==",id),where("status","==","active")));
+  L=p.docs.map(norm).sort((a,b)=>sec(b.createdAt)-sec(a.createdAt));
+  paint();
+ }catch(e){gone("Couldn’t load this shop. Check your connection.")}
+}
+function onSocial(){if(SH)paint()}
+document.addEventListener("click",async e=>{
+ if(!e.target.closest("#sh"))return;
+ const d={title:SH.shopName+" on Naija Mart",url:location.href};
+ if(navigator.share)navigator.share(d).catch(()=>{});else{try{await navigator.clipboard.writeText(location.href);toast("Link copied")}catch(x){toast("Copy this page’s address to share it")}}
+});
+onAuthStateChanged(auth,async u=>{S.u=u;if(u)await loadSocial();if(!booted){booted=true;boot()}else if(SH)paint()});
+</script>
+</body>
+</html>
