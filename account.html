@@ -3,87 +3,239 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>My account – Naija Mart</title>
+<title>My Naija Mart</title>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700;800&family=Manrope:wght@500;600;700;800&display=swap" rel="stylesheet">
 <style>
-:root{--g1:#0F3D2E;--gold:#C7A64A;--bg:#FBFAF6;--sf:#fff;--tx:#1D2822;--mu:#68756E;--ln:#E5E9E2;--ti:#F1F4EE;--gr:#185541}
-@media (prefers-color-scheme:dark){:root{--bg:#0C1210;--sf:#141E19;--tx:#EEF2EE;--mu:#A3B0A9;--ln:#24312A;--ti:#16231C;--gr:#8FD0B3}}
-*{box-sizing:border-box}
-body{margin:0;background:var(--bg);color:var(--tx);font:500 17px/1.55 Manrope,Inter,system-ui,sans-serif;padding:env(safe-area-inset-top,0) 0 env(safe-area-inset-bottom,0)}
-.w{max-width:560px;margin:0 auto;padding:18px 18px 60px}
-.top{display:flex;align-items:center;gap:10px}
-.logo{display:flex;align-items:center;gap:10px;font:800 1.3rem "Playfair Display",Georgia,serif;color:inherit;text-decoration:none;flex:1}
-.logo i{width:38px;height:38px;border-radius:11px;background:var(--g1);color:#fff;display:grid;place-items:center;font:800 1.15rem "Playfair Display",serif;font-style:normal;box-shadow:inset 0 0 0 1px rgba(199,166,74,.7)}
-.logo b{color:var(--gold)}
-h2{font:700 1.3rem "Playfair Display",Georgia,serif;margin:0 0 6px}
-.mu{color:var(--mu);font-size:.95rem}
-.card{background:var(--sf);border:1px solid var(--ln);border-radius:22px;padding:18px;margin:14px 0}
-.row{display:flex;gap:12px;align-items:center}.sp{flex:1}
-.av{width:60px;height:60px;border-radius:50%;background:var(--g1);color:var(--gold);display:grid;place-items:center;font-weight:800;font-size:1.3rem;box-shadow:inset 0 0 0 1px rgba(199,166,74,.6)}
-label{display:block;font-weight:700;font-size:.92rem;margin-bottom:6px}
-input{width:100%;min-height:50px;border-radius:14px;border:1.5px solid var(--ln);background:var(--bg);color:var(--tx);padding:0 14px;margin-bottom:14px;font:inherit}
+:root{--g1:#0F3D2E;--g2:#185541;--gold:#C7A64A;--gold2:#E6CB7C;--bg:#FBF8F1;--sf:#fff;--tx:#1D2822;--mu:#6B756E;--ln:#E8E4D8;--ti:#F3EFE4;--rd:#B3261E;--ok:#1E7A4C}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html{background:var(--bg)}
+body{margin:0;background:var(--bg);color:var(--tx);font:500 16px/1.5 Manrope,Inter,system-ui,sans-serif;padding:env(safe-area-inset-top,0) 0 0;-webkit-text-size-adjust:100%}
+button,input,select,textarea{font:inherit;color:inherit}a{color:inherit;text-decoration:none}
 :focus-visible{outline:3px solid var(--gold);outline-offset:2px}
-.btn{min-height:50px;padding:0 20px;border-radius:99px;border:1.5px solid var(--g1);background:none;color:var(--g1);font:inherit;font-weight:700;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;text-decoration:none}
-.btn.p{background:var(--g1);color:#fff}.btn.w{width:100%}.btn:disabled{opacity:.6}
-@media (prefers-color-scheme:dark){.btn:not(.p){color:var(--tx);border-color:var(--ln)}}
-.two{display:flex;gap:8px}.two .btn{flex:1}
-.pill{display:inline-block;border-radius:99px;padding:3px 14px;font-size:.82rem;font-weight:800;background:#F6E9B8;color:#5C4700}
-.msg{border-radius:14px;padding:12px 14px;margin:12px 0;display:none}
-.msg.ok{display:block;background:#CDEBD9;color:#0F3D2E}.msg.err{display:block;background:#F7D3D0;color:#7A1912}.msg.warn{display:block;background:#F6E9B8;color:#5C4700}
-.note{border-left:4px solid var(--gold);background:var(--ti);padding:10px 12px;border-radius:0 12px 12px 0;font-size:.9rem;color:var(--mu);margin:14px 0}
+svg.i{width:1.25em;height:1.25em;fill:none;stroke:currentColor;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round;flex:none;vertical-align:-.25em}
+h1,h2,h3{font-family:"Playfair Display",Georgia,serif;margin:0;line-height:1.15}
+.wrap{max-width:1000px;margin:0 auto;padding:0 14px}
+.logo{display:flex;align-items:center;gap:9px;font:800 1.25rem "Playfair Display",Georgia,serif;color:#fff}
+.logo i{width:36px;height:36px;border-radius:11px;background:var(--g1);color:var(--gold2);display:grid;place-items:center;font:800 1.1rem "Playfair Display",serif;font-style:normal;box-shadow:inset 0 0 0 1px var(--gold)}
+.logo b{color:var(--gold2)}
+.ib{width:44px;height:44px;border-radius:14px;border:1px solid rgba(255,255,255,.25);background:rgba(255,255,255,.12);color:#fff;display:grid;place-items:center;cursor:pointer;position:relative}
+.ib .n{position:absolute;top:-4px;right:-4px;background:var(--rd);color:#fff;border-radius:99px;font-size:.65rem;min-width:18px;height:18px;display:grid;place-items:center;font-weight:800}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:48px;padding:0 20px;border-radius:99px;border:1.5px solid var(--g1);background:none;color:var(--g1);font-weight:700;cursor:pointer}
+.btn.p{background:var(--g1);color:#fff}.btn.g{background:linear-gradient(90deg,var(--gold),var(--gold2));border-color:transparent;color:#1D2822}
+.btn.s{min-height:40px;padding:0 14px;font-size:.88rem}.btn.w{width:100%}.btn.r{border-color:var(--rd);color:var(--rd)}.btn[disabled]{opacity:.55;cursor:not-allowed}
+.btn[aria-pressed=true]{background:#E4EEE6}
+.card{background:var(--sf);border:1px solid var(--ln);border-radius:22px;padding:16px;margin:12px 0;box-shadow:0 6px 18px rgba(15,61,46,.05)}
+.mu{color:var(--mu);font-size:.92rem}.sp{flex:1;min-width:0}.row{display:flex;gap:10px;align-items:center}
+.sec{display:flex;align-items:baseline;justify-content:space-between;margin:22px 0 10px}.sec h2{font-size:1.3rem}.sec a{color:var(--g2);font-weight:700;font-size:.9rem}
+.chips{display:flex;gap:10px;overflow-x:auto;padding:2px 0 8px;scrollbar-width:none}.chips::-webkit-scrollbar{display:none}
+.cat{flex:none;width:84px;text-align:center;font-size:.78rem;font-weight:700;line-height:1.25}
+.cat span{display:grid;place-items:center;width:68px;height:68px;border-radius:22px;margin:0 auto 6px;box-shadow:0 4px 12px rgba(15,61,46,.08)}.cat .art{width:76%;max-width:none}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.pc{position:relative;background:var(--sf);border:1px solid var(--ln);border-radius:22px;overflow:hidden;box-shadow:0 6px 18px rgba(15,61,46,.06);display:flex;flex-direction:column}
+.im{aspect-ratio:1;display:grid;place-items:center;position:relative;overflow:hidden}.im img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}.im .art{width:62%;max-width:none}
+.hv{position:absolute;right:8px;top:8px;width:42px;height:42px;border-radius:50%;border:0;background:rgba(255,255,255,.94);color:var(--tx);display:grid;place-items:center;cursor:pointer;box-shadow:0 2px 8px rgba(0,0,0,.15)}
+.hv[aria-pressed=true]{color:var(--rd)}.hv[aria-pressed=true] svg{fill:currentColor}
+.pb{padding:10px 12px 12px;display:flex;flex-direction:column;gap:2px}
+.pb h3{font:700 .98rem Manrope,sans-serif;line-height:1.25;overflow-wrap:anywhere}
+.pr{font:800 1.2rem "Playfair Display",Georgia,serif;color:var(--g1)}.sh{font-weight:700;font-size:.86rem}.mt{color:var(--mu);font-size:.8rem;line-height:1.35}
+.vf{color:var(--ok);font-weight:800;font-size:.8rem;display:inline-flex;gap:2px;align-items:center}
+.ok{color:var(--ok);font-weight:800}.lo{color:#9A6B00;font-weight:800}.no{color:var(--rd);font-weight:800}
+.pill{display:inline-flex;gap:6px;align-items:center;border-radius:99px;padding:4px 12px;font-size:.8rem;font-weight:800;background:#F6E9B8;color:#5C4700}
+.pill.ok2{background:#D8EFE2;color:#145C38}
+.av{width:48px;height:48px;border-radius:50%;background:var(--g1);color:var(--gold2);display:grid;place-items:center;font-weight:800;flex:none;box-shadow:inset 0 0 0 1px var(--gold)}
+.in{width:100%;min-height:50px;border-radius:14px;border:1.5px solid var(--ln);background:#fff;padding:0 14px;margin-bottom:12px}textarea.in{padding:12px 14px;min-height:84px}
+label.f{display:block;font-weight:700;font-size:.9rem;margin-bottom:6px}
+.msg{border-radius:14px;padding:12px 14px;margin:10px 0;display:none}.msg.ok{display:block;background:#D8EFE2;color:#145C38}.msg.err{display:block;background:#F7D3D0;color:#7A1912}.msg.warn{display:block;background:#F6E9B8;color:#5C4700}
+.empty{text-align:center;padding:34px 12px;color:var(--mu)}.empty svg{font-size:2.2rem;color:var(--gold)}.empty h3{color:var(--tx);margin:6px 0 4px}
+.note{border-left:4px solid var(--gold);background:var(--ti);padding:10px 12px;border-radius:0 12px 12px 0;font-size:.88rem;color:var(--mu);margin:12px 0}
+.sk{height:200px;border-radius:22px;background:linear-gradient(90deg,var(--ti),var(--ln),var(--ti));background-size:200% 100%;animation:sh 1.2s infinite}@keyframes sh{to{background-position:-200% 0}}
+@media (prefers-reduced-motion:reduce){.sk{animation:none}}
+dialog{border:0;border-radius:24px;padding:0;width:calc(100% - 22px);max-width:520px;background:var(--sf);color:var(--tx);box-shadow:0 24px 60px rgba(0,0,0,.4)}dialog::backdrop{background:rgba(0,0,0,.55)}.dp{padding:18px}
+.toast{position:fixed;left:50%;bottom:calc(90px + env(safe-area-inset-bottom,0));transform:translateX(-50%);background:var(--tx);color:#fff;padding:12px 18px;border-radius:14px;font-weight:700;z-index:90;display:none;max-width:92%;text-align:center}
+@media (min-width:700px){.grid{grid-template-columns:repeat(3,1fr)}}@media (min-width:1000px){.grid{grid-template-columns:repeat(4,1fr)}}
 [hidden]{display:none!important}
+
+.app{padding-bottom:calc(86px + env(safe-area-inset-bottom,0))}
+.hero{background:linear-gradient(165deg,#0F3D2E 0,#185541 100%);color:#fff;border-radius:0 0 30px 30px;padding:12px 0 20px;position:relative;overflow:hidden}
+.hero::after{content:"";position:absolute;right:-60px;top:-60px;width:210px;height:210px;border-radius:50%;border:1px solid rgba(199,166,74,.45)}
+.hero .wrap{position:relative;z-index:1}.top{display:flex;align-items:center;gap:10px}.top .logo{flex:1}
+.hi{font:700 1.7rem "Playfair Display",Georgia,serif;margin:14px 0 2px}.hs{color:#CFE0D6;font-size:.92rem}
+.loc{display:flex;align-items:center;gap:8px;margin:12px 0 10px;color:#fff;font-weight:700}.loc select{background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.3);border-radius:99px;padding:6px 12px;min-height:40px;color:#fff;font-weight:700}.loc option{color:#1D2822}
+.sb{display:flex;align-items:center;gap:10px;background:#fff;border-radius:99px;padding:4px 6px 4px 16px;box-shadow:0 10px 24px rgba(0,0,0,.2);color:var(--mu)}.sb input{flex:1;min-width:0;border:0;outline:0;min-height:46px;background:none;color:var(--tx);font-weight:600}.sb button{border:0;background:var(--g1);color:#fff;border-radius:99px;min-height:42px;padding:0 18px;font-weight:700;cursor:pointer}
+.tb{display:flex;align-items:center;gap:10px;padding:12px 0}.tb h2{flex:1;font-size:1.5rem}.bk{width:42px;height:42px;border-radius:13px;border:1px solid var(--ln);background:#fff;display:grid;place-items:center;cursor:pointer}
+.hz{display:flex;gap:12px;overflow-x:auto;padding-bottom:6px;scrollbar-width:none}.hz::-webkit-scrollbar{display:none}
+.shc{flex:none;width:200px;background:#fff;border:1px solid var(--ln);border-radius:22px;padding:14px;text-align:center;box-shadow:0 6px 18px rgba(15,61,46,.06)}.shc .av{margin:0 auto 8px;width:56px;height:56px}
+.mi{display:flex;align-items:center;gap:14px;width:100%;min-height:58px;background:none;border:0;border-top:1px solid var(--ln);text-align:left;cursor:pointer;font-weight:700;padding:0}.mi:first-child{border-top:0}.mi svg:first-child{color:var(--g2);font-size:1.3em}.mi .s{margin-left:auto;font-size:.7rem;color:var(--gold);font-weight:800}.mi .c{margin-left:auto;color:var(--mu)}
+.st{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin:12px 0}.st div{background:#fff;border:1px solid var(--ln);border-radius:20px;text-align:center;padding:12px 4px}.st b{display:block;font:700 1.5rem "Playfair Display",serif}.st small{color:var(--mu);font-weight:700}
+.al{display:flex;gap:12px;align-items:center;padding:12px 0;border-top:1px solid var(--ln)}.al:first-child{border-top:0}.al .d{width:42px;height:42px;border-radius:50%;background:#E4EEE6;color:var(--g2);display:grid;place-items:center;flex:none}
+nav.bn{position:fixed;left:0;right:0;bottom:0;z-index:40;background:rgba(255,255,255,.96);backdrop-filter:blur(12px);border-top:1px solid var(--ln);padding:6px 8px calc(6px + env(safe-area-inset-bottom,0))}
+nav.bn div{max-width:700px;margin:0 auto;display:grid;grid-template-columns:repeat(5,1fr)}
+nav.bn a,nav.bn button{background:none;border:0;color:var(--mu);font-size:.7rem;font-weight:700;min-height:56px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;cursor:pointer}
+nav.bn [aria-current=true]{color:var(--g1)}nav.bn [aria-current=true] svg{color:var(--gold)}
 </style>
 </head>
 <body>
-<div class="w">
- <div class="top"><a class="logo" href="index.html"><i>N</i><span>Naija<b>Mart</b></span></a><button class="btn" id="out">Sign out</button></div>
- <div id="load" class="mu" style="margin-top:30px">Loading your account…</div>
- <div id="main" hidden>
-  <div class="card row"><div class="av" id="ini">?</div><div class="sp"><h2 id="nm" style="margin:0"></h2><div class="mu" id="em"></div><div class="mu">Buyer account</div></div></div>
-  <div class="msg" id="gm" role="alert"></div>
-  <div class="card" id="vc" hidden>
-   <span class="pill">Email not verified</span>
-   <p class="mu">Open the link we emailed you, then tap the button below.</p>
-   <div class="two"><button class="btn p" id="chk">I’ve verified</button><button class="btn" id="rs">Resend email</button></div>
-  </div>
-  <div class="card"><h2>Browse Naija Mart</h2><p class="mu">See what sellers across Nigeria are posting.</p><a class="btn p w" href="marketplace.html">Open the marketplace</a></div>
-  <div class="card"><h2>Your profile</h2>
-   <label for="pn">Full name</label><input id="pn">
-   <label for="pp">Phone number</label><input id="pp" type="tel">
-   <button class="btn p w" id="sv">Save changes</button>
-  </div>
-  <p class="note">Following shops, saving products, comments and messages are being built next. They’ll appear here when they’re ready.</p>
-  <p class="mu" style="text-align:center">Do you sell on Naija Mart? <a href="auth.html?role=seller" style="color:var(--gr);font-weight:700">Use the seller sign-in</a></p>
- </div>
-</div>
+<div class="app" id="app"><div class="wrap" id="v"><div class="sk" style="margin-top:20px"></div></div></div>
+<nav class="bn" id="bn" hidden aria-label="Main"><div></div></nav>
+<div class="toast" id="toast" role="status"></div>
 <script type="module">
 const firebaseConfig={apiKey:"AIzaSyCRQapXUQ32P4tpKaMiS11uccUc-z5k9yg",authDomain:"naija-mart-35ba6.firebaseapp.com",projectId:"naija-mart-35ba6",appId:"1:761759831734:web:2780ba182d5947d0cff817"};
 import {initializeApp} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
 import {getAuth,onAuthStateChanged,signOut,sendEmailVerification,updateProfile} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
-import {getFirestore,doc,getDoc,updateDoc} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+import {getFirestore,doc,getDoc,setDoc,updateDoc,deleteDoc,addDoc,collection,query,where,orderBy,limit,getDocs,writeBatch,onSnapshot,serverTimestamp} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 const app=initializeApp(firebaseConfig),auth=getAuth(app),db=getFirestore(app);
 const $=i=>document.getElementById(i);
-const say=(t,k)=>{const m=$("gm");m.textContent=t;m.className="msg "+k};
-let user,profile={};
-async function load(u){
- await u.reload();await u.getIdToken(true);user=auth.currentUser;
- const p=await getDoc(doc(db,"users",user.uid));profile=p.exists()?p.data():{name:user.displayName||"",phone:""};
- $("nm").textContent=profile.name||user.displayName||"Buyer";$("em").textContent=user.email;
- $("ini").textContent=(profile.name||user.email||"?").trim()[0].toUpperCase();
- $("pn").value=profile.name||"";$("pp").value=profile.phone||"";
- $("vc").hidden=user.emailVerified;$("load").hidden=true;$("main").hidden=false;
+const esc=s=>String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const N=n=>"₦"+Number(n||0).toLocaleString("en-NG");
+const sec=t=>t&&t.seconds?t.seconds:0;
+const ago=t=>{const s=sec(t);if(!s)return "just now";const d=Math.floor((Date.now()/1000-s)/86400);return d<=0?"today":d===1?"yesterday":d<30?d+" days ago":new Date(s*1000).toLocaleDateString("en-NG",{day:"numeric",month:"short",year:"numeric"})};
+const hm=t=>sec(t)?new Date(sec(t)*1000).toLocaleTimeString("en-NG",{hour:"2-digit",minute:"2-digit"}):"";
+const STATES=["Abia","Adamawa","Akwa Ibom","Anambra","Bauchi","Bayelsa","Benue","Borno","Cross River","Delta","Ebonyi","Edo","Ekiti","Enugu","FCT (Abuja)","Gombe","Imo","Jigawa","Kaduna","Kano","Katsina","Kebbi","Kogi","Kwara","Lagos","Nasarawa","Niger","Ogun","Ondo","Osun","Oyo","Plateau","Rivers","Sokoto","Taraba","Yobe","Zamfara"];
+const CATS=["Fashion and clothing","Shoes and bags","Phones and electronics","Home and furniture","Beauty and personal care","Food and groceries","Health and wellness","Building materials","Automotive and spare parts","Sports and fitness","Books and education","Other products"];
+const TILE=["#E7F0E9","#FBF1D6","#E3EEF1","#F8E6DE"];
+const ART=[
+'<path d="M24 8h16l-3 12 9 34H18l9-34z" fill="#D9774B"/><path d="M25 22h14l1 5H24z" fill="#C7A64A"/><circle cx="26" cy="40" r="2" fill="#FFF6E0"/><circle cx="37" cy="46" r="2" fill="#FFF6E0"/><circle cx="31" cy="34" r="2" fill="#FFF6E0"/>',
+'<path d="M6 38c0-4 3-6 7-6l8 2c4 1 6-1 8-4l4 3c3 2 7 3 11 4 6 1 12 3 12 9v5H6z" fill="#0F3D2E"/><path d="M6 47h52v5H6z" fill="#C7A64A"/><path d="M24 36l4 3M30 37l4 3" stroke="#FFF6E0" stroke-width="2" stroke-linecap="round"/>',
+'<rect x="19" y="6" width="26" height="52" rx="5" fill="#0F3D2E"/><rect x="22" y="12" width="20" height="36" rx="2" fill="#7FB7BE"/><circle cx="32" cy="53" r="2" fill="#C7A64A"/><circle cx="32" cy="26" r="6" fill="#F2C14E"/>',
+'<rect x="14" y="16" width="36" height="14" rx="5" fill="#E58A5A"/><rect x="10" y="26" width="44" height="18" rx="5" fill="#D9774B"/><rect x="6" y="30" width="10" height="18" rx="4" fill="#C0623A"/><rect x="48" y="30" width="10" height="18" rx="4" fill="#C0623A"/><path d="M14 46v8M50 46v8" stroke="#0F3D2E" stroke-width="3" stroke-linecap="round"/>',
+'<rect x="14" y="30" width="14" height="24" rx="2" fill="#C7A64A"/><rect x="15" y="18" width="12" height="14" rx="2" fill="#E58A8A"/><path d="M15 18l6-8 6 8z" fill="#E58A8A"/><rect x="34" y="38" width="20" height="16" rx="4" fill="#7FB7BE"/><rect x="36" y="32" width="16" height="6" rx="2" fill="#0F3D2E"/>',
+'<path d="M10 30h44l-5 24H15z" fill="#C79A52"/><path d="M10 30h44" stroke="#A97C3A" stroke-width="3"/><circle cx="22" cy="24" r="7" fill="#D9774B"/><circle cx="34" cy="22" r="7" fill="#F2C14E"/><circle cx="45" cy="25" r="6" fill="#185541"/><path d="M20 40h24M18 47h28" stroke="#A97C3A" stroke-width="2"/>',
+'<circle cx="32" cy="32" r="22" fill="#185541"/><path d="M32 20v24M20 32h24" stroke="#fff" stroke-width="6" stroke-linecap="round"/><circle cx="48" cy="14" r="5" fill="#F2C14E"/>',
+'<rect x="8" y="14" width="22" height="12" rx="2" fill="#D9774B"/><rect x="32" y="14" width="24" height="12" rx="2" fill="#C0623A"/><rect x="8" y="28" width="12" height="12" rx="2" fill="#C0623A"/><rect x="22" y="28" width="22" height="12" rx="2" fill="#D9774B"/><rect x="46" y="28" width="10" height="12" rx="2" fill="#C0623A"/><rect x="8" y="42" width="22" height="12" rx="2" fill="#D9774B"/><rect x="32" y="42" width="24" height="12" rx="2" fill="#C0623A"/>',
+'<circle cx="32" cy="32" r="24" fill="#0F3D2E"/><circle cx="32" cy="32" r="15" fill="#C7A64A"/><circle cx="32" cy="32" r="5" fill="#0F3D2E"/><path d="M32 17v10M32 37v10M17 32h10M37 32h10" stroke="#0F3D2E" stroke-width="3"/>',
+'<circle cx="32" cy="32" r="22" fill="#F2C14E"/><path d="M10 32c8-6 16-6 22 0s14 6 22 0M32 10c-6 8-6 16 0 22s6 14 0 22" stroke="#0F3D2E" stroke-width="2.5" fill="none"/>',
+'<rect x="8" y="40" width="48" height="12" rx="2" fill="#0F3D2E"/><rect x="12" y="28" width="42" height="12" rx="2" fill="#D9774B"/><rect x="10" y="16" width="40" height="12" rx="2" fill="#7FB7BE"/><path d="M14 46h40M18 34h30M16 22h26" stroke="#FFF6E0" stroke-width="2"/>',
+'<rect x="10" y="26" width="44" height="28" rx="3" fill="#E58A8A"/><rect x="8" y="20" width="48" height="10" rx="3" fill="#D86F6F"/><path d="M32 20v34" stroke="#C7A64A" stroke-width="6"/><path d="M32 20c-6-10-14-4-8 0zM32 20c6-10 14-4 8 0z" fill="#C7A64A"/>'];
+const art=i=>'<svg class="art" viewBox="0 0 64 64" role="img" aria-hidden="true">'+ART[i%12]+'</svg>';
+
+const catOf=p=>Number.isInteger(p.cat)&&p.cat>=0&&p.cat<12?p.cat:11;
+const safeImg=s=>/^data:image\/jpeg;base64,[A-Za-z0-9+\/=]+$/.test(s||"")?s:"";
+const PATHS={home:"M4 11 12 4l8 7v9H4z",search:"M11 18a7 7 0 1 0 0-14 7 7 0 0 0 0 14zM20 20l-4-4",heart:"M12 20s-7-4.4-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 10c0 5.6-7 10-7 10z",chat:"M4 5h16v11H9l-5 4z",user:"M12 12a4 4 0 1 0 0-8 4 4 0 0 0 0 8zM4 21c0-4 4-6 8-6s8 2 8 6",bell:"M6 17V11a6 6 0 0 1 12 0v6l2 2H4zM10 21h4",pin:"M12 21s7-6.2 7-11a7 7 0 1 0-14 0c0 4.8 7 11 7 11zM12 12.5a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5z",shield:"M12 3 4 6v6c0 5 3.4 8 8 9 4.6-1 8-4 8-9V6zM9 12l2 2 4-4",check:"m5 12 5 5 9-10",plus:"M12 5v14M5 12h14",back:"M15 5l-7 7 7 7",share:"M6 14a2.5 2.5 0 1 0 0-4 2.5 2.5 0 0 0 0 4zM18 8a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5zM18 21a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5zM8.2 10.9l7.6-4M8.2 13.1l7.6 4",flag:"M5 21V4h12l-2 4 2 4H5",store:"M4 9l1-5h14l1 5M4 9v11h16V9M4 9a3 3 0 0 0 5.3 1.9A3 3 0 0 0 14.7 10.9 3 3 0 0 0 20 9M9 20v-5h6v5",logout:"M9 4H5v16h4M16 8l4 4-4 4M20 12H9",gear:"M12 15a3 3 0 1 0 0-6 3 3 0 0 0 0 6zM12 2v3M12 19v3M2 12h3M19 12h3M5 5l2 2M17 17l2 2M5 19l2-2M17 7l2-2",help:"M12 21a9 9 0 1 0 0-18 9 9 0 0 0 0 18zM9.5 9.5a2.5 2.5 0 1 1 3.5 2.3c-.7.4-1 .9-1 1.7M12 17h.01",clock:"M12 21a9 9 0 1 0 0-18 9 9 0 0 0 0 18zM12 7v5l3 2",chev:"m9 5 7 7-7 7",box:"M4 8l8-4 8 4v8l-8 4-8-4zM4 8l8 4 8-4M12 12v8",send:"M4 12 20 4l-4 16-4-6z",x:"M6 6l12 12M18 6 6 18"};
+const I=n=>'<svg class="i" viewBox="0 0 24 24"><path d="'+PATHS[n]+'"/></svg>';
+const S={u:null,name:"",saves:new Set(),follows:new Map(),shops:{}};
+function toast(t){const e=$("toast");e.textContent=t;e.style.display="block";clearTimeout(toast.t);toast.t=setTimeout(()=>e.style.display="none",2800)}
+const need=()=>{toast("Sign in to continue");setTimeout(()=>location.href="auth.html",800)};
+const recGet=()=>{try{return JSON.parse(localStorage.getItem("nm_rec2")||"[]")}catch(e){return[]}};
+const recAdd=pid=>{try{localStorage.setItem("nm_rec2",JSON.stringify([pid].concat(recGet().filter(x=>x!==pid)).slice(0,12)))}catch(e){}};
+function norm(d){const x=d.data();return {id:d.id,sellerId:x.sellerId,shopName:x.shopName||"Shop",name:x.name||"Product",price:x.price,cat:x.cat,state:x.state||"",city:x.city||"",area:x.area||"",cond:x.cond,stock:x.stock,qty:x.qty,brand:x.brand||"",desc:x.desc||"",options:x.options||"",delivery:x.delivery||"",thumb:x.thumb||"",status:x.status,createdAt:x.createdAt}}
+async function loadShops(){const s=await getDocs(collection(db,"shops"));S.shops={};s.docs.forEach(d=>S.shops[d.id]=d.data())}
+async function loadSocial(){
+ const u=S.u;if(!u)return;
+ const [a,b,c]=await Promise.allSettled([getDocs(query(collection(db,"saves"),where("userId","==",u.uid))),getDocs(query(collection(db,"follows"),where("buyerId","==",u.uid))),getDoc(doc(db,"users",u.uid))]);
+ S.saves=new Set(a.status==="fulfilled"?a.value.docs.map(d=>d.data().pid):[]);
+ S.follows=new Map(b.status==="fulfilled"?b.value.docs.map(d=>[d.data().sellerId,d.data().shopName]):[]);
+ S.name=(c.status==="fulfilled"&&c.value.exists()?c.value.data().name:"")||u.displayName||"";
 }
-$("sv").onclick=async()=>{
- const n=$("pn").value.trim(),p=$("pp").value.trim();if(!n)return say("Enter your name.","err");
- $("sv").disabled=true;
- try{await updateDoc(doc(db,"users",user.uid),{name:n,phone:p});await updateProfile(user,{displayName:n});profile={...profile,name:n,phone:p};$("nm").textContent=n;say("Profile saved.","ok")}
- catch(e){say("Couldn’t save. Please try again.","err")}
- $("sv").disabled=false;
+async function toggleSave(pid){
+ if(!S.u){need();return false}
+ const id=S.u.uid+"_"+pid;
+ try{if(S.saves.has(pid)){await deleteDoc(doc(db,"saves",id));S.saves.delete(pid);toast("Removed from saved")}else{await setDoc(doc(db,"saves",id),{userId:S.u.uid,pid,createdAt:serverTimestamp()});S.saves.add(pid);toast("Saved")}return true}
+ catch(e){toast("Couldn’t update. Please try again.");return false}
+}
+async function toggleFollow(sid,name){
+ if(!S.u){need();return false}
+ if(sid===S.u.uid){toast("This is your own shop.");return false}
+ const id=S.u.uid+"_"+sid;
+ try{if(S.follows.has(sid)){await deleteDoc(doc(db,"follows",id));S.follows.delete(sid);toast("Unfollowed "+name)}else{await setDoc(doc(db,"follows",id),{buyerId:S.u.uid,sellerId:sid,shopName:String(name).slice(0,80),createdAt:serverTimestamp()});S.follows.set(sid,name);toast("Following "+name)}return true}
+ catch(e){toast("Couldn’t update. Please try again.");return false}
+}
+function pcard(p){
+ const ci=catOf(p),v=S.shops[p.sellerId]&&S.shops[p.sellerId].verified===true,sv=S.saves.has(p.id),img=safeImg(p.thumb),href="product.html?id="+encodeURIComponent(p.id);
+ const st=p.stock==="out"?'<span class="no">Out of stock</span>':p.stock==="low"?'<span class="lo">Low stock</span>':'<span class="ok">In stock</span>';
+ return '<article class="pc"><a class="im" href="'+href+'" style="background:'+TILE[ci%4]+'" aria-label="View '+esc(p.name)+'">'+(img?'<img src="'+img+'" alt="" loading="lazy">':art(ci))+'</a><button class="hv" data-sv="'+esc(p.id)+'" aria-pressed="'+sv+'" aria-label="Save '+esc(p.name)+'">'+I("heart")+'</button><div class="pb"><a href="'+href+'"><h3>'+esc(p.name)+'</h3></a><div class="pr">'+N(p.price)+'</div><div class="sh">'+esc(p.shopName)+(v?' <span class="vf">'+I("shield")+'Verified</span>':'')+'</div><div class="mt">'+I("pin")+' '+esc(p.city)+', '+esc(p.state)+'</div><div class="mt">'+st+' · '+ago(p.createdAt)+'</div></div></article>';
+}
+document.addEventListener("click",async e=>{
+ const t=e.target.closest("[data-sv],[data-fl]");if(!t)return;
+ e.preventDefault();
+ const ok=t.dataset.sv?await toggleSave(t.dataset.sv):await toggleFollow(t.dataset.fl,t.dataset.n||"");
+ if(ok&&typeof onSocial==="function")onSocial();
+});
+
+let PRODS=[],CH=[],route="home";
+const stGet=()=>{try{return localStorage.getItem("nm_state")||""}catch(e){return""}};
+const stSet=v=>{try{localStorage.setItem("nm_state",v)}catch(e){}};
+const first=()=>String(S.name||S.u.displayName||"there").trim().split(/\s+/)[0];
+const initials=s=>String(s||"?").trim().split(/\s+/).slice(0,2).map(w=>w[0]).join("").toUpperCase()||"?";
+const grid=L=>'<div class="grid">'+L.map(pcard).join("")+'</div>';
+const section=(t,html,more)=>'<div class="sec"><h2>'+t+'</h2>'+(more?'<a href="'+more+'">See all</a>':'')+'</div>'+html;
+function alerts(){
+ const out=[],now=Date.now()/1000;
+ PRODS.filter(p=>S.follows.has(p.sellerId)&&now-sec(p.createdAt)<14*86400).forEach(p=>out.push({t:sec(p.createdAt),ic:"store",h:"New from "+p.shopName,s:p.name+" · "+N(p.price),href:"product.html?id="+encodeURIComponent(p.id)}));
+ CH.filter(c=>c.lastFrom&&c.lastFrom!==S.u.uid).forEach(c=>out.push({t:sec(c.lastAt),ic:"chat",h:(c.buyerId===S.u.uid?c.shopName:c.buyerName)+" sent a message",s:c.lastText,href:"chat.html"}));
+ return out.sort((a,b)=>b.t-a.t);
+}
+const V={};
+V.home=()=>{
+ const st=stGet(),fl=PRODS.filter(p=>S.follows.has(p.sellerId)),near=st?PRODS.filter(p=>p.state===st):[],rv=recGet().map(id=>PRODS.find(p=>p.id===id)).filter(Boolean),
+ ver=Object.entries(S.shops).filter(([k,s])=>s.verified===true&&s.status==="approved"),na=alerts().length;
+ return '<div class="hero"><div class="wrap"><div class="top"><a class="logo" href="index.html"><i>N</i><span>Naija<b>Mart</b></span></a><button class="ib" data-r="alerts" aria-label="Alerts">'+I("bell")+(na?'<span class="n">'+na+'</span>':'')+'</button></div>'+
+ '<div class="hi">Hello, '+esc(first())+'</div><div class="hs">Discover products from sellers across Nigeria.</div>'+
+ '<label class="loc">'+I("pin")+'<select id="lc" aria-label="Your state"><option value="">All of Nigeria</option>'+STATES.map(s=>'<option'+(s===st?" selected":"")+'>'+s+'</option>').join("")+'</select></label>'+
+ '<form class="sb" id="sf">'+I("search")+'<input id="q" type="search" placeholder="Search products, sellers and shops" aria-label="Search"><button>Search</button></form></div></div>'+
+ '<div class="wrap">'+(S.u.emailVerified?'':'<div class="card" style="display:flex;gap:10px;align-items:center;flex-wrap:wrap"><span class="pill">Email not verified</span><span class="mu sp">Verify your email to keep your account safe.</span><button class="btn s" data-r="settings">Verify</button></div>')+
+ section("Categories",'<div class="chips">'+CATS.map((c,i)=>'<a class="cat" href="marketplace.html?cat='+encodeURIComponent(c)+'"><span style="background:'+TILE[i%4]+'">'+art(i)+'</span>'+esc(c)+'</a>').join("")+'</div>')+
+ (fl.length?section("New from shops you follow",grid(fl.slice(0,4)),"#"):"")+
+ (PRODS.length?section("Recently added",grid(PRODS.slice(0,8)),"marketplace.html"):'<div class="card empty">'+I("store")+'<h3>Sellers are getting started</h3><p>New products appear here as sellers publish them.</p></div>')+
+ (near.length?section("Near you · "+esc(st),grid(near.slice(0,4)),"marketplace.html?state="+encodeURIComponent(st)):"")+
+ (ver.length?section("Verified sellers",'<div class="hz">'+ver.map(([k,s])=>'<div class="shc"><div class="av">'+esc(initials(s.shopName))+'</div><b>'+esc(s.shopName)+'</b> <span class="vf">'+I("shield")+'</span><div class="mt">'+esc(s.city)+', '+esc(s.state)+'</div><div class="row" style="margin-top:10px"><a class="btn s sp" href="marketplace.html?q='+encodeURIComponent(s.shopName)+'">Products</a><button class="btn s p sp" data-fl="'+esc(k)+'" data-n="'+esc(s.shopName)+'" aria-pressed="'+S.follows.has(k)+'">'+(S.follows.has(k)?"Following":"Follow")+'</button></div></div>').join("")+'</div>'):"")+
+ (rv.length?section("Recently viewed",grid(rv.slice(0,4)),"#"):"")+'</div>';
 };
-$("chk").onclick=async()=>{await load(user);say(user.emailVerified?"Email verified. Thank you!":"Not verified yet. Open the link in your email, then try again.",user.emailVerified?"ok":"warn")};
-$("rs").onclick=async()=>{try{await sendEmailVerification(user);say("Verification email sent. Check your inbox and spam.","ok")}catch(e){say("Please wait a moment and try again.","warn")}};
-$("out").onclick=()=>signOut(auth).then(()=>location.replace("auth.html"));
-onAuthStateChanged(auth,u=>{if(!u)location.replace("auth.html");else load(u).catch(()=>{$("load").textContent="Couldn’t load your account. Check your connection and reload."})});
+const bar=(t,back)=>'<div class="wrap"><div class="tb">'+(back?'<button class="bk" data-r="'+back+'" aria-label="Back">'+I("back")+'</button>':'')+'<h2>'+t+'</h2></div>';
+V.saved=()=>{const L=PRODS.filter(p=>S.saves.has(p.id));return bar("Saved products")+(L.length?grid(L):'<div class="card empty">'+I("heart")+'<h3>Nothing saved yet</h3><p>Tap the heart on any product to save it here.</p><a class="btn p" href="marketplace.html">Browse products</a></div>')+'</div>'};
+V.recent=()=>{const L=recGet().map(id=>PRODS.find(p=>p.id===id)).filter(Boolean);return bar("Recently viewed","account")+(L.length?grid(L):'<div class="card empty">'+I("clock")+'<h3>No history yet</h3><p>Products you open will appear here.</p></div>')+'</div>'};
+V.following=()=>{const L=[...S.follows.entries()];return bar("Following","account")+(L.length?L.map(([k,n])=>{const s=S.shops[k]||{},cnt=PRODS.filter(p=>p.sellerId===k).length;return '<div class="card"><div class="row"><div class="av">'+esc(initials(n))+'</div><div class="sp"><b>'+esc(n)+'</b> '+(s.verified===true?'<span class="vf">'+I("shield")+'Verified</span>':'')+'<div class="mu">'+cnt+' product'+(cnt===1?"":"s")+'</div></div></div><div class="row" style="margin-top:10px"><a class="btn s sp" href="marketplace.html?q='+encodeURIComponent(n)+'">Products</a><a class="btn s sp" href="chat.html?to='+encodeURIComponent(k)+'&shop='+encodeURIComponent(n)+'">Message</a><button class="btn s r sp" data-fl="'+esc(k)+'" data-n="'+esc(n)+'">Unfollow</button></div></div>'}).join(""):'<div class="card empty">'+I("store")+'<h3>You’re not following any shops</h3><p>Open a product and tap Follow to see new products from that shop here.</p></div>')+'</div>'};
+V.alerts=()=>{const L=alerts();return bar("Notifications","account")+'<div class="card">'+(L.length?L.map(a=>'<a class="al" href="'+a.href+'"><span class="d">'+I(a.ic)+'</span><div class="sp"><b>'+esc(a.h)+'</b><div class="mu" style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap">'+esc(a.s)+'</div></div><span class="mu">'+ago({seconds:a.t})+'</span></a>').join(""):'<div class="empty">'+I("bell")+'<h3>All caught up</h3><p>New products from shops you follow and new messages will show here.</p></div>')+'</div></div>'};
+V.account=()=>{
+ const u=S.u,nm=S.name||u.displayName||"Buyer",na=alerts().length;
+ return '<div class="hero"><div class="wrap"><div class="top"><a class="logo" href="index.html"><i>N</i><span>Naija<b>Mart</b></span></a></div><div class="row" style="margin-top:16px"><div class="av" style="width:64px;height:64px;font-size:1.3rem">'+esc(initials(nm))+'</div><div class="sp"><div class="hi" style="margin:0">'+esc(nm)+'</div><div class="hs">'+esc(u.email)+'</div>'+(stGet()?'<div class="hs">'+I("pin")+' '+esc(stGet())+'</div>':'')+'</div></div></div></div>'+
+ '<div class="wrap"><div class="st"><div><b>'+S.saves.size+'</b><small>Saved</small></div><div><b>'+S.follows.size+'</b><small>Following</small></div><div><b>'+recGet().length+'</b><small>Viewed</small></div></div>'+
+ '<div class="card" style="padding:4px 16px">'+
+ [["saved","heart","Saved products"],["recent","clock","Recently viewed"],["following","store","Following"],["alerts","bell","Notifications"+(na?" ("+na+")":"")]].map(x=>'<button class="mi" data-r="'+x[0]+'">'+I(x[1])+x[2]+I("chev").replace('<svg','<svg style="margin-left:auto"')+'</button>').join("")+
+ '<a class="mi" href="chat.html">'+I("chat")+'Messages'+I("chev").replace('<svg','<svg style="margin-left:auto"')+'</a>'+
+ [["settings","gear","Settings"],["help","help","Help and support"]].map(x=>'<button class="mi" data-r="'+x[0]+'">'+I(x[1])+x[2]+I("chev").replace('<svg','<svg style="margin-left:auto"')+'</button>').join("")+
+ [["box","My orders"],["flag","My reviews"],["pin","Addresses"]].map(x=>'<div class="mi" style="cursor:default;color:var(--mu)">'+I(x[0])+x[1]+'<span class="s">SOON</span></div>').join("")+
+ '<button class="mi" data-out="1" style="color:var(--rd)">'+I("logout")+'Log out</button></div>'+
+ '<p class="note">Orders, reviews and addresses are marked Soon because Naija Mart doesn’t process orders yet. Buyers and sellers arrange purchases directly.</p></div>';
+};
+V.settings=()=>bar("Settings","account")+'<div class="msg" id="gm" role="alert"></div>'+
+ (S.u.emailVerified?'':'<div class="card"><span class="pill">Email not verified</span><p class="mu">Open the link we emailed you, then tap the button.</p><div class="row"><button class="btn p sp" id="chk">I’ve verified</button><button class="btn sp" id="rs">Resend email</button></div></div>')+
+ '<div class="card"><h3 style="margin-bottom:10px">Your profile</h3><label class="f" for="pn">Full name</label><input class="in" id="pn" value="'+esc(S.name)+'"><label class="f" for="pp">Phone number</label><input class="in" id="pp" type="tel" value="'+esc(S.phone||"")+'"><label class="f" for="ps">Your state</label><select class="in" id="ps"><option value="">All of Nigeria</option>'+STATES.map(s=>'<option'+(s===stGet()?" selected":"")+'>'+s+'</option>').join("")+'</select><button class="btn p w" id="sv">Save changes</button></div>'+
+ '<p class="mu" style="text-align:center">Sell on Naija Mart? <a href="auth.html?role=seller" style="color:var(--g2);font-weight:700">Use the seller sign-in</a></p></div>';
+V.help=()=>bar("Help and support","account")+'<div class="card"><h3>How it works</h3><p class="mu">Browse products, follow shops you like, then message the seller to agree price, pickup or delivery. Naija Mart doesn’t take payment or guarantee delivery.</p></div><div class="card"><h3>Stay safe</h3><p class="mu">Never pay in advance to someone you can’t verify. Meet in public places. Report suspicious listings from the product page.</p></div><div class="card"><h3>Contact support</h3><p class="mu">A support inbox is coming soon. For now, use Report on a product or message the seller.</p></div></div>';
+function render(){
+ const f=V[route]||V.home;$("v").innerHTML=f();
+ const nv=[["home","home","Home"],["browse","search","Browse"],["msg","chat","Messages"],["saved","heart","Saved"],["account","user","Account"]];
+ $("bn").firstElementChild.innerHTML=nv.map(n=>n[0]==="browse"?'<a href="marketplace.html">'+I(n[1])+n[2]+'</a>':n[0]==="msg"?'<a href="chat.html">'+I(n[1])+n[2]+'</a>':'<button data-r="'+n[0]+'"'+((route===n[0]||(n[0]==="account"&&["recent","following","alerts","settings","help"].includes(route)))?' aria-current="true"':'')+'>'+I(n[1])+n[2]+'</button>').join("");
+ window.scrollTo(0,0);
+}
+function go(r){if(location.hash==="#"+r)route=r,render();else location.hash="#"+r}
+addEventListener("hashchange",()=>{route=(location.hash||"#home").slice(1);if(!V[route])route="home";render()});
+function onSocial(){const y=window.scrollY;render();window.scrollTo(0,y)}
+const say=(t,k)=>{const m=$("gm");if(m){m.textContent=t;m.className="msg "+k}else toast(t)};
+document.addEventListener("click",async e=>{
+ const t=e.target.closest("[data-r],[data-out],#sv,#chk,#rs");if(!t)return;
+ if(t.dataset.r)return go(t.dataset.r);
+ if(t.dataset.out)return signOut(auth).then(()=>location.replace("auth.html"));
+ if(t.id==="sv"){const n=$("pn").value.trim(),p=$("pp").value.trim();if(!n)return say("Enter your name.","err");t.disabled=true;try{await updateDoc(doc(db,"users",S.u.uid),{name:n,phone:p});await updateProfile(S.u,{displayName:n});S.name=n;S.phone=p;stSet($("ps").value);say("Saved.","ok")}catch(x){say("Couldn’t save. Please try again.","err")}t.disabled=false;return}
+ if(t.id==="chk"){await S.u.reload();await S.u.getIdToken(true);S.u=auth.currentUser;if(S.u.emailVerified){toast("Email verified. Thank you!");render()}else say("Not verified yet. Open the link in your email, then try again.","warn");return}
+ if(t.id==="rs"){try{await sendEmailVerification(S.u);say("Verification email sent. Check your inbox and spam.","ok")}catch(x){say("Please wait a moment and try again.","warn")}}
+});
+document.addEventListener("submit",e=>{if(e.target.id==="sf"){e.preventDefault();const q=$("q").value.trim(),p=new URLSearchParams();if(q)p.set("q",q);if(stGet())p.set("state",stGet());location.href="marketplace.html"+(p.toString()?"?"+p:"")}});
+document.addEventListener("change",e=>{if(e.target.id==="lc"){stSet(e.target.value);render()}});
+onAuthStateChanged(auth,async u=>{
+ if(!u)return location.replace("auth.html");
+ S.u=u;
+ try{
+  await u.reload();S.u=auth.currentUser;
+  const [p,a]=await Promise.allSettled([getDocs(query(collection(db,"products"),where("status","==","active"),limit(120))),loadShops()]);
+  PRODS=p.status==="fulfilled"?p.value.docs.map(norm).sort((x,y)=>sec(y.createdAt)-sec(x.createdAt)):[];
+  await loadSocial();
+  try{const c=await getDocs(query(collection(db,"chats"),where("buyerId","==",S.u.uid)));CH=c.docs.map(d=>d.data())}catch(e){}
+  try{const pr=await getDoc(doc(db,"users",S.u.uid));S.phone=pr.exists()?pr.data().phone:""}catch(e){}
+  route=(location.hash||"#home").slice(1);if(!V[route])route="home";
+  $("bn").hidden=false;render();
+ }catch(e){$("v").innerHTML='<div class="wrap"><div class="card empty"><h3>Couldn’t load your account</h3><p>Check your connection, or the latest Firestore rules may not be published yet.</p></div></div>'}
+});
 </script>
 </body>
 </html>
