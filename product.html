@@ -83,7 +83,7 @@ dl{display:grid;grid-template-columns:auto 1fr;gap:8px 16px;margin:0}dt{color:va
 const firebaseConfig={apiKey:"AIzaSyCRQapXUQ32P4tpKaMiS11uccUc-z5k9yg",authDomain:"naija-mart-35ba6.firebaseapp.com",projectId:"naija-mart-35ba6",appId:"1:761759831734:web:2780ba182d5947d0cff817"};
 import {initializeApp} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
 import {getAuth,onAuthStateChanged,signOut,sendEmailVerification,updateProfile} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
-import {getFirestore,doc,getDoc,setDoc,updateDoc,deleteDoc,addDoc,collection,query,where,orderBy,limit,getDocs,writeBatch,onSnapshot,serverTimestamp} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+import {getFirestore,doc,getDoc,setDoc,updateDoc,deleteDoc,addDoc,collection,query,where,orderBy,limit,getDocs,writeBatch,onSnapshot,serverTimestamp,increment} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 const app=initializeApp(firebaseConfig),auth=getAuth(app),db=getFirestore(app);
 const $=i=>document.getElementById(i);
 const esc=s=>String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
@@ -127,10 +127,11 @@ async function loadSocial(){
  S.follows=new Map(b.status==="fulfilled"?b.value.docs.map(d=>[d.data().sellerId,d.data().shopName]):[]);
  S.name=(c.status==="fulfilled"&&c.value.exists()?c.value.data().name:"")||u.displayName||"";
 }
+const cnt=(pid,n)=>updateDoc(doc(db,"products",pid),{saveCount:increment(n)}).catch(()=>{});
 async function toggleSave(pid){
  if(!S.u){need();return false}
  const id=S.u.uid+"_"+pid;
- try{if(S.saves.has(pid)){await deleteDoc(doc(db,"saves",id));S.saves.delete(pid);toast("Removed from saved")}else{await setDoc(doc(db,"saves",id),{userId:S.u.uid,pid,createdAt:serverTimestamp()});S.saves.add(pid);toast("Saved")}return true}
+ try{if(S.saves.has(pid)){await deleteDoc(doc(db,"saves",id));S.saves.delete(pid);cnt(pid,-1);toast("Removed from saved")}else{await setDoc(doc(db,"saves",id),{userId:S.u.uid,pid,createdAt:serverTimestamp()});S.saves.add(pid);cnt(pid,1);toast("Saved")}return true}
  catch(e){toast("Couldn’t update. Please try again.");return false}
 }
 async function toggleFollow(sid,name){
@@ -143,7 +144,7 @@ async function toggleFollow(sid,name){
 function pcard(p){
  const ci=catOf(p),v=S.shops[p.sellerId]&&S.shops[p.sellerId].verified===true,sv=S.saves.has(p.id),img=safeImg(p.thumb),href="product.html?id="+encodeURIComponent(p.id);
  const st=p.stock==="out"?'<span class="no">Out of stock</span>':p.stock==="low"?'<span class="lo">Low stock</span>':'<span class="ok">In stock</span>';
- return '<article class="pc"><a class="im" href="'+href+'" style="background:'+TILE[ci%4]+'" aria-label="View '+esc(p.name)+'">'+(img?'<img src="'+img+'" alt="" loading="lazy">':art(ci))+'</a><button class="hv" data-sv="'+esc(p.id)+'" aria-pressed="'+sv+'" aria-label="Save '+esc(p.name)+'">'+I("heart")+'</button><div class="pb"><a href="'+href+'"><h3>'+esc(p.name)+'</h3></a><div class="pr">'+N(p.price)+'</div><div class="sh">'+esc(p.shopName)+(v?' <span class="vf">'+I("shield")+'Verified</span>':'')+'</div><div class="mt">'+I("pin")+' '+esc(p.city)+', '+esc(p.state)+'</div><div class="mt">'+st+' · '+ago(p.createdAt)+'</div></div></article>';
+ return '<article class="pc"><a class="im" href="'+href+'" style="background:'+TILE[ci%4]+'" aria-label="View '+esc(p.name)+'">'+(img?'<img src="'+img+'" alt="" loading="lazy">':art(ci))+'</a><button class="hv" data-sv="'+esc(p.id)+'" aria-pressed="'+sv+'" aria-label="Save '+esc(p.name)+'">'+I("heart")+'</button><div class="pb"><a href="'+href+'"><h3>'+esc(p.name)+'</h3></a><div class="pr">'+N(p.price)+'</div><div class="sh"><a href="shop.html?id='+encodeURIComponent(p.sellerId)+'">'+esc(p.shopName)+'</a>'+(v?' <span class="vf">'+I("shield")+'Verified</span>':'')+'</div><div class="mt">'+I("pin")+' '+esc(p.city)+', '+esc(p.state)+'</div><div class="mt">'+st+' · '+ago(p.createdAt)+'</div></div></article>';
 }
 document.addEventListener("click",async e=>{
  const t=e.target.closest("[data-sv],[data-fl]");if(!t)return;
@@ -167,7 +168,7 @@ function paint(){
  '<div class="card" style="margin-top:0"><h1 style="font-size:1.6rem;overflow-wrap:anywhere">'+esc(p.name)+'</h1><div class="big">'+N(p.price)+'</div><div style="margin:6px 0">'+st+' <span class="mu">· Updated '+ago(p.createdAt)+'</span></div>'+(v?'<span class="pill ok2">'+I("shield")+' Verified seller</span>':'')+
  '<p style="margin:14px 0 8px">'+esc(p.desc)+'</p>'+(p.options?'<div class="pills" style="margin:8px 0">'+p.options.split(/[,;]/).map(x=>x.trim()).filter(Boolean).map(x=>'<span class="pl">'+esc(x)+'</span>').join("")+'</div>':'')+
  '<dl style="margin-top:12px"><dt>Condition</dt><dd>'+esc(p.cond||"–")+'</dd>'+(p.brand?'<dt>Brand</dt><dd>'+esc(p.brand)+'</dd>':'')+'<dt>Category</dt><dd>'+esc(CATS[ci])+'</dd><dt>Location</dt><dd>'+esc(p.area)+', '+esc(p.city)+', '+esc(p.state)+'</dd><dt>Pickup / delivery</dt><dd>'+esc(p.delivery)+'</dd></dl></div>'+
- '<div class="card"><div class="row"><div class="av">'+esc(p.shopName.trim().split(/\s+/).slice(0,2).map(w=>w[0]).join("").toUpperCase())+'</div><div class="sp"><b>'+esc(p.shopName)+'</b> '+(v?'<span class="vf">'+I("shield")+'Verified</span>':'<span class="mu">Not verified</span>')+'<div class="mu">'+I("pin")+' '+esc(p.city)+', '+esc(p.state)+'</div></div>'+(own?'':'<button class="btn s" data-fl="'+esc(p.sellerId)+'" data-n="'+esc(p.shopName)+'" aria-pressed="'+fl+'">'+(fl?"Following":"Follow")+'</button>')+'</div>'+
+ '<div class="card"><div class="row"><div class="av">'+esc(p.shopName.trim().split(/\s+/).slice(0,2).map(w=>w[0]).join("").toUpperCase())+'</div><div class="sp"><a href="shop.html?id='+encodeURIComponent(p.sellerId)+'"><b>'+esc(p.shopName)+'</b></a> '+(v?'<span class="vf">'+I("shield")+'Verified</span>':'<span class="mu">Not verified</span>')+'<div class="mu">'+I("pin")+' '+esc(p.city)+', '+esc(p.state)+'</div></div>'+(own?'':'<button class="btn s" data-fl="'+esc(p.sellerId)+'" data-n="'+esc(p.shopName)+'" aria-pressed="'+fl+'">'+(fl?"Following":"Follow")+'</button>')+'</div>'+
  (own?'<p class="mu" style="margin:10px 0 0">This is your own product.</p>':'<div class="acts"><a class="btn p full" href="chat.html?to='+encodeURIComponent(p.sellerId)+'&shop='+encodeURIComponent(p.shopName)+'">'+I("chat")+' Message seller</a></div>')+
  '<div class="acts" style="margin-top:10px"><button class="btn" data-sv="'+esc(p.id)+'" id="sv2">'+I("heart")+(S.saves.has(p.id)?" Saved":" Save")+'</button><button class="btn" id="sh2">'+I("share")+' Share</button><button class="btn full r" id="rp">'+I("flag")+' Report listing</button></div></div>'+
  '<div class="note">Naija Mart doesn’t take payment or guarantee delivery. Confirm price and stock with the seller, and never pay in advance to someone you can’t verify.</div>'+
@@ -210,6 +211,7 @@ async function boot(){
   PR=norm(d);
   try{const s=await getDoc(doc(db,"shops",PR.sellerId));if(s.exists())S.shops[PR.sellerId]=s.data()}catch(e){}
   document.title=PR.name+" – Naija Mart";recAdd(id);
+  if(S.u&&S.u.uid!==PR.sellerId&&PR.status==="active"){const k="nm_v_"+id;try{if(!sessionStorage.getItem(k)){sessionStorage.setItem(k,"1");updateDoc(doc(db,"products",id),{views:increment(1)}).catch(()=>{})}}catch(e){}}
   paint();loadPhotos();loadComments();loadSimilar();
  }catch(e){gone(e&&e.code==="permission-denied"?"This product isn’t available":"Couldn’t load this product. Check your connection.")}
 }
