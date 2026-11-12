@@ -142,7 +142,7 @@ const art=i=>'<svg class="art" viewBox="0 0 64 64" role="img" aria-hidden="true"
 
 const P={home:"M4 11 12 4l8 7v9H4z",box:"M4 8l8-4 8 4v8l-8 4-8-4zM4 8l8 4 8-4M12 12v8",plus:"M12 5v14M5 12h14",chat:"M4 5h16v11H9l-5 4z",more:"M5 12h.01M12 12h.01M19 12h.01",eye:"M2 12s4-7 10-7 10 7 10 7-4 7-10 7S2 12 2 12zM12 15a3 3 0 1 0 0-6 3 3 0 0 0 0 6z",heart:"M12 20s-7-4.4-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 10c0 5.6-7 10-7 10z",users:"M9 11a4 4 0 1 0 0-8 4 4 0 0 0 0 8zM2 21c0-4 3-6 7-6s7 2 7 6M17 4a4 4 0 0 1 0 7M22 21c0-3-2-5-4-5.5",cart:"M3 4h2l2 11h11l2-8H7M9 20h.01M17 20h.01",chart:"M4 20V10M10 20V4M16 20v-8M22 20H2",store:"M4 9l1-5h14l1 5M4 9v11h16V9M4 9a3 3 0 0 0 5.3 1.9A3 3 0 0 0 14.7 10.9 3 3 0 0 0 20 9M9 20v-5h6v5",gear:"M12 15a3 3 0 1 0 0-6 3 3 0 0 0 0 6zM12 2v3M12 19v3M2 12h3M19 12h3M5 5l2 2M17 17l2 2M5 19l2-2M17 7l2-2",logout:"M9 4H5v16h4M16 8l4 4-4 4M20 12H9",search:"M11 18a7 7 0 1 0 0-14 7 7 0 0 0 0 14zM20 20l-4-4",check:"m5 12 5 5 9-10",lock:"M7 11V8a5 5 0 0 1 10 0v3M5 11h14v9H5z",crown:"M3 8l4 4 5-7 5 7 4-4-2 11H5z",back:"M15 5l-7 7 7 7",shield:"M12 3 4 6v6c0 5 3.4 8 8 9 4.6-1 8-4 8-9V6zM9 12l2 2 4-4",pin:"M12 21s7-6.2 7-11a7 7 0 1 0-14 0c0 4.8 7 11 7 11zM12 12.5a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5z",camera:"M4 8h3l2-3h6l2 3h3v11H4zM12 17a4 4 0 1 0 0-8 4 4 0 0 0 0 8z",x:"M6 6l12 12M18 6 6 18",bell:"M6 17V11a6 6 0 0 1 12 0v6l2 2H4zM10 21h4",hide:"M3 3l18 18M10.6 6.2A9.7 9.7 0 0 1 12 6c6 0 10 6 10 6a17 17 0 0 1-3.2 3.7M6.6 6.6A17 17 0 0 0 2 12s4 7 10 7a9.7 9.7 0 0 0 4-.9"};
 const I=n=>'<svg class="i" viewBox="0 0 24 24"><path d="'+P[n]+'"/></svg>';
-const S={app:null,prof:{},prods:[],f:"all",q:"",sort:"new",ed:null,form:null,imgs:[],pch:false,v:"home",u:null,fol:null};
+const S={app:null,prof:{},prods:[],f:"all",q:"",sort:"new",ed:null,form:null,imgs:[],pch:false,v:"home",u:null,fol:null,fl:[],ch:null};
 
 function toast(t){const e=$("toast");e.textContent=t;e.style.display="block";clearTimeout(toast.t);toast.t=setTimeout(()=>e.style.display="none",3000)}
 function ask(t,m){return new Promise(r=>{$("cft").textContent=t;$("cfm").textContent=m;$("cf").showModal();$("cy").onclick=()=>{$("cf").close();r(true)};$("cn").onclick=()=>{$("cf").close();r(false)}})}
@@ -159,14 +159,14 @@ const V={};
 function head(t,back){return '<div class="ttl">'+(back?'<button class="back" data-go="'+back+'" aria-label="Back">'+I("back")+'</button>':'')+'<h2>'+t+'</h2></div>'}
 function soon(ic,t,m){return '<div class="card empty">'+I(ic)+'<h3>'+t+'</h3><p>'+m+'</p><span class="pill off">Coming soon</span></div>'}
 V.home=()=>{
- const a=S.app,ci=catIdx(),pr=S.prods,tot=pr.length,act=pr.filter(p=>inF(p,"active")).length,out=pr.filter(p=>inF(p,"out")).length,ver=a.verified===true;
+ const a=S.app,ci=catIdx(),pr=S.prods,tot=pr.length,act=pr.filter(p=>inF(p,"active")).length,out=pr.filter(p=>inF(p,"out")).length,ver=a.verified===true,vw=pr.reduce((t,p)=>t+(Number(p.views)||0),0),lk=pr.reduce((t,p)=>t+Math.max(0,Number(p.saveCount)||0),0);
  const s1=(ic,n,l)=>'<div class="s1">'+I(ic)+'<b>'+n+'</b><small>'+l+'</small></div>',sn=(ic,l)=>'<div class="s1 soon">'+I(ic)+'<b>—</b><small>'+l+'</small><em>SOON</em></div>';
  const rec=pr.filter(p=>p.status!=="removed").slice(0,3);
  return '<div class="hero"><div class="hr"><div class="lt" style="background:'+TILE[ci%4]+'">'+art(ci)+'</div><div class="sp"><h1>'+esc(a.shopName)+'</h1><div class="loc">'+I("pin")+' '+esc(a.city)+', '+esc(a.state)+'</div></div></div>'+
  '<div class="pills"><span class="pill ok">'+I("check")+' Approved Seller</span>'+(ver?'<span class="pill gold">'+I("shield")+' Verified Seller</span>':'<span class="pill off">Verified badge: not yet</span>')+'</div>'+
- '<div style="margin-top:14px"><button class="btn w" disabled>View public shop · coming soon</button></div></div>'+
- '<div class="stats">'+s1("box",tot,"Products")+s1("check",act,"Active")+s1("lock",out,"Out of stock")+sn("eye","Views")+'</div>'+
- '<div class="stats">'+(S.fol===null?sn("users","Followers"):s1("users",S.fol,"Followers"))+sn("heart","Likes")+sn("chat","Enquiries")+sn("cart","Orders")+'</div>'+
+ '<div style="margin-top:14px"><a class="btn w" href="shop.html?id='+S.u.uid+'">View public shop</a></div></div>'+
+ '<div class="stats">'+s1("box",tot,"Products")+s1("check",act,"Active")+s1("lock",out,"Out of stock")+s1("eye",vw,"Views")+'</div>'+
+ '<div class="stats">'+(S.fol===null?sn("users","Followers"):s1("users",S.fol,"Followers"))+s1("heart",lk,"Likes")+(S.ch===null?sn("chat","Enquiries"):s1("chat",S.ch.length,"Enquiries"))+sn("cart","Orders")+'</div>'+
  '<div class="prem">'+I("crown")+'<div class="sp"><b>Seller Premium</b><div class="mu">₦3,000/month proposed · not yet available</div></div><span class="pill off">Soon</span></div>'+
  '<h3 class="sec">Quick actions</h3><div class="qa"><button data-new="1">'+I("plus")+'Add Product</button><button data-go="products">'+I("box")+'My Products</button><button data-go="analytics">'+I("chart")+'Analytics</button><button data-go="messages">'+I("chat")+'Messages</button></div>'+
  '<h3 class="sec">Recent activity</h3><div class="card">'+(rec.length?rec.map(p=>'<div class="act"><span class="dot">'+I("box")+'</span><div class="sp"><b>'+esc(p.name)+'</b><div class="mu">Published · '+fd(p.createdAt)+'</div></div><b>'+N(p.price)+'</b></div>').join(""):'<div class="empty"><h3>No activity yet</h3><p>Publish your first product to get started.</p><button class="btn g" data-new="1">'+I("plus")+' Add your first product</button></div>')+'</div>';
@@ -174,7 +174,7 @@ V.home=()=>{
 function pcard(p){
  const s=stOf(p),ci=Number.isInteger(p.cat)?p.cat:11,rm=p.status==="removed";
  const q=Number.isInteger(p.qty)?p.qty:null,stx=p.stock==="out"?"Out of stock":p.stock==="low"?"Low stock"+(q!==null?" · "+q+" left":""):(q!==null?q+" in stock":"In stock");
- return '<article class="pc"><div class="im" style="background:'+TILE[ci%4]+'">'+(p.thumb&&/^data:image\/jpeg;base64,[A-Za-z0-9+\/=]+$/.test(p.thumb)?'<img src="'+p.thumb+'" alt="">':art(ci))+'<span class="st '+s[1]+'">'+s[0]+'</span></div><div class="pb"><h3>'+esc(p.name)+'</h3><div class="pr">'+N(p.price)+'</div><div class="mt">'+esc(CATS[ci])+'</div><div class="mt">'+stx+'</div><div class="mt">'+esc(p.city)+', '+esc(p.state)+' · '+fd(p.createdAt)+'</div>'+
+ return '<article class="pc"><div class="im" style="background:'+TILE[ci%4]+'">'+(p.thumb&&/^data:image\/jpeg;base64,[A-Za-z0-9+\/=]+$/.test(p.thumb)?'<img src="'+p.thumb+'" alt="">':art(ci))+'<span class="st '+s[1]+'">'+s[0]+'</span></div><div class="pb"><h3>'+esc(p.name)+'</h3><div class="pr">'+N(p.price)+'</div><div class="mt">'+esc(CATS[ci])+'</div><div class="mt">'+stx+'</div><div class="mt">'+I("eye")+' '+(Number(p.views)||0)+' views · '+I("heart")+' '+Math.max(0,Number(p.saveCount)||0)+' likes</div><div class="mt">'+esc(p.city)+', '+esc(p.state)+' · '+fd(p.createdAt)+'</div>'+
  (rm?'<div class="bt" style="grid-template-columns:1fr"><button class="d" data-del="'+p.id+'">Delete</button></div>':'<div class="bt"><button data-ed="'+p.id+'">Edit</button><button class="d" data-del="'+p.id+'">Delete</button></div><div class="bt s"><button data-hide="'+p.id+'">'+(p.status==="hidden"?"Show":"Hide")+'</button><button data-stk="'+p.id+'">'+(p.stock==="out"?"Available":"Out of stock")+'</button></div>')+'</div></article>';
 }
 function plist(){
@@ -206,25 +206,31 @@ V.add=()=>head(S.ed?"Edit Product":"Add Product","products")+
  '<button class="btn g w" data-prev="1">Preview product →</button></div><p class="note">Be honest about price and stock. Buyers can report misleading listings, and our team can hide or remove them.</p>';
 V.messages=()=>head("Messages")+'<div class="card empty">'+I("chat")+'<h3>Customer messages</h3><p>Chat with buyers who contact you about your products.</p><a class="btn g" href="chat.html">Open messages</a></div>';
 V.orders=()=>head("Orders","more")+soon("cart","Orders","Naija Mart doesn’t process orders yet. Buyers contact sellers directly.");
-V.notes=()=>head("Notifications","more")+soon("bell","Notifications","Alerts for messages, followers and product activity will appear here.");
+function notes(){
+ const o=[];
+ (S.ch||[]).filter(c=>c.lastFrom&&c.lastFrom!==S.u.uid).forEach(c=>o.push({t:sec(c.lastAt),ic:"chat",h:"Message from "+c.buyerName,s:c.lastText,href:"chat.html"}));
+ (S.fl||[]).forEach(f=>o.push({t:sec(f.createdAt),ic:"users",h:"New follower",s:"A buyer started following your shop",href:"#home"}));
+ return o.sort((a,b)=>b.t-a.t).slice(0,30);
+}
+V.notes=()=>{const L=notes();return head("Notifications","more")+'<div class="card">'+(L.length?L.map(n=>'<a class="act" href="'+n.href+'" style="color:inherit;text-decoration:none"><span class="dot">'+I(n.ic)+'</span><div class="sp"><b>'+esc(n.h)+'</b><div class="mu" style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap">'+esc(n.s)+'</div></div><span class="mu">'+fd({seconds:n.t})+'</span></a>').join(""):'<div class="empty">'+I("bell")+'<h3>All caught up</h3><p>New messages and new followers will show here.</p></div>')+'</div>'};
 V.analytics=()=>{
  const pr=S.prods.filter(p=>p.status!=="removed"),tot=pr.length,by=CATS.map((c,i)=>[c,pr.filter(p=>p.cat===i).length]).filter(x=>x[1]);
  return head("Analytics","more")+'<div class="stats"><div class="s1">'+I("box")+'<b>'+tot+'</b><small>Products</small></div><div class="s1">'+I("check")+'<b>'+pr.filter(p=>inF(p,"active")).length+'</b><small>Active</small></div><div class="s1">'+I("hide")+'<b>'+pr.filter(p=>p.status==="hidden").length+'</b><small>Hidden</small></div><div class="s1">'+I("lock")+'<b>'+pr.filter(p=>inF(p,"out")).length+'</b><small>Out of stock</small></div></div>'+
  '<div class="card"><h3>Products by category</h3>'+(by.length?by.map(x=>'<div style="margin-top:10px"><div class="row"><span class="sp">'+esc(x[0])+'</span><b>'+x[1]+'</b></div><div class="bar"><i style="width:'+Math.round(x[1]/tot*100)+'%"></i></div></div>').join(""):'<p class="mu">No products yet.</p>')+'</div>'+
- '<div class="card"><h3>Views, likes and enquiries</h3><p class="mu">Tracking isn’t connected yet, so Naija Mart shows nothing here rather than made-up numbers.</p><span class="pill off">Coming soon</span></div>';
+ (()=>{const vw=pr.reduce((t,p)=>t+(Number(p.views)||0),0),lk=pr.reduce((t,p)=>t+Math.max(0,Number(p.saveCount)||0),0),top=[...pr].sort((x,y)=>(Number(y.views)||0)-(Number(x.views)||0)).slice(0,5);return '<div class="stats" style="grid-template-columns:repeat(3,1fr)"><div class="s1">'+I("eye")+'<b>'+vw+'</b><small>Views</small></div><div class="s1">'+I("heart")+'<b>'+lk+'</b><small>Likes</small></div><div class="s1">'+I("chat")+'<b>'+(S.ch===null?"—":S.ch.length)+'</b><small>Enquiries</small></div></div><div class="card"><h3>Top products by views</h3>'+(top.length?top.map(p=>'<div class="act"><div class="sp"><b>'+esc(p.name)+'</b></div><span class="mu">'+(Number(p.views)||0)+' views · '+Math.max(0,Number(p.saveCount)||0)+' likes</span></div>').join(""):'<p class="mu">No products yet.</p>')+'<p class="mu" style="margin:10px 0 0">Views count signed-in buyers who open a product. Likes are buyers who saved it. Enquiries are buyers who messaged you.</p></div>'})();
 };
 V.shop=()=>{
  const a=S.app,ci=catIdx(),live=S.prods.filter(p=>inF(p,"active"));
  return head("My Shop","more")+'<div class="hero"><div class="hr"><div class="lt" style="background:'+TILE[ci%4]+'">'+art(ci)+'</div><div class="sp"><h1>'+esc(a.shopName)+'</h1><div class="loc">'+esc(CATS[ci])+'</div></div></div><dl><dt>Location</dt><dd>'+esc(a.area)+', '+esc(a.city)+', '+esc(a.state)+'</dd><dt>Address</dt><dd>'+esc(a.address)+'</dd><dt>About</dt><dd>'+esc(a.description)+'</dd></dl></div>'+
  '<h3 class="sec">Live products ('+live.length+')</h3>'+(live.length?'<div class="grid">'+live.slice(0,6).map(pcard).join("")+'</div>':'<div class="card empty"><h3>Nothing live yet</h3></div>')+
- '<div class="card"><h3>Public shop page and customization</h3><p class="mu">A shareable page for your shop is coming soon.</p><span class="pill off">Coming soon</span></div>';
+ '<div class="card"><h3>Your public shop page</h3><p class="mu">Share this page so buyers can see all your products.</p><a class="btn g w" href="shop.html?id='+S.u.uid+'">Open my shop page</a></div>';
 };
 V.settings=()=>{
  const p=S.prof,u=S.u;
  return head("Settings","more")+'<div class="card"><dl><dt>Name</dt><dd>'+esc(p.name||u.displayName||"–")+'</dd><dt>Email</dt><dd>'+esc(u.email)+'</dd><dt>Phone</dt><dd>'+esc(p.phone||"–")+'</dd><dt>Email status</dt><dd>'+(u.emailVerified?"Verified":"Not verified")+'</dd></dl></div>'+
  '<a class="btn w" href="account.html" style="margin-bottom:10px">Open my buyer account</a><button class="btn r w" data-out="1">'+I("logout")+' Log out</button>';
 };
-V.more=()=>head("More")+'<div class="card menu">'+[["orders","cart","Orders",1],["analytics","chart","Analytics"],["shop","store","My Shop"],["notes","bell","Notifications",1],["settings","gear","Settings"]].map(x=>'<button data-go="'+x[0]+'">'+I(x[1])+x[2]+(x[3]?'<span class="soon">SOON</span>':'')+'</button>').join("")+'<button data-out="1">'+I("logout")+'Log out</button></div>';
+V.more=()=>head("More")+'<div class="card menu">'+[["orders","cart","Orders",1],["analytics","chart","Analytics"],["shop","store","My Shop"],["notes","bell","Notifications"],["settings","gear","Settings"]].map(x=>'<button data-go="'+x[0]+'">'+I(x[1])+x[2]+(x[3]?'<span class="soon">SOON</span>':'')+'</button>').join("")+'<button data-out="1">'+I("logout")+'Log out</button></div>';
 function statusPage(a){
  const s=a.status,t=s==="pending"?"We’re reviewing your application":s==="rejected"?"Your application wasn’t approved":"Your seller account is suspended";
  return '<div class="card"><span class="pill '+(s==="pending"?"wait":"bad")+'">'+(s==="pending"?"Pending review":s==="rejected"?"Not approved":"Suspended")+'</span><h2 style="margin-top:10px">'+t+'</h2><p class="mu">'+(s==="pending"?"Our team checks every seller before they can publish. This page updates when there’s a decision.":(a.reason?"Reason: "+esc(a.reason):"Contact support for details."))+'</p><dl><dt>Shop</dt><dd>'+esc(a.shopName)+'</dd><dt>Category</dt><dd>'+esc(a.category)+'</dd><dt>Location</dt><dd>'+esc(a.city)+', '+esc(a.state)+'</dd></dl></div><button class="btn w" data-out="1">'+I("logout")+' Log out</button>';
@@ -341,7 +347,8 @@ onAuthStateChanged(auth,async u=>{
   try{const p=await getDoc(doc(db,"users",u.uid));S.prof=p.exists()?p.data():{}}catch(e){}
   if(S.app.status!=="approved"){$("load").hidden=true;$("v").hidden=false;$("v").innerHTML=statusPage(S.app);return}
   try{await loadProducts()}catch(e){$("v").hidden=false;$("load").hidden=true;$("v").innerHTML='<div class="card empty"><h3>Couldn’t load your products</h3><p>Check your connection, or the latest Firestore rules may not be published yet.</p></div>';return}
-  try{S.fol=(await getDocs(query(collection(db,"follows"),where("sellerId","==",u.uid)))).size}catch(e){}
+  try{const f=await getDocs(query(collection(db,"follows"),where("sellerId","==",u.uid)));S.fol=f.size;S.fl=f.docs.map(d=>d.data())}catch(e){}
+  try{const c=await getDocs(query(collection(db,"chats"),where("sellerId","==",u.uid)));S.ch=c.docs.map(d=>d.data())}catch(e){}
   $("load").hidden=true;$("v").hidden=false;$("bn").hidden=false;route();
  }catch(e){$("load").textContent="Couldn’t load your dashboard. Check your connection and reload."}
 });
