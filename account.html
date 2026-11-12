@@ -82,7 +82,7 @@ nav.bn [aria-current=true]{color:var(--g1)}nav.bn [aria-current=true] svg{color:
 const firebaseConfig={apiKey:"AIzaSyCRQapXUQ32P4tpKaMiS11uccUc-z5k9yg",authDomain:"naija-mart-35ba6.firebaseapp.com",projectId:"naija-mart-35ba6",appId:"1:761759831734:web:2780ba182d5947d0cff817"};
 import {initializeApp} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
 import {getAuth,onAuthStateChanged,signOut,sendEmailVerification,updateProfile} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
-import {getFirestore,doc,getDoc,setDoc,updateDoc,deleteDoc,addDoc,collection,query,where,orderBy,limit,getDocs,writeBatch,onSnapshot,serverTimestamp} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+import {getFirestore,doc,getDoc,setDoc,updateDoc,deleteDoc,addDoc,collection,query,where,orderBy,limit,getDocs,writeBatch,onSnapshot,serverTimestamp,increment} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 const app=initializeApp(firebaseConfig),auth=getAuth(app),db=getFirestore(app);
 const $=i=>document.getElementById(i);
 const esc=s=>String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
@@ -126,10 +126,11 @@ async function loadSocial(){
  S.follows=new Map(b.status==="fulfilled"?b.value.docs.map(d=>[d.data().sellerId,d.data().shopName]):[]);
  S.name=(c.status==="fulfilled"&&c.value.exists()?c.value.data().name:"")||u.displayName||"";
 }
+const cnt=(pid,n)=>updateDoc(doc(db,"products",pid),{saveCount:increment(n)}).catch(()=>{});
 async function toggleSave(pid){
  if(!S.u){need();return false}
  const id=S.u.uid+"_"+pid;
- try{if(S.saves.has(pid)){await deleteDoc(doc(db,"saves",id));S.saves.delete(pid);toast("Removed from saved")}else{await setDoc(doc(db,"saves",id),{userId:S.u.uid,pid,createdAt:serverTimestamp()});S.saves.add(pid);toast("Saved")}return true}
+ try{if(S.saves.has(pid)){await deleteDoc(doc(db,"saves",id));S.saves.delete(pid);cnt(pid,-1);toast("Removed from saved")}else{await setDoc(doc(db,"saves",id),{userId:S.u.uid,pid,createdAt:serverTimestamp()});S.saves.add(pid);cnt(pid,1);toast("Saved")}return true}
  catch(e){toast("Couldn’t update. Please try again.");return false}
 }
 async function toggleFollow(sid,name){
@@ -142,7 +143,7 @@ async function toggleFollow(sid,name){
 function pcard(p){
  const ci=catOf(p),v=S.shops[p.sellerId]&&S.shops[p.sellerId].verified===true,sv=S.saves.has(p.id),img=safeImg(p.thumb),href="product.html?id="+encodeURIComponent(p.id);
  const st=p.stock==="out"?'<span class="no">Out of stock</span>':p.stock==="low"?'<span class="lo">Low stock</span>':'<span class="ok">In stock</span>';
- return '<article class="pc"><a class="im" href="'+href+'" style="background:'+TILE[ci%4]+'" aria-label="View '+esc(p.name)+'">'+(img?'<img src="'+img+'" alt="" loading="lazy">':art(ci))+'</a><button class="hv" data-sv="'+esc(p.id)+'" aria-pressed="'+sv+'" aria-label="Save '+esc(p.name)+'">'+I("heart")+'</button><div class="pb"><a href="'+href+'"><h3>'+esc(p.name)+'</h3></a><div class="pr">'+N(p.price)+'</div><div class="sh">'+esc(p.shopName)+(v?' <span class="vf">'+I("shield")+'Verified</span>':'')+'</div><div class="mt">'+I("pin")+' '+esc(p.city)+', '+esc(p.state)+'</div><div class="mt">'+st+' · '+ago(p.createdAt)+'</div></div></article>';
+ return '<article class="pc"><a class="im" href="'+href+'" style="background:'+TILE[ci%4]+'" aria-label="View '+esc(p.name)+'">'+(img?'<img src="'+img+'" alt="" loading="lazy">':art(ci))+'</a><button class="hv" data-sv="'+esc(p.id)+'" aria-pressed="'+sv+'" aria-label="Save '+esc(p.name)+'">'+I("heart")+'</button><div class="pb"><a href="'+href+'"><h3>'+esc(p.name)+'</h3></a><div class="pr">'+N(p.price)+'</div><div class="sh"><a href="shop.html?id='+encodeURIComponent(p.sellerId)+'">'+esc(p.shopName)+'</a>'+(v?' <span class="vf">'+I("shield")+'Verified</span>':'')+'</div><div class="mt">'+I("pin")+' '+esc(p.city)+', '+esc(p.state)+'</div><div class="mt">'+st+' · '+ago(p.createdAt)+'</div></div></article>';
 }
 document.addEventListener("click",async e=>{
  const t=e.target.closest("[data-sv],[data-fl]");if(!t)return;
@@ -161,7 +162,7 @@ const section=(t,html,more)=>'<div class="sec"><h2>'+t+'</h2>'+(more?'<a href="'
 function alerts(){
  const out=[],now=Date.now()/1000;
  PRODS.filter(p=>S.follows.has(p.sellerId)&&now-sec(p.createdAt)<14*86400).forEach(p=>out.push({t:sec(p.createdAt),ic:"store",h:"New from "+p.shopName,s:p.name+" · "+N(p.price),href:"product.html?id="+encodeURIComponent(p.id)}));
- CH.filter(c=>c.lastFrom&&c.lastFrom!==S.u.uid).forEach(c=>out.push({t:sec(c.lastAt),ic:"chat",h:(c.buyerId===S.u.uid?c.shopName:c.buyerName)+" sent a message",s:c.lastText,href:"chat.html"}));
+ CH.filter(c=>c.lastFrom&&c.lastFrom!==S.u.uid&&sec(c.lastAt)>sec(c.buyerSeen)).forEach(c=>out.push({t:sec(c.lastAt),ic:"chat",h:(c.buyerId===S.u.uid?c.shopName:c.buyerName)+" sent a message",s:c.lastText,href:"chat.html"}));
  return out.sort((a,b)=>b.t-a.t);
 }
 const V={};
@@ -177,13 +178,13 @@ V.home=()=>{
  (fl.length?section("New from shops you follow",grid(fl.slice(0,4)),"#"):"")+
  (PRODS.length?section("Recently added",grid(PRODS.slice(0,8)),"marketplace.html"):'<div class="card empty">'+I("store")+'<h3>Sellers are getting started</h3><p>New products appear here as sellers publish them.</p></div>')+
  (near.length?section("Near you · "+esc(st),grid(near.slice(0,4)),"marketplace.html?state="+encodeURIComponent(st)):"")+
- (ver.length?section("Verified sellers",'<div class="hz">'+ver.map(([k,s])=>'<div class="shc"><div class="av">'+esc(initials(s.shopName))+'</div><b>'+esc(s.shopName)+'</b> <span class="vf">'+I("shield")+'</span><div class="mt">'+esc(s.city)+', '+esc(s.state)+'</div><div class="row" style="margin-top:10px"><a class="btn s sp" href="marketplace.html?q='+encodeURIComponent(s.shopName)+'">Products</a><button class="btn s p sp" data-fl="'+esc(k)+'" data-n="'+esc(s.shopName)+'" aria-pressed="'+S.follows.has(k)+'">'+(S.follows.has(k)?"Following":"Follow")+'</button></div></div>').join("")+'</div>'):"")+
+ (ver.length?section("Verified sellers",'<div class="hz">'+ver.map(([k,s])=>'<div class="shc"><div class="av">'+esc(initials(s.shopName))+'</div><b>'+esc(s.shopName)+'</b> <span class="vf">'+I("shield")+'</span><div class="mt">'+esc(s.city)+', '+esc(s.state)+'</div><div class="row" style="margin-top:10px"><a class="btn s sp" href="shop.html?id='+encodeURIComponent(k)+'">View shop</a><button class="btn s p sp" data-fl="'+esc(k)+'" data-n="'+esc(s.shopName)+'" aria-pressed="'+S.follows.has(k)+'">'+(S.follows.has(k)?"Following":"Follow")+'</button></div></div>').join("")+'</div>'):"")+
  (rv.length?section("Recently viewed",grid(rv.slice(0,4)),"#"):"")+'</div>';
 };
 const bar=(t,back)=>'<div class="wrap"><div class="tb">'+(back?'<button class="bk" data-r="'+back+'" aria-label="Back">'+I("back")+'</button>':'')+'<h2>'+t+'</h2></div>';
 V.saved=()=>{const L=PRODS.filter(p=>S.saves.has(p.id));return bar("Saved products")+(L.length?grid(L):'<div class="card empty">'+I("heart")+'<h3>Nothing saved yet</h3><p>Tap the heart on any product to save it here.</p><a class="btn p" href="marketplace.html">Browse products</a></div>')+'</div>'};
 V.recent=()=>{const L=recGet().map(id=>PRODS.find(p=>p.id===id)).filter(Boolean);return bar("Recently viewed","account")+(L.length?grid(L):'<div class="card empty">'+I("clock")+'<h3>No history yet</h3><p>Products you open will appear here.</p></div>')+'</div>'};
-V.following=()=>{const L=[...S.follows.entries()];return bar("Following","account")+(L.length?L.map(([k,n])=>{const s=S.shops[k]||{},cnt=PRODS.filter(p=>p.sellerId===k).length;return '<div class="card"><div class="row"><div class="av">'+esc(initials(n))+'</div><div class="sp"><b>'+esc(n)+'</b> '+(s.verified===true?'<span class="vf">'+I("shield")+'Verified</span>':'')+'<div class="mu">'+cnt+' product'+(cnt===1?"":"s")+'</div></div></div><div class="row" style="margin-top:10px"><a class="btn s sp" href="marketplace.html?q='+encodeURIComponent(n)+'">Products</a><a class="btn s sp" href="chat.html?to='+encodeURIComponent(k)+'&shop='+encodeURIComponent(n)+'">Message</a><button class="btn s r sp" data-fl="'+esc(k)+'" data-n="'+esc(n)+'">Unfollow</button></div></div>'}).join(""):'<div class="card empty">'+I("store")+'<h3>You’re not following any shops</h3><p>Open a product and tap Follow to see new products from that shop here.</p></div>')+'</div>'};
+V.following=()=>{const L=[...S.follows.entries()];return bar("Following","account")+(L.length?L.map(([k,n])=>{const s=S.shops[k]||{},cnt=PRODS.filter(p=>p.sellerId===k).length;return '<div class="card"><div class="row"><div class="av">'+esc(initials(n))+'</div><div class="sp"><b>'+esc(n)+'</b> '+(s.verified===true?'<span class="vf">'+I("shield")+'Verified</span>':'')+'<div class="mu">'+cnt+' product'+(cnt===1?"":"s")+'</div></div></div><div class="row" style="margin-top:10px"><a class="btn s sp" href="shop.html?id='+encodeURIComponent(k)+'">View shop</a><a class="btn s sp" href="chat.html?to='+encodeURIComponent(k)+'&shop='+encodeURIComponent(n)+'">Message</a><button class="btn s r sp" data-fl="'+esc(k)+'" data-n="'+esc(n)+'">Unfollow</button></div></div>'}).join(""):'<div class="card empty">'+I("store")+'<h3>You’re not following any shops</h3><p>Open a product and tap Follow to see new products from that shop here.</p></div>')+'</div>'};
 V.alerts=()=>{const L=alerts();return bar("Notifications","account")+'<div class="card">'+(L.length?L.map(a=>'<a class="al" href="'+a.href+'"><span class="d">'+I(a.ic)+'</span><div class="sp"><b>'+esc(a.h)+'</b><div class="mu" style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap">'+esc(a.s)+'</div></div><span class="mu">'+ago({seconds:a.t})+'</span></a>').join(""):'<div class="empty">'+I("bell")+'<h3>All caught up</h3><p>New products from shops you follow and new messages will show here.</p></div>')+'</div></div>'};
 V.account=()=>{
  const u=S.u,nm=S.name||u.displayName||"Buyer",na=alerts().length;
