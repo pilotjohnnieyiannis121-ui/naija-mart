@@ -257,7 +257,7 @@ function list(){
   return(!q||hay.indexOf(q)>-1)&&(cat===""||p[3]==cat)&&(!s||p[6]===s)&&(!m||(p[7]+" "+p[6]).toLowerCase().indexOf(m)>-1)&&p[2]>=a&&p[2]<=b&&(!d||p[8]===d)&&(!$("fk").checked||p[9]!=="out")&&(!$("fv").checked||p[5])&&(!$("ff").checked||fol.indexOf(p[4])>-1)&&(!onlySaved||sav.indexOf(p[0])>-1)});
  const o=$("so").value;r.sort((x,y)=>o==="lo"?x[2]-y[2]:o==="hi"?y[2]-x[2]:x[10]-y[10]);return r}
 function card(p){
- const st=ST[p[9]],f=fol.indexOf(p[4])>-1,sv=sav.indexOf(p[0])>-1,c=cmp.indexOf(p[0])>-1;
+ const st=ST[p[9]],f=fol.indexOf(p[4])>-1,sv=(p[15]?rsv.has(p[15]):sav.indexOf(p[0])>-1),c=cmp.indexOf(p[0])>-1;
  return '<article class="card"><button class="ph" style="--c:'+TINT[p[3]%4]+'" data-v="'+p[0]+'" aria-label="View '+p[1]+'">'+(p[14]?'<img class="pimg" src="'+p[14]+'" alt="">':art(p[3]))+(p[15]?'':'<span class="tg">Sample</span>')+'<span class="hv" role="button" tabindex="0" data-sv="'+p[0]+'" aria-pressed="'+sv+'" aria-label="Save '+p[1]+'">'+ic("heart")+'</span></button>'+
  '<div class="cb"><h3 data-v="'+p[0]+'">'+p[1]+'</h3><div class="pr">'+N(p[2])+'</div><div class="shop">'+p[4]+(p[5]?'<span class="vf">'+ic("shield")+'Verified</span>':'')+'</div><div class="m">'+ic("pin")+' '+p[7]+', '+p[6]+'</div><div><span class="'+st[1]+'">'+st[0]+'</span> <span class="m">· Updated '+when(p[10])+'</span></div>'+
  '<div class="ca"><button class="btn pri sm" data-msg="'+p[0]+'">'+ic("chat")+'Message</button><button class="btn sm" data-fol="'+p[0]+'" aria-pressed="'+f+'">'+(f?ic("chk")+"Following":ic("plus")+"Follow")+'</button></div>'+
@@ -310,9 +310,11 @@ document.addEventListener("click",e=>{
  const t=e.target.closest("[data-v],[data-sv],[data-msg],[data-fol],[data-cmp],[data-share],[data-rep],[data-close],[data-c],[data-x]");if(!t)return;
  const d=t.dataset;
  if(d.close)return $("dg").close();
+ if(d.sv){const p0=byId(+d.sv);if(p0&&p0[15]){e.stopPropagation();return realSave(p0)}}
  if(d.sv){e.stopPropagation();const id=+d.sv,i=sav.indexOf(id);i>-1?sav.splice(i,1):sav.push(id);ls.set("nm_sav",sav);toast(i>-1?"Removed from saved":"Saved on this device");render();if($("dg").open&&$("dp").querySelector(".gal"))view(id);return}
- if(d.v)return view(+d.v);
- if(d.msg)return msg(+d.msg);
+ if(d.v){const p0=byId(+d.v);if(p0&&p0[15]){location.href="product.html?id="+encodeURIComponent(p0[15]);return}return view(+d.v)}
+ if(d.msg){const p0=byId(+d.msg);if(p0&&p0[16]){location.href="chat.html?to="+encodeURIComponent(p0[16])+"&shop="+encodeURIComponent(p0[4]);return}return msg(+d.msg)}
+ if(d.fol){const p0=byId(+d.fol);if(p0&&p0[15]){location.href="product.html?id="+encodeURIComponent(p0[15]);return}}
  if(d.fol){const p=byId(+d.fol),i=fol.indexOf(p[4]);i>-1?fol.splice(i,1):fol.push(p[4]);ls.set("nm_fol",fol);toast(i>-1?"Unfollowed "+p[4]:"Following "+p[4]+" on this device");render();if($("dg").open&&$("dp").querySelector(".gal"))view(p[0]);return}
  if(d.cmp){const id=+d.cmp,i=cmp.indexOf(id);if(i>-1)cmp.splice(i,1);else if(cmp.length<3)cmp.push(id);else toast("You can compare up to 3 products");return render()}
  if(d.share){const p=byId(+d.share);if(navigator.share)navigator.share({title:p[1]+" on Naija Mart",url:location.href}).catch(()=>{});else toast("Sharing isn’t supported on this device");return}
@@ -331,6 +333,12 @@ const net=()=>$("off").style.display=navigator.onLine?"none":"block";addEventLis
  const c=CATS.indexOf(p.get("cat"));if(c>-1){cat=String(c);document.querySelectorAll(".chip").forEach(x=>x.setAttribute("aria-pressed",x.dataset.c===cat))}})();
 const E=s=>String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
 const safeImg=s=>/^data:image\/jpeg;base64,[A-Za-z0-9+\/=]+$/.test(s||"")?s:"";
+const rsv=new Set();
+async function realSave(p){
+ const au=window.__au;if(!au||!au.currentUser){location.href="auth.html";return}
+ const u=au.currentUser,fs=window.__fs,db=window.__db,id=u.uid+"_"+p[15];
+ try{if(rsv.has(p[15])){await fs.deleteDoc(fs.doc(db,"saves",id));rsv.delete(p[15]);fs.updateDoc(fs.doc(db,"products",p[15]),{saveCount:fs.increment(-1)}).catch(()=>{});toast("Removed from saved")}else{await fs.setDoc(fs.doc(db,"saves",id),{userId:u.uid,pid:p[15],createdAt:fs.serverTimestamp()});rsv.add(p[15]);fs.updateDoc(fs.doc(db,"products",p[15]),{saveCount:fs.increment(1)}).catch(()=>{});toast("Saved")}render()}catch(e){toast("Couldn’t save. Please try again.")}
+}
 boot();
 async function boot(){
  try{
@@ -338,6 +346,8 @@ async function boot(){
   const fs=await import("https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js");
   const app=a.initializeApp({apiKey:"AIzaSyCRQapXUQ32P4tpKaMiS11uccUc-z5k9yg",authDomain:"naija-mart-35ba6.firebaseapp.com",projectId:"naija-mart-35ba6",appId:"1:761759831734:web:2780ba182d5947d0cff817"});
   const db=fs.getFirestore(app);window.__db=db;window.__fs=fs;
+  const au=await import("https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js");window.__au=au.getAuth(app);
+  au.onAuthStateChanged(window.__au,async u=>{if(!u)return;try{const s=await fs.getDocs(fs.query(fs.collection(db,"saves"),fs.where("userId","==",u.uid)));s.docs.forEach(d=>rsv.add(d.data().pid));render()}catch(e){}});
   const [ps,ss]=await Promise.all([fs.getDocs(fs.query(fs.collection(db,"products"),fs.where("status","==","active"))),fs.getDocs(fs.collection(db,"shops"))]);
   const shops={};ss.docs.forEach(d=>shops[d.id]=d.data());
   const days=t=>t&&t.seconds?Math.max(0,Math.floor((Date.now()/1000-t.seconds)/86400)):0;
