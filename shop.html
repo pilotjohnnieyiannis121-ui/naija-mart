@@ -23,7 +23,7 @@ h1,h2,h3{font-family:"Playfair Display",Georgia,serif;margin:0;line-height:1.15}
 .btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:48px;padding:0 20px;border-radius:99px;border:1.5px solid var(--g1);background:none;color:var(--g1);font-weight:700;cursor:pointer}
 .btn.p{background:var(--g1);color:#fff}.btn.g{background:linear-gradient(90deg,var(--gold),var(--gold2));border-color:transparent;color:#1D2822}
 .btn.s{min-height:40px;padding:0 14px;font-size:.88rem}.btn.w{width:100%}.btn.r{border-color:var(--rd);color:var(--rd)}.btn[disabled]{opacity:.55;cursor:not-allowed}
-.btn[aria-pressed=true]{background:#E4EEE6}
+.btn[aria-pressed=true]{background:#E4EEE6;color:var(--g1);border-color:var(--g2)}
 .card{background:var(--sf);border:1px solid var(--ln);border-radius:22px;padding:16px;margin:12px 0;box-shadow:0 6px 18px rgba(15,61,46,.05)}
 .mu{color:var(--mu);font-size:.92rem}.sp{flex:1;min-width:0}.row{display:flex;gap:10px;align-items:center}
 .sec{display:flex;align-items:baseline;justify-content:space-between;margin:22px 0 10px}.sec h2{font-size:1.3rem}.sec a{color:var(--g2);font-weight:700;font-size:.9rem}
@@ -124,11 +124,12 @@ async function toggleSave(pid){
  try{if(S.saves.has(pid)){await deleteDoc(doc(db,"saves",id));S.saves.delete(pid);cnt(pid,-1);toast("Removed from saved")}else{await setDoc(doc(db,"saves",id),{userId:S.u.uid,pid,createdAt:serverTimestamp()});S.saves.add(pid);cnt(pid,1);toast("Saved")}return true}
  catch(e){toast("Couldn’t update. Please try again.");return false}
 }
+const fc=(sid,n)=>setDoc(doc(db,"shopStats",sid),{followers:increment(n)},{merge:true}).catch(()=>{});
 async function toggleFollow(sid,name){
  if(!S.u){need();return false}
  if(sid===S.u.uid){toast("This is your own shop.");return false}
  const id=S.u.uid+"_"+sid;
- try{if(S.follows.has(sid)){await deleteDoc(doc(db,"follows",id));S.follows.delete(sid);toast("Unfollowed "+name)}else{await setDoc(doc(db,"follows",id),{buyerId:S.u.uid,sellerId:sid,shopName:String(name).slice(0,80),createdAt:serverTimestamp()});S.follows.set(sid,name);toast("Following "+name)}return true}
+ try{if(S.follows.has(sid)){await deleteDoc(doc(db,"follows",id));S.follows.delete(sid);fc(sid,-1);toast("Unfollowed "+name)}else{await setDoc(doc(db,"follows",id),{buyerId:S.u.uid,sellerId:sid,shopName:String(name).slice(0,80),createdAt:serverTimestamp()});S.follows.set(sid,name);fc(sid,1);toast("Following "+name)}return true}
  catch(e){toast("Couldn’t update. Please try again.");return false}
 }
 function pcard(p){
@@ -143,14 +144,17 @@ document.addEventListener("click",async e=>{
  if(ok&&typeof onSocial==="function")onSocial();
 });
 
+const beat=()=>{if(S.u&&document.visibilityState==="visible")setDoc(doc(db,"presence",S.u.uid),{lastSeen:serverTimestamp()},{merge:true}).catch(()=>{})};
+setTimeout(beat,6000);setInterval(beat,120000);addEventListener("visibilitychange",beat);
+
 const id=new URLSearchParams(location.search).get("id"),M=$("m");
-let SH=null,L=[],booted=false;
+let SH=null,L=[],booted=false,FOL=null,wasF=false;
 function gone(t){$("hd").innerHTML="";M.innerHTML='<div class="card empty" style="margin-top:20px">'+I("store")+'<h3>'+(t||"Shop not available")+'</h3><p>This shop may not be approved yet, or the link is wrong.</p><a class="btn p" href="marketplace.html">Back to marketplace</a></div>'}
 function paint(){
  const v=SH.verified===true,fl=S.follows.has(id),own=S.u&&S.u.uid===id,ci=Math.max(0,CATS.indexOf(SH.category)),name=esc(SH.shopName);
  $("hd").innerHTML='<div class="row" style="gap:14px"><div class="lt" style="background:'+TILE[ci%4]+'">'+art(ci)+'</div><div class="sp"><h1>'+name+'</h1><div class="s">'+I("pin")+' '+esc(SH.city)+', '+esc(SH.state)+'</div><div style="margin-top:8px">'+(v?'<span class="pl">'+I("shield")+' Verified seller</span>':'<span class="s">Not verified</span>')+'</div></div></div>';
  M.innerHTML='<div class="acts">'+(own?'<a class="btn p full" href="seller.html">Open my seller dashboard</a>':'<button class="btn p" data-fl="'+esc(id)+'" data-n="'+name+'" aria-pressed="'+fl+'">'+(fl?"Following":"Follow")+'</button><a class="btn" href="chat.html?to='+encodeURIComponent(id)+'&shop='+encodeURIComponent(SH.shopName)+'">'+I("chat")+' Message</a>')+'<button class="btn full" id="sh">'+I("share")+' Share this shop</button></div>'+
- '<div class="card"><dl style="display:grid;grid-template-columns:auto 1fr;gap:6px 14px;margin:0"><dt class="mu">Category</dt><dd style="margin:0;font-weight:600">'+esc(SH.category||"–")+'</dd><dt class="mu">Location</dt><dd style="margin:0;font-weight:600">'+esc(SH.area||"")+(SH.area?", ":"")+esc(SH.city)+', '+esc(SH.state)+'</dd><dt class="mu">Live products</dt><dd style="margin:0;font-weight:600">'+L.length+'</dd></dl></div>'+
+ '<div class="card"><dl style="display:grid;grid-template-columns:auto 1fr;gap:6px 14px;margin:0"><dt class="mu">Category</dt><dd style="margin:0;font-weight:600">'+esc(SH.category||"–")+'</dd><dt class="mu">Location</dt><dd style="margin:0;font-weight:600">'+esc(SH.area||"")+(SH.area?", ":"")+esc(SH.city)+', '+esc(SH.state)+'</dd><dt class="mu">Followers</dt><dd style="margin:0;font-weight:600">'+(FOL===null?"–":FOL)+'</dd><dt class="mu">Live products</dt><dd style="margin:0;font-weight:600">'+L.length+'</dd></dl></div>'+
  '<div class="sec"><h2>Products</h2></div>'+(L.length?'<div class="grid">'+L.map(pcard).join("")+'</div>':'<div class="card empty">'+I("box")+'<h3>No products yet</h3><p>This seller hasn’t published any products.</p></div>')+
  '<div class="note">Naija Mart doesn’t take payment or guarantee delivery. Confirm price and stock with the seller, and never pay in advance to someone you can’t verify.</div>';
 }
@@ -162,10 +166,12 @@ async function boot(){
   SH=s.data();S.shops[id]=SH;document.title=SH.shopName+" – Naija Mart";
   const p=await getDocs(query(collection(db,"products"),where("sellerId","==",id),where("status","==","active")));
   L=p.docs.map(norm).sort((a,b)=>sec(b.createdAt)-sec(a.createdAt));
+  try{const st=await getDoc(doc(db,"shopStats",id));FOL=st.exists()?Math.max(0,Number(st.data().followers)||0):0}catch(e){FOL=null}
+  wasF=S.follows.has(id);
   paint();
  }catch(e){gone("Couldn’t load this shop. Check your connection.")}
 }
-function onSocial(){if(SH)paint()}
+function onSocial(){if(!SH)return;const now=S.follows.has(id);if(FOL!==null&&now!==wasF){FOL=Math.max(0,FOL+(now?1:-1))}wasF=now;paint()}
 document.addEventListener("click",async e=>{
  if(!e.target.closest("#sh"))return;
  const d={title:SH.shopName+" on Naija Mart",url:location.href};
