@@ -24,7 +24,7 @@ h1,h2,h3{font-family:"Playfair Display",Georgia,serif;margin:0;line-height:1.15}
 .btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:48px;padding:0 20px;border-radius:99px;border:1.5px solid var(--g1);background:none;color:var(--g1);font-weight:700;cursor:pointer}
 .btn.p{background:var(--g1);color:#fff}.btn.g{background:linear-gradient(90deg,var(--gold),var(--gold2));border-color:transparent;color:#1D2822}
 .btn.s{min-height:40px;padding:0 14px;font-size:.88rem}.btn.w{width:100%}.btn.r{border-color:var(--rd);color:var(--rd)}.btn[disabled]{opacity:.55;cursor:not-allowed}
-.btn[aria-pressed=true]{background:#E4EEE6}
+.btn[aria-pressed=true]{background:#E4EEE6;color:var(--g1);border-color:var(--g2)}
 .card{background:var(--sf);border:1px solid var(--ln);border-radius:22px;padding:16px;margin:12px 0;box-shadow:0 6px 18px rgba(15,61,46,.05)}
 .mu{color:var(--mu);font-size:.92rem}.sp{flex:1;min-width:0}.row{display:flex;gap:10px;align-items:center}
 .sec{display:flex;align-items:baseline;justify-content:space-between;margin:22px 0 10px}.sec h2{font-size:1.3rem}.sec a{color:var(--g2);font-weight:700;font-size:.9rem}
@@ -153,11 +153,12 @@ async function toggleSave(pid){
  try{if(S.saves.has(pid)){await deleteDoc(doc(db,"saves",id));S.saves.delete(pid);cnt(pid,-1);toast("Removed from saved")}else{await setDoc(doc(db,"saves",id),{userId:S.u.uid,pid,createdAt:serverTimestamp()});S.saves.add(pid);cnt(pid,1);toast("Saved")}return true}
  catch(e){toast("Couldn’t update. Please try again.");return false}
 }
+const fc=(sid,n)=>setDoc(doc(db,"shopStats",sid),{followers:increment(n)},{merge:true}).catch(()=>{});
 async function toggleFollow(sid,name){
  if(!S.u){need();return false}
  if(sid===S.u.uid){toast("This is your own shop.");return false}
  const id=S.u.uid+"_"+sid;
- try{if(S.follows.has(sid)){await deleteDoc(doc(db,"follows",id));S.follows.delete(sid);toast("Unfollowed "+name)}else{await setDoc(doc(db,"follows",id),{buyerId:S.u.uid,sellerId:sid,shopName:String(name).slice(0,80),createdAt:serverTimestamp()});S.follows.set(sid,name);toast("Following "+name)}return true}
+ try{if(S.follows.has(sid)){await deleteDoc(doc(db,"follows",id));S.follows.delete(sid);fc(sid,-1);toast("Unfollowed "+name)}else{await setDoc(doc(db,"follows",id),{buyerId:S.u.uid,sellerId:sid,shopName:String(name).slice(0,80),createdAt:serverTimestamp()});S.follows.set(sid,name);fc(sid,1);toast("Following "+name)}return true}
  catch(e){toast("Couldn’t update. Please try again.");return false}
 }
 function pcard(p){
@@ -172,8 +173,10 @@ document.addEventListener("click",async e=>{
  if(ok&&typeof onSocial==="function")onSocial();
 });
 
+const beat=()=>{if(S.u&&document.visibilityState==="visible")setDoc(doc(db,"presence",S.u.uid),{lastSeen:serverTimestamp()},{merge:true}).catch(()=>{})};
+setTimeout(beat,6000);setInterval(beat,120000);addEventListener("visibilitychange",beat);
 const qs=new URLSearchParams(location.search),toId=qs.get("to"),toShop=(qs.get("shop")||"").slice(0,80),toPid=qs.get("pid");
-let me="",list=[],cur=null,msgs=[],unM=null,filt="all",q="",isSeller=false,ctxP=null,lastMark=0;
+let me="",list=[],cur=null,msgs=[],unM=null,unP=null,pres=null,roleTxt="",filt="all",q="",isSeller=false,ctxP=null,lastMark=0;
 const myF=c=>c.buyerId===S.u.uid?"buyerSeen":"sellerSeen",otF=c=>c.buyerId===S.u.uid?"sellerSeen":"buyerSeen";
 const other=c=>c.buyerId===S.u.uid?c.shopName:c.buyerName;
 const ini=s=>String(s||"?").trim().split(/\s+/).slice(0,2).map(w=>w[0]).join("").toUpperCase()||"?";
@@ -204,6 +207,9 @@ function drawThread(){
  if(atEnd||!e.dataset.s){e.scrollTop=e.scrollHeight;e.dataset.s="1"}
 }
 function drawCtx(){const x=$("cx");if(!ctxP||!cur||msgs.some(m=>m.pid===ctxP.id)){x.hidden=true;return}x.hidden=false;const ci=catOf(ctxP);x.innerHTML='<span class="pt" style="background:'+TILE[ci%4]+'">'+art(ci)+'</span><div class="sp"><div class="mu">Asking about</div><b>'+esc(ctxP.name)+'</b> · '+N(ctxP.price)+'</div><button class="btn s" data-nc="1" type="button">Remove</button>'}
+function presTxt(d){if(!d||d.show===false||!d.lastSeen)return "";const s=sec(d.lastSeen);if(!s)return "";if(Date.now()/1000-s<180)return "Online";const k=dayLab(d.lastSeen);return "Last seen "+(k==="Today"?"today at "+hm(d.lastSeen):k==="Yesterday"?"yesterday at "+hm(d.lastSeen):"on "+k)}
+function drawHead(){const e=$("ts");if(e)e.textContent=presTxt(pres)||roleTxt}
+setInterval(drawHead,60000);
 function markSeen(){
  if(!cur||cur.isNew)return;
  const lo=[...msgs].reverse().find(m=>m.from!==S.u.uid);if(!lo)return;
@@ -212,18 +218,18 @@ function markSeen(){
 }
 async function openChat(c){
  cur=c;msgs=[];lastMark=0;$("lv").hidden=true;$("tv").hidden=false;$("ms").dataset.s="";
- $("ta").textContent=ini(other(c));$("tn").textContent=other(c);$("ts").textContent=c.buyerId===S.u.uid?"Seller":"Customer";
+ $("ta").textContent=ini(other(c));$("tn").textContent=other(c);roleTxt=c.buyerId===S.u.uid?"Seller":"Customer";pres=null;drawHead();if(unP){unP();unP=null}try{unP=onSnapshot(doc(db,"presence",c.buyerId===S.u.uid?c.sellerId:c.buyerId),s=>{pres=s.exists()?s.data():null;drawHead()},()=>{})}catch(e){}
  $("tsh").hidden=c.buyerId!==S.u.uid;$("tsh").href="shop.html?id="+encodeURIComponent(c.sellerId);
  drawThread();drawCtx();
  if(unM){unM();unM=null}
  if(!c.isNew)subMsgs();
- if(c.buyerId===S.u.uid){try{const s=await getDoc(doc(db,"shops",c.sellerId));if(s.exists()&&cur&&cur.id===c.id){const x=s.data();$("ts").textContent=(x.verified===true?"Verified seller · ":"Seller · ")+x.city+", "+x.state}}catch(e){}}
+ if(c.buyerId===S.u.uid){try{const s=await getDoc(doc(db,"shops",c.sellerId));if(s.exists()&&cur&&cur.id===c.id){const x=s.data();roleTxt=(x.verified===true?"Verified seller · ":"Seller · ")+x.city+", "+x.state;drawHead()}}catch(e){}}
 }
 function subMsgs(){
  if(unM)unM();
  unM=onSnapshot(query(collection(db,"chats",cur.id,"messages"),orderBy("at","asc")),s=>{msgs=s.docs.map(d=>d.data());drawThread();drawCtx();markSeen()},()=>toast("Couldn’t load messages. Reload the page."));
 }
-function showList(){if(unM){unM();unM=null}cur=null;ctxP=null;$("tv").hidden=true;$("lv").hidden=false;drawList()}
+function showList(){if(unM){unM();unM=null}if(unP){unP();unP=null}cur=null;ctxP=null;$("tv").hidden=true;$("lv").hidden=false;drawList()}
 async function shrink(file){
  const u=URL.createObjectURL(file);
  try{
