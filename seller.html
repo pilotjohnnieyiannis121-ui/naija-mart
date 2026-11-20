@@ -3,126 +3,137 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta name="color-scheme" content="dark">
+<meta name="theme-color" content="#0F4A33">
 <title>Seller dashboard – Naija Mart</title>
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700;800&family=Manrope:wght@500;600;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@500;600;700;800&family=Manrope:wght@500;600;700;800&display=swap" rel="stylesheet">
 <style>
-:root{--g0:#06231A;--g1:#0B3A2A;--g2:#12503A;--gold:#D9B24E;--gold2:#F2D06B;--tx:#F2F6F3;--mu:#A9BDB2;--ln:rgba(255,255,255,.13);--cd:rgba(255,255,255,.07);--rd:#F2928B;--ok:#58D68D}
+:root{--g:#0F4A33;--g2:#1B6B49;--gold:#E2B44A;--gold2:#F3CE75;--bg:#F5F6F4;--sf:#fff;--tx:#17211C;--mu:#667269;--ln:#E4E8E3;--ti:#EEF2EE;--rd:#C62828;--ok:#1E8A53}
+html[data-theme=dark]{--bg:#0D1411;--sf:#151F1A;--tx:#EAF0EC;--mu:#9CA9A1;--ln:#25322B;--ti:#1B2721}
 *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
-html{background:var(--g0)}
-body{margin:0;min-height:100vh;color:var(--tx);font:500 16px/1.5 Manrope,Inter,system-ui,sans-serif;background:radial-gradient(120% 60% at 50% 0,#14573F 0,#0B3A2A 38%,#06231A 100%) fixed;padding:env(safe-area-inset-top,0) 0 0}
-button,input,select,textarea{font:inherit;color:inherit}
-:focus-visible{outline:3px solid var(--gold2);outline-offset:2px}
+html{background:var(--bg)}
+body{margin:0;background:var(--bg);color:var(--tx);font:500 16px/1.5 "DM Sans",Manrope,system-ui,sans-serif;-webkit-text-size-adjust:100%}
+button,input,select,textarea{font:inherit;color:inherit}a{color:inherit;text-decoration:none}
+:focus-visible{outline:3px solid var(--gold);outline-offset:2px}
 svg.i{width:1.3em;height:1.3em;fill:none;stroke:currentColor;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round;flex:none;vertical-align:-.25em}
-h1,h2,h3{font-family:"Playfair Display",Georgia,serif;margin:0}
-.app{max-width:720px;margin:0 auto;padding:12px 14px calc(96px + env(safe-area-inset-bottom,0))}
-.hd{display:flex;align-items:center;gap:10px;min-height:52px}
-.logo{display:flex;align-items:center;gap:9px;font:800 1.2rem "Playfair Display",Georgia,serif;flex:1;color:inherit;text-decoration:none}
-.logo i{width:36px;height:36px;border-radius:11px;background:var(--g0);color:var(--gold2);display:grid;place-items:center;font:800 1.1rem "Playfair Display",serif;font-style:normal;box-shadow:inset 0 0 0 1px var(--gold)}
-.logo b{color:var(--gold2)}
-.ib{width:46px;height:46px;border-radius:14px;border:1px solid var(--ln);background:var(--cd);display:grid;place-items:center;cursor:pointer}
-.ttl{display:flex;align-items:center;gap:10px;margin:10px 0 4px}.ttl h2{font-size:1.5rem;flex:1}
-.back{width:42px;height:42px;border-radius:12px;border:1px solid var(--ln);background:var(--cd);display:grid;place-items:center;cursor:pointer}
-.mu{color:var(--mu);font-size:.92rem}
-.card{background:var(--cd);border:1px solid var(--ln);border-radius:24px;padding:16px;margin:12px 0;backdrop-filter:blur(6px)}
-.hero{border-radius:28px;padding:18px;margin-top:6px;background:linear-gradient(150deg,rgba(242,208,107,.16),rgba(255,255,255,.05) 55%);border:1px solid rgba(217,178,78,.45)}
-.hr{display:flex;gap:14px;align-items:center}
-.lt{width:84px;height:84px;border-radius:50%;display:grid;place-items:center;flex:none;box-shadow:0 0 0 3px var(--gold),0 0 0 6px rgba(217,178,78,.25)}
-.lt .art{width:72%;max-width:none;height:auto}
-.hero h1{font-size:1.65rem;line-height:1.1;overflow-wrap:anywhere}
-.loc{color:var(--mu);font-size:.9rem;margin-top:3px}
-.pills{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
-.pill{display:inline-flex;gap:6px;align-items:center;border-radius:99px;padding:4px 12px;font-size:.8rem;font-weight:800}
-.pill.ok{background:#CDEBD9;color:#0F3D2E}.pill.gold{background:linear-gradient(90deg,var(--gold),var(--gold2));color:#1D2822}.pill.off{border:1px solid var(--ln);color:var(--mu)}.pill.wait{background:#F6E9B8;color:#5C4700}.pill.bad{background:#F7D3D0;color:#7A1912}
-.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:48px;padding:0 20px;border-radius:99px;border:1.5px solid var(--gold);background:none;color:var(--gold2);font-weight:700;cursor:pointer;text-decoration:none}
-.btn.g{background:linear-gradient(90deg,var(--gold),var(--gold2));color:#1D2822;border-color:transparent}
-.btn.w{width:100%}.btn.s{min-height:40px;padding:0 14px;font-size:.88rem}.btn.r{border-color:var(--rd);color:var(--rd)}
-.btn[disabled]{opacity:.5;cursor:not-allowed}
-.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin:12px 0}
-.s1{background:var(--cd);border:1px solid var(--ln);border-radius:18px;padding:10px 4px;text-align:center}
-.s1 svg{color:var(--gold2)}.s1 b{display:block;font-size:1.3rem;line-height:1.2;font-family:"Playfair Display",serif}
-.s1 small{color:var(--mu);font-size:.72rem;font-weight:700}
-.s1.soon b{color:var(--mu)}.s1.soon em{display:block;font-style:normal;font-size:.62rem;color:var(--gold);font-weight:800;letter-spacing:.04em}
-.sec{font-size:1.15rem;margin:20px 0 8px}
+h1,h2,h3{margin:0;font-family:"DM Sans",Manrope,sans-serif}
+#app{max-width:720px;margin:0 auto;min-height:100vh;padding-bottom:calc(96px + env(safe-area-inset-bottom,0))}
+.ld{padding:40px 18px;color:var(--mu)}
+.hb{position:sticky;top:0;z-index:30;background:var(--g);color:#fff;display:flex;align-items:center;gap:6px;padding:calc(8px + env(safe-area-inset-top,0)) 10px 8px;min-height:58px}
+.hb h1{flex:1;font-size:1.15rem;font-weight:700;padding-left:4px}
+.hbi{width:42px;height:42px;border-radius:50%;border:0;background:transparent;color:#fff;display:grid;place-items:center;cursor:pointer;position:relative;flex:none}
+.hbi .n{position:absolute;top:2px;right:2px;background:#E5484D;border-radius:99px;min-width:18px;height:18px;font-size:.65rem;font-weight:800;display:grid;place-items:center;padding:0 4px}
+.lg{flex:1;display:flex;align-items:center;gap:8px;font-weight:800;font-size:1.3rem;padding-left:6px}.lg b{color:var(--gold)}
+.pad{padding:14px}
+.sbar{background:var(--g);padding:0 14px 12px}.sbar input{width:100%;min-height:46px;border-radius:12px;border:0;padding:0 14px;background:#fff;color:#17211C}
+.card{background:var(--sf);border:1px solid var(--ln);border-radius:16px;padding:14px;margin:12px 0}
+.mu{color:var(--mu);font-size:.92rem}.sp{flex:1;min-width:0}.row{display:flex;gap:10px;align-items:center}
+.wc{display:flex;gap:12px;align-items:center;justify-content:space-between;padding:4px 2px 6px}
+.wc h2{font-size:1.35rem;line-height:1.25;font-weight:800}.wc p{margin:6px 0 0;color:var(--mu);font-size:.92rem}
+.av{border-radius:50%;overflow:hidden;display:grid;place-items:center;flex:none;box-shadow:0 0 0 3px var(--gold);position:relative}.av img{width:100%;height:100%;object-fit:cover}.av .art{width:70%;max-width:none}
+.sg{display:grid;grid-template-columns:repeat(4,1fr);background:var(--g);border-radius:18px;margin:12px 0;padding:14px 4px;color:#fff}
+.sc{background:none;border:0;color:#fff;text-align:center;cursor:pointer;padding:4px 2px}.sc svg{color:var(--gold);font-size:1.4em}.sc b{display:block;font-size:1.3rem;font-weight:800;line-height:1.3}.sc small{font-size:.74rem;opacity:.9;font-weight:600}
+.pm{display:flex;gap:12px;align-items:center;border-radius:16px;padding:12px 14px;background:#3F3B17;border:1px solid var(--gold);color:#fff;margin:12px 0}
+.pm>svg{font-size:2rem;color:var(--gold)}.pm b{color:var(--gold2);font-size:1.02rem;display:block}.pm small{font-size:.78rem;opacity:.9;line-height:1.3;display:block}
+.pb2{border:0;background:linear-gradient(90deg,var(--gold),var(--gold2));color:#2A2508;font-weight:800;border-radius:99px;min-height:40px;padding:0 16px;cursor:pointer;white-space:nowrap}
+.sec{display:flex;justify-content:space-between;align-items:baseline;margin:20px 0 8px}.sec h3{font-size:1.1rem;font-weight:800}.sec a,.sec button{color:var(--g2);font-weight:700;font-size:.9rem;background:none;border:0;cursor:pointer}
+html[data-theme=dark] .sec a,html[data-theme=dark] .sec button{color:var(--gold2)}
 .qa{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
-.qa button{background:var(--cd);border:1px solid var(--ln);border-radius:18px;min-height:88px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;font-size:.78rem;font-weight:700;cursor:pointer;color:var(--tx)}
-.qa svg{color:var(--gold2);font-size:1.4em}
-.row{display:flex;gap:10px;align-items:center}.sp{flex:1;min-width:0}
-.act{display:flex;gap:12px;align-items:center;padding:10px 0;border-top:1px solid var(--ln)}.act:first-child{border-top:0}
-.dot{width:40px;height:40px;border-radius:50%;background:rgba(88,214,141,.16);color:var(--ok);display:grid;place-items:center;flex:none}
-.prem{display:flex;gap:12px;align-items:center;border-radius:22px;padding:14px;border:1px solid rgba(217,178,78,.5);background:linear-gradient(90deg,rgba(217,178,78,.22),rgba(217,178,78,.06))}
-.prem svg{font-size:2rem;color:var(--gold2)}
-.chips{display:flex;gap:8px;overflow-x:auto;padding:4px 0 10px;scrollbar-width:none}.chips::-webkit-scrollbar{display:none}
-.chip{flex:none;border:1px solid var(--ln);background:var(--cd);border-radius:99px;padding:8px 14px;min-height:42px;font-weight:700;cursor:pointer;font-size:.9rem}
-.chip[aria-pressed=true]{background:linear-gradient(90deg,var(--gold),var(--gold2));color:#1D2822;border-color:transparent}
-.tools{display:flex;gap:8px}.tools input,.tools select{min-height:46px;border-radius:14px;border:1px solid var(--ln);background:var(--cd);padding:0 12px}.tools input{flex:1;min-width:0}.tools select{max-width:130px}
-.tools select option{color:#1D2822}
-.grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:10px}
-.pc{background:rgba(255,255,255,.95);color:#1D2822;border-radius:22px;overflow:hidden;display:flex;flex-direction:column}
-.im{aspect-ratio:1;position:relative;display:grid;place-items:center}.im img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}.im .art{width:62%;max-width:none}
-.st{position:absolute;left:8px;top:8px;border-radius:99px;padding:2px 10px;font-size:.72rem;font-weight:800;color:#fff;background:#1E8A53}
-.st.hd{background:#6B756E}.st.out{background:#B3261E}.st.rm{background:#7A1912}
-.pb{padding:10px 10px 12px;display:flex;flex-direction:column;gap:2px;flex:1}
-.pb h3{font:700 .98rem Manrope,sans-serif;line-height:1.25;overflow-wrap:anywhere}.pr{font:800 1.12rem "Playfair Display",serif;color:#0F3D2E}
-.mt{color:#68756E;font-size:.78rem;line-height:1.35}
-.bt{display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-top:6px}
-.bt button{min-height:40px;border-radius:12px;border:1.5px solid #0F3D2E;background:#0F3D2E;color:#fff;font-weight:700;font-size:.82rem;cursor:pointer}
-.bt button.d{background:#fff;border-color:#B3261E;color:#B3261E}.bt.s button{background:#fff;color:#0F3D2E}
-.bt button:disabled{opacity:.5}
+.qa button{background:var(--ti);border:1px solid var(--ln);border-radius:14px;min-height:92px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;font-size:.76rem;font-weight:600;cursor:pointer;position:relative;text-align:center;padding:4px}
+.qa svg{font-size:1.5em;color:var(--g2)}.qa .bg{position:absolute;top:6px;right:8px;background:#E5484D;color:#fff;border-radius:99px;min-width:18px;height:18px;font-size:.65rem;font-weight:800;display:grid;place-items:center;padding:0 4px}
+.ac{display:flex;gap:12px;align-items:center;width:100%;background:var(--sf);border:1px solid var(--ln);border-radius:14px;padding:10px 12px;margin-bottom:8px;text-align:left;cursor:pointer}
+.ac .ci{width:42px;height:42px;border-radius:50%;background:#DDEBE3;color:var(--g);display:grid;place-items:center;font-weight:800;flex:none}
+.ac b{font-weight:700;font-size:.95rem;display:block}.ac small{color:var(--mu);font-size:.8rem}.ac>svg{color:var(--g2)}.ac.un{border-color:var(--g2)}
+.chips{display:flex;gap:8px;overflow-x:auto;padding:2px 0 12px;scrollbar-width:none}.chips::-webkit-scrollbar{display:none}
+.chip{flex:none;border:1px solid var(--ln);background:var(--sf);border-radius:99px;padding:7px 16px;min-height:40px;font-weight:600;cursor:pointer;font-size:.9rem;color:var(--mu)}
+.chip[aria-pressed=true]{background:var(--g);color:#fff;border-color:var(--g)}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.pc{background:var(--sf);border:1px solid var(--ln);border-radius:16px;overflow:hidden}
+.pim{display:grid;place-items:center;aspect-ratio:1;position:relative;overflow:hidden}.pim img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}.pim .art{width:60%;max-width:none}
+.pi{padding:8px 10px 10px}.pi h3{font-size:.95rem;font-weight:600;line-height:1.3;overflow-wrap:anywhere}
+.ps{font-size:.8rem;font-weight:700;display:flex;align-items:center;gap:6px;color:var(--ok);margin-bottom:2px}
+.dt{width:9px;height:9px;border-radius:50%;background:var(--ok);display:inline-block}.dt.hd{background:#8A948D}.dt.out{background:var(--rd)}.dt.rm{background:#7A1912}
+.ps:has(.hd){color:var(--mu)}.ps:has(.out),.ps:has(.rm){color:var(--rd)}
+.pp{display:flex;justify-content:space-between;align-items:center;margin-top:2px}.pp b{font-size:1.02rem;font-weight:800}
+.dots{width:36px;height:36px;border:0;background:none;color:var(--mu);border-radius:50%;display:grid;place-items:center;cursor:pointer}
+.pv{color:var(--mu);font-size:.76rem}
+.fabw{position:sticky;bottom:calc(84px + env(safe-area-inset-bottom,0));padding:0 14px;z-index:15}
+.fab{width:100%;min-height:50px;border:0;border-radius:12px;background:var(--g);color:#fff;font-weight:700;font-size:1rem;display:flex;align-items:center;justify-content:center;gap:8px;cursor:pointer;box-shadow:0 6px 16px rgba(15,74,51,.35)}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:46px;padding:0 20px;border-radius:12px;border:1.5px solid var(--g);background:none;color:var(--g);font-weight:700;cursor:pointer}
+html[data-theme=dark] .btn{color:var(--gold2);border-color:var(--gold)}
+.btn.p{background:var(--g);color:#fff;border-color:var(--g)}.btn.g1{background:linear-gradient(90deg,var(--gold),var(--gold2));color:#2A2508;border-color:transparent}.btn.w{width:100%}.btn.r{border-color:var(--rd);color:var(--rd)}.btn[disabled]{opacity:.55}
+.in{width:100%;min-height:48px;border-radius:12px;border:1.5px solid var(--ln);background:var(--sf);padding:0 14px;margin-bottom:14px}textarea.in{padding:12px 14px;min-height:96px}
 label.f{display:block;font-weight:700;font-size:.9rem;margin:2px 0 6px}
-.in{width:100%;min-height:50px;border-radius:14px;border:1px solid var(--ln);background:rgba(255,255,255,.08);padding:0 14px;margin-bottom:14px}
-textarea.in{padding:12px 14px;min-height:100px}.in option{color:#1D2822}
 .two{display:grid;grid-template-columns:1fr 1fr;gap:10px}
-.pv{display:flex;gap:10px;flex-wrap:wrap;margin:6px 0 12px}
-.th{position:relative;width:84px;height:84px}.th img{width:100%;height:100%;object-fit:cover;border-radius:14px;border:1px solid var(--ln)}
-.th button{position:absolute;top:-8px;right:-8px;width:30px;height:30px;border-radius:50%;border:0;background:var(--rd);color:#1D2822;font-weight:800;cursor:pointer}
-.up{display:flex;align-items:center;justify-content:center;gap:8px;min-height:84px;width:84px;border:1.5px dashed var(--gold);border-radius:14px;color:var(--gold2);cursor:pointer;font-size:.72rem;font-weight:800;flex-direction:column;text-align:center}
-.up input{display:none}
-.msg{border-radius:14px;padding:12px 14px;margin:10px 0;display:none}.msg.err{display:block;background:#F7D3D0;color:#7A1912}.msg.ok{display:block;background:#CDEBD9;color:#0F3D2E}
-.empty{text-align:center;padding:34px 12px;color:var(--mu)}.empty svg{font-size:2.2rem;color:var(--gold)}.empty h3{color:var(--tx);margin:6px 0 4px}
-.menu button{display:flex;align-items:center;gap:14px;width:100%;min-height:58px;background:none;border:0;border-top:1px solid var(--ln);color:inherit;text-align:left;cursor:pointer;font-weight:700}
-.menu button:first-child{border-top:0}.menu svg{color:var(--gold2);font-size:1.4em}.menu .soon{margin-left:auto;font-size:.7rem;color:var(--gold);font-weight:800}
-.bar{height:10px;border-radius:99px;background:rgba(255,255,255,.1);overflow:hidden;margin:4px 0 10px}.bar i{display:block;height:100%;background:linear-gradient(90deg,var(--gold),var(--gold2))}
-dl{display:grid;grid-template-columns:auto 1fr;gap:6px 14px;margin:8px 0 0}dt{color:var(--mu)}dd{margin:0;font-weight:600;overflow-wrap:anywhere}
-.note{border-left:4px solid var(--gold);background:rgba(255,255,255,.06);padding:10px 12px;border-radius:0 12px 12px 0;font-size:.88rem;color:var(--mu);margin:12px 0}
-nav.bn{position:fixed;left:0;right:0;bottom:0;z-index:20;background:rgba(6,35,26,.94);backdrop-filter:blur(12px);border-top:1px solid var(--ln);padding:6px 8px calc(6px + env(safe-area-inset-bottom,0))}
-nav.bn div{max-width:720px;margin:0 auto;display:grid;grid-template-columns:repeat(5,1fr);align-items:end}
-nav.bn button{background:none;border:0;color:var(--mu);font-size:.7rem;font-weight:700;min-height:56px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;cursor:pointer}
-nav.bn button[aria-current=true]{color:var(--gold2)}
-nav.bn button{position:relative}.bd{position:absolute;top:4px;left:calc(50% + 6px);background:#E5484D;color:#fff;border-radius:99px;font-size:.65rem;min-width:18px;height:18px;display:grid;place-items:center;font-style:normal;font-weight:800;padding:0 4px}
-nav.bn .plus{position:relative;top:-14px}nav.bn .plus span{width:56px;height:56px;border-radius:50%;background:linear-gradient(135deg,var(--gold),var(--gold2));color:#1D2822;display:grid;place-items:center;box-shadow:0 6px 18px rgba(0,0,0,.45)}
-dialog{border:0;border-radius:26px;padding:0;width:calc(100% - 22px);max-width:560px;max-height:92vh;background:#0E3F2E;color:var(--tx);box-shadow:0 24px 60px rgba(0,0,0,.55)}
-dialog::backdrop{background:rgba(0,0,0,.6)}.dp{padding:18px;overflow:auto;max-height:92vh}
-.toast{position:fixed;left:50%;bottom:calc(94px + env(safe-area-inset-bottom,0));transform:translateX(-50%);background:#F2F6F3;color:#0B3A2A;padding:12px 18px;border-radius:14px;font-weight:800;z-index:90;display:none;max-width:92%;text-align:center}
-.sk{height:150px;border-radius:22px;background:linear-gradient(90deg,rgba(255,255,255,.06),rgba(255,255,255,.14),rgba(255,255,255,.06));background-size:200% 100%;animation:sh 1.2s infinite}
-@keyframes sh{to{background-position:-200% 0}}
-@media (prefers-reduced-motion:reduce){.sk{animation:none}}
+.pvw{display:flex;gap:10px;flex-wrap:wrap;margin:6px 0 12px}
+.th{position:relative;width:84px;height:84px}.th img{width:100%;height:100%;object-fit:cover;border-radius:12px;border:1px solid var(--ln)}
+.th button{position:absolute;top:-8px;right:-8px;width:28px;height:28px;border-radius:50%;border:0;background:var(--rd);color:#fff;font-weight:800;cursor:pointer}
+.up{display:flex;align-items:center;justify-content:center;gap:4px;min-height:84px;width:84px;border:1.5px dashed var(--g2);border-radius:12px;color:var(--g2);cursor:pointer;font-size:.72rem;font-weight:700;flex-direction:column;text-align:center}.up input{display:none}
+.msg{border-radius:12px;padding:12px 14px;margin:10px 0;display:none}.msg.err{display:block;background:#FBE0DE;color:#7A1912}.msg.ok{display:block;background:#DDF0E5;color:#145C38}
+.empty{text-align:center;padding:34px 12px;color:var(--mu)}.empty svg{font-size:2.2rem;color:var(--g2)}.empty h3{color:var(--tx);margin:6px 0 4px}
+.note{border-left:4px solid var(--gold);background:var(--ti);padding:10px 12px;border-radius:0 10px 10px 0;font-size:.88rem;color:var(--mu);margin:12px 0}
+.rws{background:var(--sf);border-top:1px solid var(--ln);border-bottom:1px solid var(--ln);margin:12px 0}
+.rw{display:flex;align-items:center;gap:14px;width:100%;background:none;border:0;border-bottom:1px solid var(--ln);padding:12px 16px;text-align:left;cursor:pointer;min-height:60px}
+.rws .rw:last-child{border-bottom:0}.rw .ri{color:var(--g2);display:grid;place-items:center;width:30px}.rw .ri svg{font-size:1.35em}
+html[data-theme=dark] .rw .ri{color:var(--gold2)}
+.rw .rt{flex:1;min-width:0}.rw b{display:block;font-weight:600}.rw small{display:block;color:var(--mu);font-size:.8rem;line-height:1.3}.rw>svg{color:var(--mu);font-size:1.1em}
+.rw.red b,.rw.red .ri{color:var(--rd)}.rw.gold .ri{color:var(--gold)}
+.sp2{display:flex;align-items:center;gap:14px;padding:16px;background:var(--sf);border-bottom:1px solid var(--ln);width:100%;border-top:0;border-left:0;border-right:0;text-align:left;cursor:pointer}
+.vt{display:inline-grid;place-items:center;width:18px;height:18px;border-radius:50%;background:#2A7FDB;color:#fff;vertical-align:middle}.vt svg{width:12px;height:12px;stroke-width:3}.vt.big{position:absolute;right:2px;bottom:6px;width:26px;height:26px;border:3px solid var(--sf)}.vt.big svg{width:14px;height:14px}
+.cv{height:150px;background:linear-gradient(135deg,var(--g),var(--g2));position:relative;overflow:hidden}.cv img{width:100%;height:100%;object-fit:cover;display:block}
+.pr0{text-align:center;padding:0 16px 14px;background:var(--sf)}
+.pav{position:relative;width:104px;height:104px;margin:-52px auto 8px;border-radius:50%;background:var(--sf);padding:4px}.pav .av{width:96px!important;height:96px!important;box-shadow:none}
+.pn{font-size:1.45rem;font-weight:800}.un{color:var(--mu);margin:2px 0 12px}
+.ps3{display:grid;grid-template-columns:repeat(3,1fr);border-top:1px solid var(--ln);margin-top:14px;padding-top:12px}.ps3 b{display:block;font-size:1.25rem;font-weight:800}.ps3 small{color:var(--mu)}.ps3 button{background:none;border:0;cursor:pointer}
+.inf{text-align:left;background:var(--sf);padding:4px 16px 12px}.inf p{margin:4px 0 10px}.inf .il{display:flex;gap:10px;align-items:center;margin:8px 0}.inf .il svg{color:var(--g2)}
+.tabs{display:grid;grid-template-columns:repeat(3,1fr);background:var(--sf);border-bottom:1px solid var(--ln);position:sticky;top:58px;z-index:10}
+.tabs button{background:none;border:0;border-bottom:3px solid transparent;min-height:48px;font-weight:700;color:var(--mu);cursor:pointer}.tabs button[aria-pressed=true]{color:var(--g);border-color:var(--g)}
+html[data-theme=dark] .tabs button[aria-pressed=true]{color:var(--gold2);border-color:var(--gold)}
+.mini{display:block;background:var(--sf);border:1px solid var(--ln);border-radius:12px;overflow:hidden}.mini .pim{aspect-ratio:1}.mini div.t{padding:6px 8px}.mini b{display:block;font-size:.88rem;font-weight:600;line-height:1.25}.mini span{font-weight:800;font-size:.9rem}
+.fh{display:flex;flex-direction:column;align-items:center;text-align:center;padding:22px 16px 12px}.fh svg{font-size:3.2rem;color:var(--g2)}.fh b{font-size:1.7rem;font-weight:800}
+.fi{display:flex;gap:12px;align-items:center;padding:10px 16px;border-bottom:1px solid var(--ln);background:var(--sf)}
+.cvp{height:120px;border-radius:12px;overflow:hidden;background:linear-gradient(135deg,var(--g),var(--g2));position:relative;margin-bottom:14px}.cvp img{width:100%;height:100%;object-fit:cover;display:block}
+.cvp label{position:absolute;right:8px;bottom:8px;background:rgba(0,0,0,.6);color:#fff;border-radius:99px;padding:6px 12px;font-size:.8rem;font-weight:700;cursor:pointer}
+.chg{display:flex;align-items:center;gap:14px;margin-bottom:14px}
+.bar{height:10px;border-radius:99px;background:var(--ti);overflow:hidden;margin:4px 0 10px}.bar i{display:block;height:100%;background:var(--g2)}
+.st4{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:12px 0}.st4 div{background:var(--sf);border:1px solid var(--ln);border-radius:14px;text-align:center;padding:12px 4px}.st4 b{display:block;font-size:1.35rem;font-weight:800}.st4 small{color:var(--mu);font-weight:600}
+.bn{position:fixed;left:0;right:0;bottom:0;z-index:40;background:var(--sf);border-top:1px solid var(--ln);padding:6px 8px calc(6px + env(safe-area-inset-bottom,0))}
+.bn div{max-width:720px;margin:0 auto;display:grid;grid-template-columns:repeat(5,1fr);align-items:end}
+.bn button{background:none;border:0;color:var(--mu);font-size:.72rem;font-weight:600;min-height:54px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;cursor:pointer;position:relative}
+.bn button[aria-current=true]{color:var(--g)}html[data-theme=dark] .bn button[aria-current=true]{color:var(--gold2)}
+.bn .plus{top:-16px;min-height:0}.bn .plus span{width:56px;height:56px;border-radius:50%;background:var(--g);color:#fff;display:grid;place-items:center;box-shadow:0 6px 16px rgba(15,74,51,.4);border:4px solid var(--sf)}
+.bn .bd{position:absolute;top:2px;left:calc(50% + 6px);background:#E5484D;color:#fff;border-radius:99px;font-size:.65rem;min-width:18px;height:18px;display:grid;place-items:center;font-style:normal;font-weight:800;padding:0 4px}
+dialog.sheet{border:0;padding:0;width:100%;max-width:620px;margin:auto auto 0;border-radius:20px 20px 0 0;background:var(--sf);color:var(--tx);box-shadow:0 -10px 40px rgba(0,0,0,.3);max-height:92vh}
+dialog.sheet::backdrop{background:rgba(0,0,0,.5)}.dp{padding:16px 16px calc(16px + env(safe-area-inset-bottom,0));overflow:auto;max-height:90vh}
+.sh-t{font-weight:800;margin-bottom:8px;overflow-wrap:anywhere}
+.sa{display:flex;align-items:center;gap:14px;width:100%;background:none;border:0;border-top:1px solid var(--ln);min-height:54px;font-weight:600;text-align:left;cursor:pointer;padding:0 4px}.sa svg{color:var(--g2)}.sa.red,.sa.red svg{color:var(--rd)}
+.toast{position:fixed;left:50%;bottom:calc(96px + env(safe-area-inset-bottom,0));transform:translateX(-50%);background:#17211C;color:#fff;padding:12px 18px;border-radius:12px;font-weight:700;z-index:90;display:none;max-width:92%;text-align:center}
+.faq details{border-top:1px solid var(--ln);padding:10px 0}.faq summary{font-weight:700;cursor:pointer}.faq p{margin:8px 0 0;color:var(--mu)}
+.rad{display:flex;align-items:center;gap:12px;min-height:52px;font-weight:600}.rad input{width:22px;height:22px;accent-color:var(--g)}
+@media (prefers-reduced-motion:reduce){*{scroll-behavior:auto!important}}
 @media (min-width:640px){.grid{grid-template-columns:repeat(3,1fr)}}
 [hidden]{display:none!important}
 </style>
 </head>
 <body>
-<div class="app" id="app">
- <div class="hd"><a class="logo" href="index.html"><i>N</i><span>Naija<b>Mart</b></span></a><button class="ib" data-go="notes" aria-label="Notifications"><svg class="i" viewBox="0 0 24 24"><path d="M6 17V11a6 6 0 0 1 12 0v6l2 2H4zM10 21h4"/></svg></button></div>
- <div id="load" class="mu" style="margin-top:24px">Loading your dashboard…</div>
- <main id="v" hidden></main>
-</div>
+<div id="app"><div id="load" class="ld">Loading your dashboard…</div><main id="v" hidden></main></div>
 <nav class="bn" id="bn" hidden aria-label="Dashboard"><div></div></nav>
-<dialog id="dg"><div class="dp" id="dp"></div></dialog>
-<dialog id="cf"><div class="dp"><h3 id="cft" style="margin-bottom:6px"></h3><p class="mu" id="cfm" style="margin:0 0 16px"></p><div class="row"><button class="btn sp" id="cn">Cancel</button><button class="btn g sp" id="cy">Confirm</button></div></div></dialog>
+<dialog id="dg" class="sheet"><div class="dp" id="dp"></div></dialog>
+<dialog id="cf" class="sheet"><div class="dp"><h3 id="cft" style="margin-bottom:6px"></h3><p class="mu" id="cfm" style="margin:0 0 16px"></p><div class="row"><button class="btn sp" id="cn">Cancel</button><button class="btn p sp" id="cy">Confirm</button></div></div></dialog>
 <div class="toast" id="toast" role="status"></div>
 
 <script type="module">
 const firebaseConfig={apiKey:"AIzaSyCRQapXUQ32P4tpKaMiS11uccUc-z5k9yg",authDomain:"naija-mart-35ba6.firebaseapp.com",projectId:"naija-mart-35ba6",appId:"1:761759831734:web:2780ba182d5947d0cff817"};
 import {initializeApp} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-import {getAuth,onAuthStateChanged,signOut} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
-import {getFirestore,doc,getDoc,setDoc,updateDoc,collection,query,where,getDocs,writeBatch,serverTimestamp} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+import {getAuth,onAuthStateChanged,signOut,sendPasswordResetEmail} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+import {getFirestore,doc,getDoc,setDoc,updateDoc,addDoc,collection,query,where,getDocs,writeBatch,serverTimestamp} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 const app=initializeApp(firebaseConfig),auth=getAuth(app),db=getFirestore(app);
+try{document.documentElement.dataset.theme=localStorage.getItem("nm_theme")==="dark"?"dark":"light"}catch(e){}
 const $=i=>document.getElementById(i);
 const esc=s=>String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
 const N=n=>"₦"+Number(n||0).toLocaleString("en-NG");
 const sec=t=>t&&t.seconds?t.seconds:0;
 const fd=t=>sec(t)?new Date(sec(t)*1000).toLocaleDateString("en-NG",{day:"numeric",month:"short",year:"numeric"}):"Just now";
+const ago=t=>{const s=sec(t);if(!s)return "just now";const d=Date.now()/1000-s;return d<60?"just now":d<3600?Math.floor(d/60)+"m ago":d<86400?Math.floor(d/3600)+"h ago":d<604800?Math.floor(d/86400)+"d ago":fd(t)};
 const STATES=["Abia","Adamawa","Akwa Ibom","Anambra","Bauchi","Bayelsa","Benue","Borno","Cross River","Delta","Ebonyi","Edo","Ekiti","Enugu","FCT (Abuja)","Gombe","Imo","Jigawa","Kaduna","Kano","Katsina","Kebbi","Kogi","Kwara","Lagos","Nasarawa","Niger","Ogun","Ondo","Osun","Oyo","Plateau","Rivers","Sokoto","Taraba","Yobe","Zamfara"];
 const CATS=["Fashion and clothing","Shoes and bags","Phones and electronics","Home and furniture","Beauty and personal care","Food and groceries","Health and wellness","Building materials","Automotive and spare parts","Sports and fitness","Books and education","Other products"];
 const TILE=["#E7F0E9","#FBF1D6","#E3EEF1","#F8E6DE"];
@@ -140,61 +151,75 @@ const ART=[
 '<rect x="8" y="40" width="48" height="12" rx="2" fill="#0F3D2E"/><rect x="12" y="28" width="42" height="12" rx="2" fill="#D9774B"/><rect x="10" y="16" width="40" height="12" rx="2" fill="#7FB7BE"/><path d="M14 46h40M18 34h30M16 22h26" stroke="#FFF6E0" stroke-width="2"/>',
 '<rect x="10" y="26" width="44" height="28" rx="3" fill="#E58A8A"/><rect x="8" y="20" width="48" height="10" rx="3" fill="#D86F6F"/><path d="M32 20v34" stroke="#C7A64A" stroke-width="6"/><path d="M32 20c-6-10-14-4-8 0zM32 20c6-10 14-4 8 0z" fill="#C7A64A"/>'];
 const art=i=>'<svg class="art" viewBox="0 0 64 64" role="img" aria-hidden="true">'+ART[i%12]+'</svg>';
-
-const P={home:"M4 11 12 4l8 7v9H4z",box:"M4 8l8-4 8 4v8l-8 4-8-4zM4 8l8 4 8-4M12 12v8",plus:"M12 5v14M5 12h14",chat:"M4 5h16v11H9l-5 4z",more:"M5 12h.01M12 12h.01M19 12h.01",eye:"M2 12s4-7 10-7 10 7 10 7-4 7-10 7S2 12 2 12zM12 15a3 3 0 1 0 0-6 3 3 0 0 0 0 6z",heart:"M12 20s-7-4.4-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 10c0 5.6-7 10-7 10z",users:"M9 11a4 4 0 1 0 0-8 4 4 0 0 0 0 8zM2 21c0-4 3-6 7-6s7 2 7 6M17 4a4 4 0 0 1 0 7M22 21c0-3-2-5-4-5.5",cart:"M3 4h2l2 11h11l2-8H7M9 20h.01M17 20h.01",chart:"M4 20V10M10 20V4M16 20v-8M22 20H2",store:"M4 9l1-5h14l1 5M4 9v11h16V9M4 9a3 3 0 0 0 5.3 1.9A3 3 0 0 0 14.7 10.9 3 3 0 0 0 20 9M9 20v-5h6v5",gear:"M12 15a3 3 0 1 0 0-6 3 3 0 0 0 0 6zM12 2v3M12 19v3M2 12h3M19 12h3M5 5l2 2M17 17l2 2M5 19l2-2M17 7l2-2",logout:"M9 4H5v16h4M16 8l4 4-4 4M20 12H9",search:"M11 18a7 7 0 1 0 0-14 7 7 0 0 0 0 14zM20 20l-4-4",check:"m5 12 5 5 9-10",lock:"M7 11V8a5 5 0 0 1 10 0v3M5 11h14v9H5z",crown:"M3 8l4 4 5-7 5 7 4-4-2 11H5z",back:"M15 5l-7 7 7 7",shield:"M12 3 4 6v6c0 5 3.4 8 8 9 4.6-1 8-4 8-9V6zM9 12l2 2 4-4",pin:"M12 21s7-6.2 7-11a7 7 0 1 0-14 0c0 4.8 7 11 7 11zM12 12.5a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5z",camera:"M4 8h3l2-3h6l2 3h3v11H4zM12 17a4 4 0 1 0 0-8 4 4 0 0 0 0 8z",x:"M6 6l12 12M18 6 6 18",bell:"M6 17V11a6 6 0 0 1 12 0v6l2 2H4zM10 21h4",hide:"M3 3l18 18M10.6 6.2A9.7 9.7 0 0 1 12 6c6 0 10 6 10 6a17 17 0 0 1-3.2 3.7M6.6 6.6A17 17 0 0 0 2 12s4 7 10 7a9.7 9.7 0 0 0 4-.9"};
+const safeImg=s=>/^data:image\/jpeg;base64,[A-Za-z0-9+\/=]+$/.test(s||"")?s:"";
+const P={home:"M4 11 12 4l8 7v9H4z",box:"M4 8l8-4 8 4v8l-8 4-8-4zM4 8l8 4 8-4M12 12v8",plus:"M12 5v14M5 12h14",chat:"M4 5h16v11H9l-5 4z",eye:"M2 12s4-7 10-7 10 7 10 7-4 7-10 7S2 12 2 12zM12 15a3 3 0 1 0 0-6 3 3 0 0 0 0 6z",heart:"M12 20s-7-4.4-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 10c0 5.6-7 10-7 10z",users:"M9 11a4 4 0 1 0 0-8 4 4 0 0 0 0 8zM2 21c0-4 3-6 7-6s7 2 7 6M17 4a4 4 0 0 1 0 7M22 21c0-3-2-5-4-5.5",cart:"M3 4h2l2 11h11l2-8H7M9 20h.01M17 20h.01",chart:"M4 20V10M10 20V4M16 20v-8M22 20H2",store:"M4 9l1-5h14l1 5M4 9v11h16V9M4 9a3 3 0 0 0 5.3 1.9A3 3 0 0 0 14.7 10.9 3 3 0 0 0 20 9M9 20v-5h6v5",gear:"M12 15a3 3 0 1 0 0-6 3 3 0 0 0 0 6zM12 2v3M12 19v3M2 12h3M19 12h3M5 5l2 2M17 17l2 2M5 19l2-2M17 7l2-2",logout:"M9 4H5v16h4M16 8l4 4-4 4M20 12H9",search:"M11 18a7 7 0 1 0 0-14 7 7 0 0 0 0 14zM20 20l-4-4",check:"m5 12 5 5 9-10",lock:"M7 11V8a5 5 0 0 1 10 0v3M5 11h14v9H5z",crown:"M3 8l4 4 5-7 5 7 4-4-2 11H5z",back:"M15 5l-7 7 7 7",pin:"M12 21s7-6.2 7-11a7 7 0 1 0-14 0c0 4.8 7 11 7 11zM12 12.5a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5z",camera:"M4 8h3l2-3h6l2 3h3v11H4zM12 17a4 4 0 1 0 0-8 4 4 0 0 0 0 8z",bell:"M6 17V11a6 6 0 0 1 12 0v6l2 2H4zM10 21h4",hide:"M3 3l18 18M10.6 6.2A9.7 9.7 0 0 1 12 6c6 0 10 6 10 6a17 17 0 0 1-3.2 3.7M6.6 6.6A17 17 0 0 0 2 12s4 7 10 7a9.7 9.7 0 0 0 4-.9",share:"M6 14a2.5 2.5 0 1 0 0-4 2.5 2.5 0 0 0 0 4zM18 8a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5zM18 21a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5zM8.2 10.9l7.6-4M8.2 13.1l7.6 4",user:"M12 12a4 4 0 1 0 0-8 4 4 0 0 0 0 8zM4 21c0-4 4-6 8-6s8 2 8 6",chev:"m9 5 7 7-7 7",dots:"M12 5h.01M12 12h.01M12 19h.01",pencil:"M4 20h4L19 9l-4-4L4 16zM13 7l4 4",trash:"M5 7h14M10 7V4h4v3M7 7l1 13h8l1-13",cal:"M5 5h14v15H5zM5 10h14M9 3v4M15 3v4",help:"M12 21a9 9 0 1 0 0-18 9 9 0 0 0 0 18zM9.5 9.5a2.5 2.5 0 1 1 3.5 2.3c-.7.4-1 .9-1 1.7M12 17h.01",moon:"M20 14.5A8 8 0 1 1 9.5 4 6.5 6.5 0 0 0 20 14.5z",star:"m12 3 2.7 5.6 6.1.9-4.4 4.3 1 6.1L12 17l-5.4 2.9 1-6.1L3.2 9.5l6.1-.9z",bag:"M6 8h12l1 12H5zM9 8a3 3 0 0 1 6 0"};
 const I=n=>'<svg class="i" viewBox="0 0 24 24"><path d="'+P[n]+'"/></svg>';
-const S={app:null,prof:{},prods:[],f:"all",q:"",sort:"new",ed:null,form:null,imgs:[],pch:false,v:"home",u:null,fol:null,fl:[],ch:null,show:true};
+const S={app:null,prof:{},pf:{},shop:{},prods:[],f:"all",q:"",sq:false,ed:null,form:null,imgs:[],pch:false,v:"home",u:null,fol:null,fl:[],fing:null,ch:null,show:true,preq:false,pt:"products",eav:null,ecv:null};
 
 function toast(t){const e=$("toast");e.textContent=t;e.style.display="block";clearTimeout(toast.t);toast.t=setTimeout(()=>e.style.display="none",3000)}
 function ask(t,m){return new Promise(r=>{$("cft").textContent=t;$("cfm").textContent=m;$("cf").showModal();$("cy").onclick=()=>{$("cf").close();r(true)};$("cn").onclick=()=>{$("cf").close();r(false)}})}
 const catIdx=()=>Math.max(0,CATS.indexOf(S.app.category));
-const stOf=p=>p.status==="removed"?["Removed","rm"]:p.status==="hidden"?["Hidden","hd"]:p.stock==="out"?["Out of stock","out"]:["Active",""];
+const stOf=p=>p.status==="removed"?["Removed","rm"]:p.status==="hidden"?["Hidden","hd"]:p.stock==="out"?["Out of stock","out"]:["Active","ok"];
 const inF=(p,f)=>f==="all"||(f==="active"&&p.status==="active"&&p.stock!=="out")||(f==="hidden"&&p.status==="hidden")||(f==="out"&&p.status!=="removed"&&p.stock==="out")||(f==="removed"&&p.status==="removed");
+const premOn=()=>{const t=S.shop&&S.shop.premiumUntil;return !!(t&&t.seconds&&t.seconds>Date.now()/1000)};
+const nvGet=()=>{try{return Number(localStorage.getItem("nm_nv")||0)}catch(e){return 0}};
+const UN=()=>(S.ch||[]).filter(c=>c.lastFrom&&c.lastFrom!==S.u.uid&&sec(c.lastAt)>sec(c.sellerSeen)).length;
+const NF=()=>S.fl.filter(f=>sec(f.createdAt)>nvGet()).length;
+const bellN=()=>UN()+NF();
+const ini=s=>String(s||"?").trim().split(/\s+/).slice(0,2).map(w=>w[0]).join("").toUpperCase()||"?";
 async function loadProducts(){
  const s=await getDocs(query(collection(db,"products"),where("sellerId","==",S.u.uid)));
  S.prods=s.docs.map(d=>({id:d.id,...d.data()})).sort((a,b)=>sec(b.createdAt)-sec(a.createdAt));
 }
+function avatar(sz){const a=safeImg(S.pf.avatar),ci=catIdx();return '<div class="av" style="width:'+sz+'px;height:'+sz+'px;background:'+(a?'#fff':TILE[ci%4])+'">'+(a?'<img src="'+a+'" alt="" loading="lazy">':art(ci))+'</div>'}
+const VT='<span class="vt">'+I("check")+'</span>';
+function acts(){
+ const o=[];
+ (S.ch||[]).filter(c=>c.lastFrom&&c.lastFrom!==S.u.uid).forEach(c=>o.push({t:sec(c.lastAt),ic:"chat",w:c.buyerName,h:"Message from "+c.buyerName,s:c.lastText,href:"chat.html",un:sec(c.lastAt)>sec(c.sellerSeen)}));
+ S.fl.forEach(f=>o.push({t:sec(f.createdAt),ic:"users",w:f.buyerName||"Buyer",h:(f.buyerName||"A buyer")+" followed your shop",s:"New follower",href:"#followers",un:sec(f.createdAt)>nvGet()}));
+ S.prods.filter(p=>p.status!=="removed").slice(0,3).forEach(p=>o.push({t:sec(p.createdAt),ic:"box",w:S.app.shopName,h:"You published "+p.name,s:N(p.price),href:"#products",un:false}));
+ return o.sort((a,b)=>b.t-a.t);
+}
+const actRow=a=>'<'+(a.href[0]==="#"?'button data-go="'+a.href.slice(1)+'"':'a href="'+a.href+'"')+' class="ac'+(a.un?" un":"")+'"><span class="ci">'+esc(ini(a.w))+'</span><span class="sp"><b>'+esc(a.h)+'</b><small>'+esc(a.s)+' · '+ago({seconds:a.t})+'</small></span>'+I(a.ic)+'</'+(a.href[0]==="#"?'button':'a')+'>';
+
+/* ---------- headers ---------- */
+const bellBtn=()=>'<button class="hbi" data-go="notes" aria-label="Notifications">'+I("bell")+(bellN()?'<span class="n">'+bellN()+'</span>':'')+'</button>';
+const logoBar=()=>'<div class="hb"><div class="lg"><svg class="i" viewBox="0 0 24 24" style="color:var(--gold);width:1.5em;height:1.5em"><path d="'+P.bag+'"/></svg>Naija<b>Mart</b></div>'+bellBtn()+'</div>';
+const hb=(t,back,right)=>'<div class="hb">'+(back?'<button class="hbi" data-go="'+back+'" aria-label="Back">'+I("back")+'</button>':'')+'<h1>'+t+'</h1>'+(right||'')+'</div>';
+const rw=(ic,t,s,go,cls)=>'<button class="rw '+(cls||"")+'" data-go="'+go+'"><span class="ri">'+I(ic)+'</span><span class="rt"><b>'+t+'</b>'+(s?'<small>'+s+'</small>':'')+'</span>'+I("chev")+'</button>';
+const rwA=(ic,t,s,href)=>'<a class="rw" href="'+href+'"><span class="ri">'+I(ic)+'</span><span class="rt"><b>'+t+'</b>'+(s?'<small>'+s+'</small>':'')+'</span>'+I("chev")+'</a>';
 
 /* ---------- views ---------- */
 const V={};
-function head(t,back){return '<div class="ttl">'+(back?'<button class="back" data-go="'+back+'" aria-label="Back">'+I("back")+'</button>':'')+'<h2>'+t+'</h2></div>'}
-function soon(ic,t,m){return '<div class="card empty">'+I(ic)+'<h3>'+t+'</h3><p>'+m+'</p><span class="pill off">Coming soon</span></div>'}
 V.home=()=>{
- const a=S.app,ci=catIdx(),pr=S.prods,tot=pr.length,act=pr.filter(p=>inF(p,"active")).length,out=pr.filter(p=>inF(p,"out")).length,ver=a.verified===true,vw=pr.reduce((t,p)=>t+(Number(p.views)||0),0),lk=pr.reduce((t,p)=>t+Math.max(0,Number(p.saveCount)||0),0);
- const s1=(ic,n,l)=>'<div class="s1">'+I(ic)+'<b>'+n+'</b><small>'+l+'</small></div>',sn=(ic,l)=>'<div class="s1 soon">'+I(ic)+'<b>—</b><small>'+l+'</small><em>SOON</em></div>';
- const rec=pr.filter(p=>p.status!=="removed").slice(0,3);
- return '<div class="hero"><div class="hr"><div class="lt" style="background:'+TILE[ci%4]+'">'+art(ci)+'</div><div class="sp"><h1>'+esc(a.shopName)+'</h1><div class="loc">'+I("pin")+' '+esc(a.city)+', '+esc(a.state)+'</div></div></div>'+
- '<div class="pills"><span class="pill ok">'+I("check")+' Approved Seller</span>'+(ver?'<span class="pill gold">'+I("shield")+' Verified Seller</span>':'<span class="pill off">Verified badge: not yet</span>')+'</div>'+
- '<div style="margin-top:14px"><a class="btn w" href="shop.html?id='+S.u.uid+'">View public shop</a></div></div>'+
- '<div class="stats">'+s1("box",tot,"Products")+s1("check",act,"Active")+s1("lock",out,"Out of stock")+s1("eye",vw,"Views")+'</div>'+
- '<div class="stats">'+(S.fol===null?sn("users","Followers"):s1("users",S.fol,"Followers"))+s1("heart",lk,"Likes")+(S.ch===null?sn("chat","Enquiries"):s1("chat",S.ch.length,"Enquiries"))+sn("cart","Orders")+'</div>'+
- '<div class="prem">'+I("crown")+'<div class="sp"><b>Seller Premium</b><div class="mu">₦3,000/month proposed · not yet available</div></div><span class="pill off">Soon</span></div>'+
- '<h3 class="sec">Quick actions</h3><div class="qa"><button data-new="1">'+I("plus")+'Add Product</button><button data-go="products">'+I("box")+'My Products</button><button data-go="analytics">'+I("chart")+'Analytics</button><button data-go="messages">'+I("chat")+'Messages</button></div>'+
- '<h3 class="sec">Recent activity</h3><div class="card">'+(rec.length?rec.map(p=>'<div class="act"><span class="dot">'+I("box")+'</span><div class="sp"><b>'+esc(p.name)+'</b><div class="mu">Published · '+fd(p.createdAt)+'</div></div><b>'+N(p.price)+'</b></div>').join(""):'<div class="empty"><h3>No activity yet</h3><p>Publish your first product to get started.</p><button class="btn g" data-new="1">'+I("plus")+' Add your first product</button></div>')+'</div>';
+ const a=S.app,pr=S.prods,vw=pr.reduce((t,p)=>t+(Number(p.views)||0),0),rec=acts().slice(0,3),un=UN();
+ const sc=(ic,n,l,go)=>'<button class="sc" data-go="'+go+'">'+I(ic)+'<b>'+n+'</b><small>'+l+'</small></button>';
+ return logoBar()+'<div class="pad"><div class="wc"><div><h2>Welcome back,<br>'+esc(a.shopName)+' 👋</h2><p>Grow your business on Naija Mart</p></div>'+avatar(66)+'</div>'+
+ '<div class="sg">'+sc("users",S.fol===null?"–":S.fol,"Followers","followers")+sc("box",pr.length,"Products","products")+sc("eye",vw,"Views","analytics")+sc("chat",S.ch===null?"–":S.ch.length,"Enquiries","messages")+'</div>'+
+ (premOn()?'<div class="pm">'+I("crown")+'<div class="sp"><b>Premium seller</b><small>Active until '+fd(S.shop.premiumUntil)+'</small></div><button class="pb2" data-go="premium">View</button></div>':'<div class="pm">'+I("crown")+'<div class="sp"><b>Go Premium</b><small>Unlock more features and reach more buyers!</small></div><button class="pb2" data-go="premium">Upgrade '+I("chev")+'</button></div>')+
+ '<div class="sec"><h3>Quick Actions</h3></div><div class="qa"><button data-new="1">'+I("plus")+'Add Product</button><button data-go="products">'+I("box")+'Manage Products</button><button data-go="messages">'+I("chat")+'Messages'+(un?'<span class="bg">'+un+'</span>':'')+'</button><button data-go="analytics">'+I("chart")+'Analytics</button></div>'+
+ '<div class="sec"><h3>Recent Activity</h3><button data-go="notes">See all →</button></div>'+(rec.length?rec.map(actRow).join(""):'<div class="card empty">'+I("bell")+'<h3>No activity yet</h3><p>New messages, followers and products show up here.</p></div>')+'</div>';
 };
+function mini(p){const ci=Number.isInteger(p.cat)?p.cat:11,im=safeImg(p.thumb);return '<a class="mini" href="product.html?id='+p.id+'"><div class="pim" style="background:'+TILE[ci%4]+'">'+(im?'<img src="'+im+'" alt="" loading="lazy">':art(ci))+'</div><div class="t"><b>'+esc(p.name)+'</b><span>'+N(p.price)+'</span></div></a>'}
 function pcard(p){
- const s=stOf(p),ci=Number.isInteger(p.cat)?p.cat:11,rm=p.status==="removed";
- const q=Number.isInteger(p.qty)?p.qty:null,stx=p.stock==="out"?"Out of stock":p.stock==="low"?"Low stock"+(q!==null?" · "+q+" left":""):(q!==null?q+" in stock":"In stock");
- return '<article class="pc"><div class="im" style="background:'+TILE[ci%4]+'">'+(p.thumb&&/^data:image\/jpeg;base64,[A-Za-z0-9+\/=]+$/.test(p.thumb)?'<img src="'+p.thumb+'" alt="">':art(ci))+'<span class="st '+s[1]+'">'+s[0]+'</span></div><div class="pb"><h3>'+esc(p.name)+'</h3><div class="pr">'+N(p.price)+'</div><div class="mt">'+esc(CATS[ci])+'</div><div class="mt">'+stx+'</div><div class="mt">'+I("eye")+' '+(Number(p.views)||0)+' views · '+I("heart")+' '+Math.max(0,Number(p.saveCount)||0)+' likes</div><div class="mt">'+esc(p.city)+', '+esc(p.state)+' · '+fd(p.createdAt)+'</div>'+
- (rm?'<div class="bt" style="grid-template-columns:1fr"><button class="d" data-del="'+p.id+'">Delete</button></div>':'<div class="bt"><button data-ed="'+p.id+'">Edit</button><button class="d" data-del="'+p.id+'">Delete</button></div><div class="bt s"><button data-hide="'+p.id+'">'+(p.status==="hidden"?"Show":"Hide")+'</button><button data-stk="'+p.id+'">'+(p.stock==="out"?"Available":"Out of stock")+'</button></div>')+'</div></article>';
+ const s=stOf(p),ci=Number.isInteger(p.cat)?p.cat:11,im=safeImg(p.thumb);
+ return '<article class="pc"><a class="pim" href="product.html?id='+p.id+'" style="background:'+TILE[ci%4]+'" aria-label="View '+esc(p.name)+'">'+(im?'<img src="'+im+'" alt="" loading="lazy">':art(ci))+'</a><div class="pi"><div class="ps"><i class="dt '+(s[1]==="ok"?"":s[1])+'"></i>'+s[0]+'</div><h3>'+esc(p.name)+'</h3><div class="pp"><b>'+N(p.price)+'</b><button class="dots" data-sh="'+p.id+'" aria-label="Options for '+esc(p.name)+'">'+I("dots")+'</button></div><div class="pv">'+(Number(p.views)||0)+' views · '+Math.max(0,Number(p.saveCount)||0)+' likes</div></div></article>';
 }
 function plist(){
  const q=S.q.toLowerCase();
- let L=S.prods.filter(p=>inF(p,S.f)&&(!q||[p.name,p.brand,CATS[p.cat],p.city].join(" ").toLowerCase().indexOf(q)>-1));
- L.sort((a,b)=>S.sort==="old"?sec(a.createdAt)-sec(b.createdAt):S.sort==="lo"?a.price-b.price:S.sort==="hi"?b.price-a.price:S.sort==="az"?String(a.name).localeCompare(b.name):sec(b.createdAt)-sec(a.createdAt));
- return L.length?'<div class="grid">'+L.map(pcard).join("")+'</div>':'<div class="card empty">'+I("box")+'<h3>'+(S.prods.length?"No products match":"No products yet")+'</h3><p>'+(S.prods.length?"Try another filter or search.":"Add your first product and it goes live for buyers right away.")+'</p>'+(S.prods.length?'':'<button class="btn g" data-new="1">'+I("plus")+' Add product</button>')+'</div>';
+ const L=S.prods.filter(p=>inF(p,S.f)&&(!q||[p.name,p.brand,CATS[p.cat],p.city].join(" ").toLowerCase().indexOf(q)>-1));
+ return L.length?'<div class="grid">'+L.map(pcard).join("")+'</div>':'<div class="card empty">'+I("box")+'<h3>'+(S.prods.length?"No products match":"No products yet")+'</h3><p>'+(S.prods.length?"Try another filter or search.":"Add your first product and it goes live for buyers right away.")+'</p></div>';
 }
 V.products=()=>{
  const c=f=>S.prods.filter(p=>inF(p,f)).length;
- return head("My Products")+'<div class="tools"><input id="qs" type="search" placeholder="Search products" aria-label="Search products" value="'+esc(S.q)+'"><select id="so" aria-label="Sort"><option value="new">Newest</option><option value="old">Oldest</option><option value="lo">Price ↑</option><option value="hi">Price ↓</option><option value="az">Name A–Z</option></select></div>'+
- '<div class="chips">'+[["all","All"],["active","Active"],["hidden","Hidden"],["out","Out of stock"],["removed","Removed"]].map(x=>'<button class="chip" data-f="'+x[0]+'" aria-pressed="'+(S.f===x[0])+'">'+x[1]+' ('+c(x[0])+')</button>').join("")+'</div><div id="pg">'+plist()+'</div>';
+ return hb("My Products","home",'<button class="hbi" data-sq="1" aria-label="Search">'+I("search")+'</button>')+(S.sq?'<div class="sbar"><input id="qs" type="search" placeholder="Search your products" aria-label="Search your products" value="'+esc(S.q)+'"></div>':'')+
+ '<div class="pad"><div class="chips">'+[["all","All"],["active","Active"],["hidden","Hidden"],["out","Out of Stock"],["removed","Removed"]].map(x=>'<button class="chip" data-f="'+x[0]+'" aria-pressed="'+(S.f===x[0])+'">'+x[1]+' ('+c(x[0])+')</button>').join("")+'</div><div id="pg">'+plist()+'</div></div><div class="fabw"><button class="fab" data-new="1">'+I("plus")+' Add New Product</button></div>';
 };
 const blank=()=>({name:"",price:"",cat:"",brand:"",desc:"",qty:"1",cond:"New",options:"",state:S.app.state,city:S.app.city,area:S.app.area,delivery:"Pickup and delivery"});
 const val=k=>esc(S.form[k]);
 const opt=(arr,k,idx)=>arr.map((x,i)=>'<option value="'+(idx?i:esc(x))+'"'+(String(S.form[k])===String(idx?i:x)?" selected":"")+'>'+esc(x)+'</option>').join("");
 function prevThumbs(){return S.imgs.map((m,i)=>'<div class="th"><img src="'+m.thumb+'" alt="Photo '+(i+1)+'"><button type="button" data-rm="'+i+'" aria-label="Remove photo '+(i+1)+'">✕</button></div>').join("")}
-V.add=()=>head(S.ed?"Edit Product":"Add Product","products")+
- '<div class="msg" id="fm" role="alert"></div><div class="card"><label class="f">Photos <span class="mu">(up to 3, shrunk on your phone to save data)</span></label><div class="pv" id="pvs">'+prevThumbs()+'<label class="up">'+I("camera")+'Add photos<input id="pf" type="file" accept="image/*" multiple></label></div>'+
+V.add=()=>hb(S.ed?"Edit Product":"Add Product","products")+'<div class="pad"><div class="msg" id="fm" role="alert"></div><div class="card"><label class="f">Photos <span class="mu">(up to 3, shrunk on your phone to save data)</span></label><div class="pvw" id="pvs">'+prevThumbs()+'<label class="up">'+I("camera")+'Add photos<input id="pf" type="file" accept="image/*" multiple></label></div>'+
  '<label class="f" for="f-name">Product name *</label><input class="in" id="f-name" data-k="name" maxlength="100" value="'+val("name")+'">'+
  '<div class="two"><div><label class="f" for="f-price">Price (₦) *</label><input class="in" id="f-price" data-k="price" type="number" min="0" inputmode="numeric" value="'+val("price")+'"></div><div><label class="f" for="f-qty">Stock quantity *</label><input class="in" id="f-qty" data-k="qty" type="number" min="0" inputmode="numeric" value="'+val("qty")+'"></div></div>'+
  '<label class="f" for="f-cat">Category *</label><select class="in" id="f-cat" data-k="cat"><option value="">Choose…</option>'+opt(CATS,"cat",1)+'</select>'+
@@ -204,44 +229,62 @@ V.add=()=>head(S.ed?"Edit Product":"Add Product","products")+
  '<div class="two"><div><label class="f" for="f-state">State *</label><select class="in" id="f-state" data-k="state">'+opt(STATES,"state")+'</select></div><div><label class="f" for="f-city">City or town *</label><input class="in" id="f-city" data-k="city" maxlength="60" value="'+val("city")+'"></div></div>'+
  '<label class="f" for="f-area">Market or area *</label><input class="in" id="f-area" data-k="area" maxlength="80" value="'+val("area")+'">'+
  '<label class="f" for="f-delivery">Pickup and delivery</label><select class="in" id="f-delivery" data-k="delivery">'+opt(["Pickup and delivery","Pickup only","Delivery only"],"delivery")+'</select>'+
- '<button class="btn g w" data-prev="1">Preview product →</button></div><p class="note">Be honest about price and stock. Buyers can report misleading listings, and our team can hide or remove them.</p>';
-V.messages=()=>head("Messages")+'<div class="card empty">'+I("chat")+'<h3>Customer messages</h3><p>Chat with buyers who contact you about your products.</p><a class="btn g" href="chat.html">Open messages</a></div>';
-V.orders=()=>head("Orders","more")+soon("cart","Orders","Naija Mart doesn’t process orders yet. Buyers contact sellers directly.");
-function notes(){
- const o=[];
- (S.ch||[]).filter(c=>c.lastFrom&&c.lastFrom!==S.u.uid&&sec(c.lastAt)>sec(c.sellerSeen)).forEach(c=>o.push({t:sec(c.lastAt),ic:"chat",h:"Message from "+c.buyerName,s:c.lastText,href:"chat.html"}));
- (S.fl||[]).forEach(f=>o.push({t:sec(f.createdAt),ic:"users",h:"New follower",s:"A buyer started following your shop",href:"#home"}));
- return o.sort((a,b)=>b.t-a.t).slice(0,30);
-}
-V.notes=()=>{const L=notes();return head("Notifications","more")+'<div class="card">'+(L.length?L.map(n=>'<a class="act" href="'+n.href+'" style="color:inherit;text-decoration:none"><span class="dot">'+I(n.ic)+'</span><div class="sp"><b>'+esc(n.h)+'</b><div class="mu" style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap">'+esc(n.s)+'</div></div><span class="mu">'+fd({seconds:n.t})+'</span></a>').join(""):'<div class="empty">'+I("bell")+'<h3>All caught up</h3><p>New messages and new followers will show here.</p></div>')+'</div>'};
+ '<button class="btn p w" data-prev="1">Preview product →</button></div><p class="note">Be honest about price and stock. Buyers can report misleading listings, and our team can hide or remove them.</p></div>';
+V.messages=()=>hb("Messages","home")+'<div class="pad"><div class="card empty">'+I("chat")+'<h3>Customer messages</h3><p>Chat with buyers who contact you about your products.</p><a class="btn p" href="chat.html">Open messages</a></div></div>';
+V.notes=()=>{const L=acts();setTimeout(()=>{try{localStorage.setItem("nm_nv",String(Math.floor(Date.now()/1000)))}catch(e){}nav()},400);return hb("Notifications","home")+'<div class="pad">'+(L.length?L.map(actRow).join(""):'<div class="card empty">'+I("bell")+'<h3>All caught up</h3><p>New messages and new followers will show here.</p></div>')+'</div>'};
+V.followers=()=>{
+ const L=[...S.fl].sort((a,b)=>sec(b.createdAt)-sec(a.createdAt));
+ return hb("My Followers","more")+'<div class="fh">'+I("users")+'<b>'+(S.fol===null?"–":S.fol)+' Followers</b><span class="mu">People who follow your shop</span></div>'+(L.length?L.map(f=>'<div class="fi"><span class="av" style="width:46px;height:46px;background:#DDEBE3;color:var(--g);font-weight:800;box-shadow:none">'+esc(ini(f.buyerName||"Buyer"))+'</span><div class="sp"><b>'+esc(f.buyerName||"Naija Mart buyer")+'</b><div class="mu">'+ago(f.createdAt)+'</div></div></div>').join(""):'<div class="card empty" style="margin:14px">'+I("users")+'<h3>No followers yet</h3><p>Buyers who follow your shop appear here.</p></div>');
+};
+V.profile=()=>{
+ const a=S.app,pf=S.pf,ver=a.verified===true,cv=safeImg(pf.cover),bio=pf.bio||a.description||"";
+ const tab=S.pt==="reviews"?'<div class="card empty">'+I("star")+'<h3>No reviews yet</h3><p>Reviews from buyers will appear here.</p></div>':S.pt==="about"?'<div class="card"><dl style="display:grid;grid-template-columns:auto 1fr;gap:8px 14px;margin:0"><dt class="mu">Category</dt><dd style="margin:0;font-weight:600">'+esc(a.category)+'</dd><dt class="mu">Location</dt><dd style="margin:0;font-weight:600">'+esc(a.area)+', '+esc(a.city)+', '+esc(a.state)+'</dd><dt class="mu">Address</dt><dd style="margin:0;font-weight:600">'+esc(a.address)+'</dd><dt class="mu">About</dt><dd style="margin:0;font-weight:600">'+esc(bio)+'</dd></dl></div>':(S.prods.filter(p=>inF(p,"active")).length?'<div class="grid">'+S.prods.filter(p=>inF(p,"active")).map(mini).join("")+'</div>':'<div class="card empty">'+I("box")+'<h3>No live products</h3></div>');
+ return hb("My Profile","more",'<button class="hbi" data-shr="1" aria-label="Share my shop">'+I("share")+'</button>')+'<div class="cv">'+(cv?'<img src="'+cv+'" alt="" loading="lazy">':'')+'</div><div class="pr0"><div class="pav">'+avatar(96)+(ver?'<span class="vt big">'+I("check")+'</span>':'')+'</div><h2 class="pn">'+esc(a.shopName)+(ver?' '+VT:'')+'</h2><div class="un">'+(pf.username?'@'+esc(pf.username):'No username yet')+'</div><button class="btn p" data-go="edit" style="min-width:200px">Edit Profile</button>'+
+ '<div class="ps3"><button data-go="followers"><b>'+(S.fol===null?"–":S.fol)+'</b><small>Followers</small></button><div><b>'+(S.fing===null?"–":S.fing)+'</b><small>Following</small></div><div><b>–</b><small>Rating</small></div></div></div>'+
+ '<div class="inf"><p>'+esc(bio)+'</p><div class="il">'+I("pin")+'<span>'+esc(a.city)+', '+esc(a.state)+'</span></div><div class="il">'+I("cal")+'<span>Joined '+(sec(a.createdAt)?new Date(sec(a.createdAt)*1000).toLocaleDateString("en-NG",{month:"short",year:"numeric"}):"recently")+'</span></div><div class="il" style="color:var(--ok);font-weight:700">'+I("check")+'<span>'+(ver?"Verified Seller":"Approved Seller")+'</span></div></div>'+
+ '<div class="tabs">'+[["products","Products"],["reviews","Reviews"],["about","About"]].map(x=>'<button data-pt="'+x[0]+'" aria-pressed="'+(S.pt===x[0])+'">'+x[1]+'</button>').join("")+'</div><div class="pad" id="ptab">'+tab+'</div>';
+};
+V.edit=()=>{
+ const pf=S.pf,cv=safeImg(S.ecv??pf.cover),avN=S.eav??pf.avatar;
+ return hb("Edit Profile","profile")+'<div class="pad"><div class="msg" id="fm" role="alert"></div><div class="card"><label class="f">Cover photo</label><div class="cvp" id="cvp">'+(cv?'<img src="'+cv+'" alt="">':'')+'<label>Change cover<input id="fcv" type="file" accept="image/*" hidden></label></div>'+
+ '<label class="f">Profile picture</label><div class="chg"><div id="avp">'+(safeImg(avN)?'<div class="av" style="width:76px;height:76px;background:#fff"><img src="'+safeImg(avN)+'" alt=""></div>':avatar(76))+'</div><label class="btn s" style="min-height:42px">Change photo<input id="fav" type="file" accept="image/*" hidden></label></div>'+
+ '<label class="f" for="pu">Username</label><input class="in" id="pu" maxlength="20" autocapitalize="off" placeholder="e.g. ikechienterprise" value="'+esc(pf.username||"")+'"><p class="mu" style="margin:-8px 0 12px">3–20 letters, numbers or underscores. Must be unique.</p>'+
+ '<label class="f" for="pb">About your business</label><textarea class="in" id="pb" maxlength="200" placeholder="What do you sell? Where do you deliver?">'+esc(pf.bio||S.app.description||"")+'</textarea>'+
+ '<button class="btn p w" data-sp="1">Save profile</button></div><p class="note">Your shop name, category and address were approved by the Naija Mart team and can’t be changed here.</p></div>';
+};
+V.settings=()=>hb("Settings","more")+'<button class="sp2" data-go="profile">'+avatar(60)+'<span class="sp"><b style="font-size:1.1rem">'+esc(S.app.shopName)+(S.app.verified===true?' '+VT:'')+'</b><div class="mu">'+esc(S.u.email)+'</div></span>'+I("chev")+'</button><div class="rws">'+
+ rw("user","Account","Name, phone and password","acct")+rw("lock","Privacy","Last seen and online status","privacy")+rw("store","Business Tools","Business profile, catalogue, shop page","bizt")+rw("bell","Notifications","Messages and new followers","notif")+rw("moon","Appearance","Light mode or dark mode","appear")+rw("help","Help","FAQ and report a problem","help")+'</div><div class="rws">'+rw("logout","Log Out","","out","red")+'</div>';
+V.acct=()=>{const p=S.prof,u=S.u;return hb("Account","settings")+'<div class="pad"><div class="msg" id="fm" role="alert"></div><div class="card"><label class="f" for="an">Full name</label><input class="in" id="an" value="'+esc(p.name||u.displayName||"")+'"><label class="f" for="ap">Phone number</label><input class="in" id="ap" type="tel" value="'+esc(p.phone||"")+'"><label class="f">Email</label><input class="in" value="'+esc(u.email)+'" disabled><p class="mu" style="margin:-6px 0 12px">Email status: '+(u.emailVerified?"Verified":"Not verified")+'</p><button class="btn p w" data-sa="1">Save changes</button></div><div class="card"><b>Password</b><p class="mu">We’ll email you a link to choose a new password.</p><button class="btn w" data-pw="1">Send password reset email</button></div></div>'};
+V.privacy=()=>hb("Privacy","settings")+'<div class="pad"><div class="card"><label class="rad"><input type="checkbox" id="shw"'+(S.show===false?"":" checked")+'> Let buyers see when I was last active</label><p class="mu" style="margin:6px 0 0">When this is off, buyers will not see “Online” or “Last seen” for you.</p></div></div>';
+V.bizt=()=>hb("Business Tools","settings")+'<div class="rws">'+rw("pencil","Business profile","Cover photo, picture, username, about","edit")+rwA("store","My public shop page","See what buyers see","shop.html?id="+S.u.uid)+rw("box","Product catalogue","Add, edit, hide or remove products","products")+rw("chart","Analytics","Views, likes and enquiries","analytics")+rw("crown","Seller Premium","Request or view Premium","premium")+'</div>';
+V.notif=()=>hb("Notifications","settings")+'<div class="pad"><div class="card"><b>What you’ll see</b><p class="mu">The bell shows a red number when a buyer sends you a message or follows your shop. Tap it to see the details. You’ll also see a red number on the Messages tab.</p><p class="mu" style="margin:0">Alerts appear inside Naija Mart while you’re using it. Phone pop-up alerts when the app is closed are not available.</p></div></div>';
+V.appear=()=>{const d=document.documentElement.dataset.theme==="dark";return hb("Appearance","settings")+'<div class="pad"><div class="card"><label class="rad"><input type="radio" name="th" data-th="light"'+(d?"":" checked")+'> Light mode</label><label class="rad"><input type="radio" name="th" data-th="dark"'+(d?" checked":"")+'> Dark mode</label></div></div>'};
+V.help=()=>hb("Help","settings")+'<div class="pad"><div class="card faq"><b>Frequently asked questions</b>'+[["How do buyers contact me?","Buyers tap “Message seller” on your product. Their messages appear in your Messages tab."],["Does Naija Mart handle payment?","No. Naija Mart doesn’t take payment or guarantee delivery. You and the buyer agree on price, pickup and delivery."],["Why is a product not showing to buyers?","It may be hidden, out of stock, or removed by the Naija Mart team. Check My Products."],["What is the Verified badge?","Verified Seller is a separate badge given by the Naija Mart team after checks. It is not the same as Premium."]].map(x=>'<details><summary>'+x[0]+'</summary><p>'+x[1]+'</p></details>').join("")+'</div><div class="card"><b>Report a problem</b><div class="msg" id="fm" role="alert"></div><label class="f" for="st" style="margin-top:8px">Topic</label><select class="in" id="st"><option>Something isn’t working</option><option>Report a buyer</option><option>Question about my account</option><option>Other</option></select><label class="f" for="sm">Message</label><textarea class="in" id="sm" maxlength="800" placeholder="Tell us what happened"></textarea><button class="btn p w" data-su="1">Send to Naija Mart</button></div></div>';
+V.more=()=>logoBar()+'<div class="pad"><div class="card"><div class="row">'+avatar(64)+'<div class="sp"><b style="font-size:1.1rem">'+esc(S.app.shopName)+(S.app.verified===true?' '+VT:'')+'</b><div class="mu" style="color:var(--ok);font-weight:600">'+(S.app.verified===true?"Verified Seller":"Approved Seller")+(premOn()?" · Premium":"")+'</div></div></div><button class="btn g1 w" data-go="profile" style="margin-top:12px">View Profile</button></div></div><div class="rws">'+
+ rw("store","My Shop","Your public shop page","shop")+rw("box","My Products","","products")+rw("cart","My Orders","","orders")+rw("users","Followers","","followers")+rw("star","Reviews","","reviews")+rw("chart","Analytics","","analytics")+rw("crown","Go Premium","","premium","gold")+rw("gear","Settings","","settings")+rw("logout","Log Out","","out","red")+'</div>';
+V.orders=()=>hb("My Orders","more")+'<div class="pad"><div class="card empty">'+I("cart")+'<h3>No orders yet</h3><p>Order requests aren’t available yet. For now buyers message you directly to agree price, pickup and delivery.</p><a class="btn p" href="chat.html">Open messages</a></div></div>';
+V.reviews=()=>hb("Reviews","more")+'<div class="pad"><div class="card empty">'+I("star")+'<h3>No reviews yet</h3><p>Reviews from buyers will appear here once buyers can leave them.</p></div></div>';
 V.analytics=()=>{
- const pr=S.prods.filter(p=>p.status!=="removed"),tot=pr.length,by=CATS.map((c,i)=>[c,pr.filter(p=>p.cat===i).length]).filter(x=>x[1]);
- return head("Analytics","more")+'<div class="stats"><div class="s1">'+I("box")+'<b>'+tot+'</b><small>Products</small></div><div class="s1">'+I("check")+'<b>'+pr.filter(p=>inF(p,"active")).length+'</b><small>Active</small></div><div class="s1">'+I("hide")+'<b>'+pr.filter(p=>p.status==="hidden").length+'</b><small>Hidden</small></div><div class="s1">'+I("lock")+'<b>'+pr.filter(p=>inF(p,"out")).length+'</b><small>Out of stock</small></div></div>'+
- '<div class="card"><h3>Products by category</h3>'+(by.length?by.map(x=>'<div style="margin-top:10px"><div class="row"><span class="sp">'+esc(x[0])+'</span><b>'+x[1]+'</b></div><div class="bar"><i style="width:'+Math.round(x[1]/tot*100)+'%"></i></div></div>').join(""):'<p class="mu">No products yet.</p>')+'</div>'+
- (()=>{const vw=pr.reduce((t,p)=>t+(Number(p.views)||0),0),lk=pr.reduce((t,p)=>t+Math.max(0,Number(p.saveCount)||0),0),top=[...pr].sort((x,y)=>(Number(y.views)||0)-(Number(x.views)||0)).slice(0,5);return '<div class="stats" style="grid-template-columns:repeat(3,1fr)"><div class="s1">'+I("eye")+'<b>'+vw+'</b><small>Views</small></div><div class="s1">'+I("heart")+'<b>'+lk+'</b><small>Likes</small></div><div class="s1">'+I("chat")+'<b>'+(S.ch===null?"—":S.ch.length)+'</b><small>Enquiries</small></div></div><div class="card"><h3>Top products by views</h3>'+(top.length?top.map(p=>'<div class="act"><div class="sp"><b>'+esc(p.name)+'</b></div><span class="mu">'+(Number(p.views)||0)+' views · '+Math.max(0,Number(p.saveCount)||0)+' likes</span></div>').join(""):'<p class="mu">No products yet.</p>')+'<p class="mu" style="margin:10px 0 0">Views count signed-in buyers who open a product. Likes are buyers who saved it. Enquiries are buyers who messaged you.</p></div>'})();
+ const pr=S.prods.filter(p=>p.status!=="removed"),tot=pr.length,by=CATS.map((c,i)=>[c,pr.filter(p=>p.cat===i).length]).filter(x=>x[1]),vw=pr.reduce((t,p)=>t+(Number(p.views)||0),0),lk=pr.reduce((t,p)=>t+Math.max(0,Number(p.saveCount)||0),0),top=[...pr].sort((x,y)=>(Number(y.views)||0)-(Number(x.views)||0)).slice(0,5);
+ const c3=(n,l)=>'<div><b>'+n+'</b><small>'+l+'</small></div>';
+ return hb("Analytics","more")+'<div class="pad"><div class="st4">'+c3(S.fol===null?"–":S.fol,"Followers")+c3(tot,"Products")+c3(pr.filter(p=>inF(p,"active")).length,"Active")+c3(vw,"Views")+c3(lk,"Likes")+c3(S.ch===null?"–":S.ch.length,"Enquiries")+c3(pr.filter(p=>p.status==="hidden").length,"Hidden")+c3(pr.filter(p=>inF(p,"out")).length,"Out of stock")+c3("–","Orders")+'</div>'+
+ '<div class="card"><b>Top products by views</b>'+(top.length?top.map(p=>'<div class="row" style="padding:8px 0;border-top:1px solid var(--ln);margin-top:8px"><span class="sp">'+esc(p.name)+'</span><span class="mu">'+(Number(p.views)||0)+' views · '+Math.max(0,Number(p.saveCount)||0)+' likes</span></div>').join(""):'<p class="mu">No products yet.</p>')+'</div>'+
+ '<div class="card"><b>Products by category</b>'+(by.length?by.map(x=>'<div style="margin-top:10px"><div class="row"><span class="sp">'+esc(x[0])+'</span><b>'+x[1]+'</b></div><div class="bar"><i style="width:'+Math.round(x[1]/tot*100)+'%"></i></div></div>').join(""):'<p class="mu">No products yet.</p>')+'</div><p class="note">Views count signed-in buyers who open a product. Likes are buyers who saved it. Enquiries are buyers who messaged you.</p></div>';
 };
-V.shop=()=>{
- const a=S.app,ci=catIdx(),live=S.prods.filter(p=>inF(p,"active"));
- return head("My Shop","more")+'<div class="hero"><div class="hr"><div class="lt" style="background:'+TILE[ci%4]+'">'+art(ci)+'</div><div class="sp"><h1>'+esc(a.shopName)+'</h1><div class="loc">'+esc(CATS[ci])+'</div></div></div><dl><dt>Location</dt><dd>'+esc(a.area)+', '+esc(a.city)+', '+esc(a.state)+'</dd><dt>Address</dt><dd>'+esc(a.address)+'</dd><dt>About</dt><dd>'+esc(a.description)+'</dd></dl></div>'+
- '<h3 class="sec">Live products ('+live.length+')</h3>'+(live.length?'<div class="grid">'+live.slice(0,6).map(pcard).join("")+'</div>':'<div class="card empty"><h3>Nothing live yet</h3></div>')+
- '<div class="card"><h3>Your public shop page</h3><p class="mu">Share this page so buyers can see all your products.</p><a class="btn g w" href="shop.html?id='+S.u.uid+'">Open my shop page</a></div>';
-};
-V.settings=()=>{
- const p=S.prof,u=S.u;
- return head("Settings","more")+'<div class="card"><dl><dt>Name</dt><dd>'+esc(p.name||u.displayName||"–")+'</dd><dt>Email</dt><dd>'+esc(u.email)+'</dd><dt>Phone</dt><dd>'+esc(p.phone||"–")+'</dd><dt>Email status</dt><dd>'+(u.emailVerified?"Verified":"Not verified")+'</dd></dl></div>'+
- '<div class="card"><h3 style="margin-bottom:6px">Privacy</h3><label style="display:flex;gap:12px;align-items:center;min-height:48px;font-weight:600"><input type="checkbox" id="shw"'+(S.show===false?"":" checked")+' style="width:22px;height:22px;accent-color:#D9B24E"> Let buyers see when I was last active</label></div><a class="btn w" href="account.html" style="margin-bottom:10px">Open my buyer account</a><button class="btn r w" data-out="1">'+I("logout")+' Log out</button>';
-};
-V.more=()=>head("More")+'<div class="card menu">'+[["orders","cart","Orders",1],["analytics","chart","Analytics"],["shop","store","My Shop"],["notes","bell","Notifications"],["settings","gear","Settings"]].map(x=>'<button data-go="'+x[0]+'">'+I(x[1])+x[2]+(x[3]?'<span class="soon">SOON</span>':'')+'</button>').join("")+'<button data-out="1">'+I("logout")+'Log out</button></div>';
+V.shop=()=>hb("My Shop","more")+'<div class="pad"><div class="card"><div class="row">'+avatar(60)+'<div class="sp"><b>'+esc(S.app.shopName)+'</b><div class="mu">'+esc(S.app.city)+', '+esc(S.app.state)+'</div></div></div><a class="btn p w" href="shop.html?id='+S.u.uid+'" style="margin-top:12px">Open my public shop page</a><button class="btn w" data-shr="1" style="margin-top:8px">'+I("share")+' Share my shop</button></div><div class="sec"><h3>Live products ('+S.prods.filter(p=>inF(p,"active")).length+')</h3><button data-go="products">Manage</button></div>'+(S.prods.filter(p=>inF(p,"active")).length?'<div class="grid">'+S.prods.filter(p=>inF(p,"active")).slice(0,6).map(mini).join("")+'</div>':'<div class="card empty"><h3>Nothing live yet</h3></div>')+'</div>';
+V.premium=()=>hb("Go Premium","more")+'<div class="pad"><div class="pm" style="flex-direction:column;align-items:flex-start">'+I("crown")+'<b style="font-size:1.2rem">Seller Premium</b><small>'+(premOn()?"Your Premium is active until "+fd(S.shop.premiumUntil)+".":"₦3,000 per month (proposed price)")+'</small></div>'+
+ '<div class="card"><b>What you get</b><div class="row" style="margin-top:10px">'+I("check")+'<span>A Premium badge on your public shop page</span></div></div>'+
+ '<div class="card"><b>How it works</b><p class="mu">Premium is activated by the Naija Mart team. It is never switched on automatically, and it is separate from the Verified Seller badge.</p><p class="mu" style="margin:0">1. Tap “Request Premium”.<br>2. Our team contacts you with payment details.<br>3. After the payment is confirmed, we activate Premium on your shop.</p></div>'+
+ (premOn()?'':'<div class="msg" id="fm" role="alert"></div><button class="btn g1 w" data-pr="1"'+(S.preq?" disabled":"")+'>'+(S.preq?"Request sent. We’ll contact you.":"Request Premium")+'</button>')+'</div>';
 function statusPage(a){
  const s=a.status,t=s==="pending"?"We’re reviewing your application":s==="rejected"?"Your application wasn’t approved":"Your seller account is suspended";
- return '<div class="card"><span class="pill '+(s==="pending"?"wait":"bad")+'">'+(s==="pending"?"Pending review":s==="rejected"?"Not approved":"Suspended")+'</span><h2 style="margin-top:10px">'+t+'</h2><p class="mu">'+(s==="pending"?"Our team checks every seller before they can publish. This page updates when there’s a decision.":(a.reason?"Reason: "+esc(a.reason):"Contact support for details."))+'</p><dl><dt>Shop</dt><dd>'+esc(a.shopName)+'</dd><dt>Category</dt><dd>'+esc(a.category)+'</dd><dt>Location</dt><dd>'+esc(a.city)+', '+esc(a.state)+'</dd></dl></div><button class="btn w" data-out="1">'+I("logout")+' Log out</button>';
+ return logoBar().replace(bellBtn(),"")+'<div class="pad"><div class="card"><b style="color:'+(s==="pending"?"#8A6A00":"var(--rd)")+'">'+(s==="pending"?"Pending review":s==="rejected"?"Not approved":"Suspended")+'</b><h2 style="margin:8px 0">'+t+'</h2><p class="mu">'+(s==="pending"?"Our team checks every seller before they can publish. This page updates when there’s a decision.":(a.reason?"Reason: "+esc(a.reason):"Contact support for details."))+'</p><p class="mu" style="margin:0">'+esc(a.shopName)+' · '+esc(a.category)+' · '+esc(a.city)+', '+esc(a.state)+'</p></div><button class="btn r w" data-out="1">Log Out</button></div>';
 }
 
 /* ---------- shell ---------- */
-const NAVI=[["home","home","Home"],["products","box","Products"],["add","plus","Add"],["messages","chat","Messages"],["more","more","More"]];
-const UN=()=>(S.ch||[]).filter(c=>c.lastFrom&&c.lastFrom!==S.u.uid&&sec(c.lastAt)>sec(c.sellerSeen)).length;
-function nav(){$("bn").firstElementChild.innerHTML=NAVI.map(n=>n[0]==="add"?'<button class="plus" data-new="1" aria-label="Add product"><span>'+I("plus")+'</span></button>':'<button data-go="'+n[0]+'"'+((S.v===n[0]||(n[0]==="more"&&["orders","analytics","shop","notes","settings"].includes(S.v)))?' aria-current="true"':'')+'>'+I(n[1])+n[2]+(n[0]==="messages"&&UN()?'<i class="bd">'+UN()+'</i>':'')+'</button>').join("")}
-function render(){nav();$("v").innerHTML=V[S.v]();const so=$("so");if(so)so.value=S.sort;window.scrollTo(0,0)}
+const NAVMAP={home:"home",notes:"home",products:"products",add:"products"};
+function nav(){const cur=NAVMAP[S.v]||"more";$("bn").firstElementChild.innerHTML=[["home","home","Home"],["products","box","Products"],["add","plus","Add"],["messages","chat","Messages"],["more","user","Account"]].map(n=>n[0]==="add"?'<button class="plus" data-new="1" aria-label="Add product"><span>'+I("plus")+'</span></button>':'<button data-go="'+n[0]+'"'+(cur===n[0]?' aria-current="true"':'')+'>'+I(n[1])+n[2]+(n[0]==="messages"&&UN()?'<i class="bd">'+UN()+'</i>':'')+'</button>').join("")}
+function render(){nav();$("v").innerHTML=V[S.v]();window.scrollTo(0,0)}
 function route(){const h=(location.hash||"#home").slice(1);S.v=V[h]?h:"home";if(S.v==="messages"){history.replaceState(null,"",location.pathname+"#home");location.href="chat.html";return}render()}
 function go(h){if(location.hash==="#"+h)route();else location.hash="#"+h}
 function newP(){S.ed=null;S.form=blank();S.imgs=[];S.pch=false;go("add")}
@@ -255,14 +298,20 @@ async function startEdit(id){
   if(S.v==="add"&&S.ed===id)repaintPhotos()
  }catch(e){}
 }
+function sheet(id){
+ const p=S.prods.find(x=>x.id===id);if(!p)return;const rm=p.status==="removed";
+ $("dp").innerHTML='<div class="sh-t">'+esc(p.name)+'</div>'+(rm?'':'<button class="sa" data-ed="'+id+'">'+I("pencil")+'Edit product</button><button class="sa" data-hide="'+id+'">'+I(p.status==="hidden"?"eye":"hide")+(p.status==="hidden"?"Make visible to buyers":"Hide from buyers")+'</button><button class="sa" data-stk="'+id+'">'+I("box")+(p.stock==="out"?"Mark as available":"Mark as out of stock")+'</button>')+'<a class="sa" href="product.html?id='+id+'">'+I("eye")+'View as a buyer</a><button class="sa red" data-del="'+id+'">'+I("trash")+'Delete product</button><button class="sa" data-close="1" style="justify-content:center;color:var(--mu)">Cancel</button>';
+ $("dg").showModal();
+}
 
 /* ---------- photos ---------- */
 function shrink(src,max,q){return new Promise((res,rej)=>{const im=new Image();im.onload=()=>{const r=Math.min(1,max/Math.max(im.width,im.height)),c=document.createElement("canvas");c.width=Math.max(1,Math.round(im.width*r));c.height=Math.max(1,Math.round(im.height*r));c.getContext("2d").drawImage(im,0,0,c.width,c.height);res(c.toDataURL("image/jpeg",q))};im.onerror=()=>rej(new Error("bad image"));im.src=src})}
 async function fromFile(f){const u=URL.createObjectURL(f);try{let full=await shrink(u,800,.72);if(full.length>200000)full=await shrink(u,640,.55);return{full,thumb:await shrink(u,320,.6)}}finally{URL.revokeObjectURL(u)}}
+function cropJpeg(file,w,h,q){return new Promise((res,rej)=>{const u=URL.createObjectURL(file),im=new Image();im.onload=()=>{const r=Math.max(w/im.width,h/im.height),sw=w/r,sh=h/r,c=document.createElement("canvas");c.width=w;c.height=h;c.getContext("2d").drawImage(im,(im.width-sw)/2,(im.height-sh)/2,sw,sh,0,0,w,h);URL.revokeObjectURL(u);res(c.toDataURL("image/jpeg",q))};im.onerror=()=>{URL.revokeObjectURL(u);rej()};im.src=u})}
 function fmsg(t,k){const m=$("fm");if(m){m.textContent=t;m.className="msg "+k;m.scrollIntoView({block:"center",behavior:"smooth"})}else toast(t)}
 function repaintPhotos(){const e=$("pvs");if(e)e.innerHTML=prevThumbs()+'<label class="up">'+I("camera")+'Add photos<input id="pf" type="file" accept="image/*" multiple></label>'}
 
-/* ---------- form actions ---------- */
+/* ---------- product form ---------- */
 function validate(){
  const d=S.form,q=Number(d.qty);
  if(String(d.name).trim().length<2)return "Enter the product name.";
@@ -276,14 +325,14 @@ function validate(){
 function preview(){
  const e=validate();if(e)return fmsg(e,"err");
  const d=S.form,ci=+d.cat;
- $("dp").innerHTML='<h3 style="margin-bottom:10px">Preview</h3><p class="mu" style="margin:0 0 10px">This is how buyers will see your product.</p><div class="grid" style="grid-template-columns:1fr"><article class="pc"><div class="im" style="background:'+TILE[ci%4]+'">'+(S.imgs[0]?'<img src="'+S.imgs[0].thumb+'" alt="">':art(ci))+'<span class="st">Active</span></div><div class="pb"><h3>'+esc(d.name)+'</h3><div class="pr">'+N(d.price)+'</div><div class="mt">'+esc(CATS[ci])+(d.brand?" · "+esc(d.brand):"")+' · '+esc(d.cond)+'</div><div class="mt">'+esc(d.qty)+' in stock · '+esc(d.delivery)+'</div><div class="mt">'+esc(d.area)+', '+esc(d.city)+', '+esc(d.state)+'</div>'+(d.options?'<div class="mt">'+esc(d.options)+'</div>':'')+'<p class="mt" style="margin:6px 0 0">'+esc(d.desc)+'</p></div></article></div><div class="row" style="margin-top:14px"><button class="btn sp" data-close="1">Back to edit</button><button class="btn g sp" id="pub">'+(S.ed?"Save changes":"Publish product")+'</button></div>';
+ $("dp").innerHTML='<h3 style="margin-bottom:6px">Preview</h3><p class="mu" style="margin:0 0 10px">This is how buyers will see your product.</p><article class="pc"><div class="pim" style="background:'+TILE[ci%4]+'">'+(S.imgs[0]?'<img src="'+S.imgs[0].thumb+'" alt="">':art(ci))+'</div><div class="pi"><h3>'+esc(d.name)+'</h3><div class="pp"><b>'+N(d.price)+'</b></div><div class="pv">'+esc(CATS[ci])+(d.brand?" · "+esc(d.brand):"")+' · '+esc(d.cond)+' · '+esc(d.qty)+' in stock</div><div class="pv">'+esc(d.area)+', '+esc(d.city)+', '+esc(d.state)+' · '+esc(d.delivery)+'</div>'+(d.options?'<div class="pv">'+esc(d.options)+'</div>':'')+'<p class="mu" style="margin:6px 0 0">'+esc(d.desc)+'</p></div></article><div class="row" style="margin-top:14px"><button class="btn sp" data-close="1">Back to edit</button><button class="btn p sp" id="pub">'+(S.ed?"Save changes":"Publish product")+'</button></div>';
  $("dg").showModal();
 }
 async function publish(){
  const b=$("pub");b.disabled=true;
  const d=S.form,qty=Number(d.qty),stock=qty<=0?"out":qty<=3?"low":"in";
  const f={name:d.name.trim(),price:Math.round(Number(d.price)),cat:+d.cat,state:d.state,city:d.city.trim(),area:d.area.trim(),cond:d.cond,stock,qty,brand:d.brand.trim(),desc:d.desc.trim(),options:d.options.trim(),delivery:d.delivery,thumb:S.imgs[0]?S.imgs[0].thumb:"",photoCount:S.imgs.length};
- if(!navigator.onLine){b.disabled=false;return fmsg("No connection. Check your internet and try again.","err"),$("dg").close()}
+ if(!navigator.onLine){b.disabled=false;$("dg").close();return fmsg("No connection. Check your internet and try again.","err")}
  try{
   let id=S.ed;
   if(id){await updateDoc(doc(db,"products",id),{...f,updatedAt:serverTimestamp()})}
@@ -296,7 +345,7 @@ async function publish(){
  b.disabled=false;
 }
 async function prodAct(id,a){
- const p=S.prods.find(x=>x.id===id);if(!p)return;
+ const p=S.prods.find(x=>x.id===id);if(!p)return;$("dg").close();
  try{
   if(a==="del"){if(!await ask("Delete this product?",p.name+" will be removed for good."))return;const b=writeBatch(db);for(let i=0;i<3;i++)b.delete(doc(db,"products",id,"photos",String(i)));b.delete(doc(db,"products",id));await b.commit();toast("Product deleted.")}
   else if(a==="hide"){const s=p.status==="hidden"?"active":"hidden";await updateDoc(doc(db,"products",id),{status:s,updatedAt:serverTimestamp()});toast(s==="hidden"?"Hidden from buyers.":"Visible to buyers again.")}
@@ -305,29 +354,61 @@ async function prodAct(id,a){
  }catch(x){toast("That didn’t work. Nothing was changed. Please try again.")}
 }
 
+/* ---------- profile, account, help ---------- */
+async function saveProfile(){
+ const bio=$("pb").value.trim().slice(0,200),un=$("pu").value.trim().toLowerCase().replace(/^@/,""),old=S.pf.username||"";
+ if(un&&!/^[a-z0-9_]{3,20}$/.test(un))return fmsg("Username must be 3–20 letters, numbers or underscores.","err");
+ try{
+  const b=writeBatch(db);
+  if(un&&un!==old){const t=await getDoc(doc(db,"usernames",un));if(t.exists()&&t.data().uid!==S.u.uid)return fmsg("That username is taken. Try another.","err");if(!t.exists())b.set(doc(db,"usernames",un),{uid:S.u.uid});if(old)b.delete(doc(db,"usernames",old))}
+  if(!un&&old)b.delete(doc(db,"usernames",old));
+  const data={bio,username:un,avatar:S.eav??S.pf.avatar??"",cover:S.ecv??S.pf.cover??"",updatedAt:serverTimestamp()};
+  b.set(doc(db,"profiles",S.u.uid),data);
+  await b.commit();S.pf={...data};S.eav=S.ecv=null;toast("Profile saved.");go("profile");
+ }catch(x){fmsg(x.code==="permission-denied"?"Couldn’t save. The latest Firestore rules must be published first.":"Couldn’t save your profile. Check your connection and try again.","err")}
+}
+async function shareShop(){const u=new URL("shop.html?id="+S.u.uid,location.href).href,d={title:S.app.shopName+" on Naija Mart",url:u};if(navigator.share)navigator.share(d).catch(()=>{});else{try{await navigator.clipboard.writeText(u);toast("Shop link copied")}catch(e){toast(u)}}}
+
 /* ---------- events ---------- */
-document.addEventListener("click",e=>{
- const t=e.target.closest("[data-go],[data-new],[data-f],[data-ed],[data-del],[data-hide],[data-stk],[data-prev],[data-rm],[data-close],[data-out],#pub");if(!t)return;
+document.addEventListener("click",async e=>{
+ const t=e.target.closest("[data-go],[data-new],[data-f],[data-ed],[data-del],[data-hide],[data-stk],[data-prev],[data-rm],[data-close],[data-out],[data-sq],[data-sh],[data-pt],[data-shr],[data-sp],[data-sa],[data-pw],[data-su],[data-pr],#pub");if(!t)return;
  const d=t.dataset;
  if(t.id==="pub")return publish();
+ if(d.go==="out"||d.out)return signOut(auth).then(()=>location.replace("auth.html"));
  if(d.go)return go(d.go);
  if(d.new)return newP();
  if(d.f){S.f=d.f;return render()}
- if(d.ed)return startEdit(d.ed);
+ if(d.sq){S.sq=!S.sq;render();const q=$("qs");if(q)q.focus();return}
+ if(d.sh)return sheet(d.sh);
+ if(d.ed){$("dg").close();return startEdit(d.ed)}
  if(d.del)return prodAct(d.del,"del");
  if(d.hide)return prodAct(d.hide,"hide");
  if(d.stk)return prodAct(d.stk,"stk");
  if(d.prev)return preview();
  if(d.rm!==undefined){S.imgs.splice(+d.rm,1);S.pch=true;return repaintPhotos()}
- if(d.close)return $("dg").close();
- if(d.out)return signOut(auth).then(()=>location.replace("auth.html"));
+ if(d.close!==undefined)return $("dg").close();
+ if(d.pt){S.pt=d.pt;const y=window.scrollY;render();window.scrollTo(0,y);return}
+ if(d.shr!==undefined)return shareShop();
+ if(d.sp!==undefined){t.disabled=true;await saveProfile();t.disabled=false;return}
+ if(d.sa!==undefined){const n=$("an").value.trim(),p=$("ap").value.trim();if(!n)return fmsg("Enter your name.","err");t.disabled=true;try{await updateDoc(doc(db,"users",S.u.uid),{name:n,phone:p});S.prof={...S.prof,name:n,phone:p};fmsg("Saved.","ok")}catch(x){fmsg("Couldn’t save. Please try again.","err")}t.disabled=false;return}
+ if(d.pw!==undefined){try{await sendPasswordResetEmail(auth,S.u.email);toast("Password reset email sent. Check your inbox and spam.")}catch(x){toast("Couldn’t send the email. Try again in a moment.")}return}
+ if(d.su!==undefined){const m=$("sm").value.trim();if(m.length<5)return fmsg("Please write a few words about the problem.","err");t.disabled=true;try{await addDoc(collection(db,"supportRequests"),{uid:S.u.uid,email:S.u.email||"",topic:$("st").value,message:m.slice(0,800),createdAt:serverTimestamp()});$("sm").value="";fmsg("Sent. The Naija Mart team will review it.","ok")}catch(x){fmsg("Couldn’t send. The latest Firestore rules must be published first.","err")}t.disabled=false;return}
+ if(d.pr!==undefined){t.disabled=true;try{await setDoc(doc(db,"premiumRequests",S.u.uid),{uid:S.u.uid,note:"",status:"requested",createdAt:serverTimestamp()});S.preq=true;render();toast("Request sent. We’ll contact you.")}catch(x){t.disabled=false;fmsg("Couldn’t send your request. The latest Firestore rules must be published first.","err")}}
 });
 document.addEventListener("input",e=>{const t=e.target;if(t.dataset.k)S.form[t.dataset.k]=t.value;if(t.id==="qs"){S.q=t.value;$("pg").innerHTML=plist()}});
 document.addEventListener("change",async e=>{
  const t=e.target;
  if(t.dataset.k)S.form[t.dataset.k]=t.value;
- if(t.id==="so"){S.sort=t.value;$("pg").innerHTML=plist()}
- if(t.id==="shw"){const v=t.checked;setDoc(doc(db,"presence",S.u.uid),{show:v,lastSeen:serverTimestamp()},{merge:true}).then(()=>{S.show=v;toast(v?"Last seen is visible":"Last seen is hidden")}).catch(()=>{t.checked=!v;toast("Couldn’t save that setting.")})}
+ if(t.dataset.th){try{localStorage.setItem("nm_theme",t.dataset.th)}catch(x){}document.documentElement.dataset.theme=t.dataset.th;return}
+ if(t.id==="shw"){const v=t.checked;setDoc(doc(db,"presence",S.u.uid),{show:v,lastSeen:serverTimestamp()},{merge:true}).then(()=>{S.show=v;toast(v?"Last seen is visible":"Last seen is hidden")}).catch(()=>{t.checked=!v;toast("Couldn’t save that setting.")});return}
+ if(t.id==="fav"||t.id==="fcv"){
+  const f=t.files[0];t.value="";if(!f)return;if(!f.type.startsWith("image/")||f.size>15e6)return fmsg("Choose a photo under 15 MB.","err");
+  try{
+   if(t.id==="fav"){let d=await cropJpeg(f,240,240,.78);if(d.length>55000)d=await cropJpeg(f,200,200,.6);S.eav=d;const p=$("avp");if(p)p.innerHTML='<div class="av" style="width:76px;height:76px;background:#fff"><img src="'+d+'" alt=""></div>'}
+   else{let d=await cropJpeg(f,900,380,.7);if(d.length>150000)d=await cropJpeg(f,720,304,.55);S.ecv=d;const p=$("cvp");if(p){const l=p.querySelector("label");p.innerHTML='<img src="'+d+'" alt="">';p.appendChild(l)}}
+  }catch(x){fmsg("Couldn’t read that photo. Try another.","err")}
+  return;
+ }
  if(t.id==="pf"){
   const fl=[...t.files];t.value="";
   for(const f of fl){
@@ -347,13 +428,18 @@ onAuthStateChanged(auth,async u=>{
  S.u=u;
  try{
   const a=await getDoc(doc(db,"sellerApplications",u.uid));
-  if(!a.exists()){$("load").hidden=true;$("v").hidden=false;$("v").innerHTML='<div class="card"><h2>You haven’t applied yet</h2><p class="mu">Tell us about your shop to start selling.</p><a class="btn g w" href="apply.html">Apply to sell</a></div>';return}
+  if(!a.exists()){$("load").hidden=true;$("v").hidden=false;$("v").innerHTML=logoBar().replace(bellBtn(),"")+'<div class="pad"><div class="card"><h2>You haven’t applied yet</h2><p class="mu">Tell us about your shop to start selling.</p><a class="btn p w" href="apply.html">Apply to sell</a></div></div>';return}
   S.app=a.data();
   try{const p=await getDoc(doc(db,"users",u.uid));S.prof=p.exists()?p.data():{}}catch(e){}
   if(S.app.status!=="approved"){$("load").hidden=true;$("v").hidden=false;$("v").innerHTML=statusPage(S.app);return}
-  try{await loadProducts()}catch(e){$("v").hidden=false;$("load").hidden=true;$("v").innerHTML='<div class="card empty"><h3>Couldn’t load your products</h3><p>Check your connection, or the latest Firestore rules may not be published yet.</p></div>';return}
-  try{const f=await getDocs(query(collection(db,"follows"),where("sellerId","==",u.uid)));S.fol=f.size;S.fl=f.docs.map(d=>d.data())}catch(e){}
-  try{const c=await getDocs(query(collection(db,"chats"),where("sellerId","==",u.uid)));S.ch=c.docs.map(d=>d.data())}catch(e){}
+  try{await loadProducts()}catch(e){$("v").hidden=false;$("load").hidden=true;$("v").innerHTML=hb("Seller dashboard")+'<div class="pad"><div class="card empty"><h3>Couldn’t load your products</h3><p>Check your connection, or the latest Firestore rules may not be published yet.</p></div></div>';return}
+  const [pf,sh,fl,fg,ch,pq]=await Promise.allSettled([getDoc(doc(db,"profiles",u.uid)),getDoc(doc(db,"shops",u.uid)),getDocs(query(collection(db,"follows"),where("sellerId","==",u.uid))),getDocs(query(collection(db,"follows"),where("buyerId","==",u.uid))),getDocs(query(collection(db,"chats"),where("sellerId","==",u.uid))),getDoc(doc(db,"premiumRequests",u.uid))]);
+  S.pf=pf.status==="fulfilled"&&pf.value.exists()?pf.value.data():{};
+  S.shop=sh.status==="fulfilled"&&sh.value.exists()?sh.value.data():{};
+  if(fl.status==="fulfilled"){S.fol=fl.value.size;S.fl=fl.value.docs.map(d=>d.data())}
+  if(fg.status==="fulfilled")S.fing=fg.value.size;
+  if(ch.status==="fulfilled")S.ch=ch.value.docs.map(d=>d.data());
+  S.preq=pq.status==="fulfilled"&&pq.value.exists();
   try{if(S.fol!==null){const st=await getDoc(doc(db,"shopStats",u.uid));const cur=st.exists()?st.data().followers:null;if(cur!==S.fol)await setDoc(doc(db,"shopStats",u.uid),{followers:S.fol})}}catch(e){}
   try{const p2=await getDoc(doc(db,"presence",u.uid));S.show=p2.exists()?p2.data().show!==false:true}catch(e){}
   $("load").hidden=true;$("v").hidden=false;$("bn").hidden=false;route();
