@@ -129,7 +129,7 @@ async function toggleFollow(sid,name){
  if(!S.u){need();return false}
  if(sid===S.u.uid){toast("This is your own shop.");return false}
  const id=S.u.uid+"_"+sid;
- try{if(S.follows.has(sid)){await deleteDoc(doc(db,"follows",id));S.follows.delete(sid);fc(sid,-1);toast("Unfollowed "+name)}else{await setDoc(doc(db,"follows",id),{buyerId:S.u.uid,sellerId:sid,shopName:String(name).slice(0,80),createdAt:serverTimestamp()});S.follows.set(sid,name);fc(sid,1);toast("Following "+name)}return true}
+ try{if(S.follows.has(sid)){await deleteDoc(doc(db,"follows",id));S.follows.delete(sid);fc(sid,-1);toast("Unfollowed "+name)}else{await setDoc(doc(db,"follows",id),{buyerId:S.u.uid,sellerId:sid,shopName:String(name).slice(0,80),buyerName:String(S.name||"Buyer").slice(0,60),createdAt:serverTimestamp()});S.follows.set(sid,name);fc(sid,1);toast("Following "+name)}return true}
  catch(e){toast("Couldn’t update. Please try again.");return false}
 }
 function pcard(p){
@@ -148,13 +148,14 @@ const beat=()=>{if(S.u&&document.visibilityState==="visible")setDoc(doc(db,"pres
 setTimeout(beat,6000);setInterval(beat,120000);addEventListener("visibilitychange",beat);
 
 const id=new URLSearchParams(location.search).get("id"),M=$("m");
-let SH=null,L=[],booted=false,FOL=null,wasF=false;
+let SH=null,L=[],booted=false,FOL=null,wasF=false,PF={};
 function gone(t){$("hd").innerHTML="";M.innerHTML='<div class="card empty" style="margin-top:20px">'+I("store")+'<h3>'+(t||"Shop not available")+'</h3><p>This shop may not be approved yet, or the link is wrong.</p><a class="btn p" href="marketplace.html">Back to marketplace</a></div>'}
 function paint(){
  const v=SH.verified===true,fl=S.follows.has(id),own=S.u&&S.u.uid===id,ci=Math.max(0,CATS.indexOf(SH.category)),name=esc(SH.shopName);
- $("hd").innerHTML='<div class="row" style="gap:14px"><div class="lt" style="background:'+TILE[ci%4]+'">'+art(ci)+'</div><div class="sp"><h1>'+name+'</h1><div class="s">'+I("pin")+' '+esc(SH.city)+', '+esc(SH.state)+'</div><div style="margin-top:8px">'+(v?'<span class="pl">'+I("shield")+' Verified seller</span>':'<span class="s">Not verified</span>')+'</div></div></div>';
+ const prem=!!(SH.premiumUntil&&SH.premiumUntil.seconds>Date.now()/1000),cvI=safeImg(PF.cover),avI=safeImg(PF.avatar);
+ $("hd").innerHTML=(cvI?'<div style="margin:0 -14px 14px;height:130px;border-radius:0 0 22px 22px;overflow:hidden"><img src="'+cvI+'" alt="" style="width:100%;height:100%;object-fit:cover;display:block"></div>':'')+'<div class="row" style="gap:14px">'+(avI?'<div class="lt" style="background:#fff"><img src="'+avI+'" alt="" style="width:100%;height:100%;border-radius:50%;object-fit:cover"></div>':'<div class="lt" style="background:'+TILE[ci%4]+'">'+art(ci)+'</div>')+'<div class="sp"><h1>'+name+'</h1>'+(PF.username?'<div class="s">@'+esc(PF.username)+'</div>':'')+'<div class="s">'+I("pin")+' '+esc(SH.city)+', '+esc(SH.state)+'</div><div style="margin-top:8px;display:flex;gap:6px;flex-wrap:wrap">'+(v?'<span class="pl">'+I("shield")+' Verified seller</span>':'<span class="s">Not verified</span>')+(prem?'<span class="pl" style="background:#fff;color:#0F3D2E">'+I("check")+' Premium</span>':'')+'</div></div></div>';
  M.innerHTML='<div class="acts">'+(own?'<a class="btn p full" href="seller.html">Open my seller dashboard</a>':'<button class="btn p" data-fl="'+esc(id)+'" data-n="'+name+'" aria-pressed="'+fl+'">'+(fl?"Following":"Follow")+'</button><a class="btn" href="chat.html?to='+encodeURIComponent(id)+'&shop='+encodeURIComponent(SH.shopName)+'">'+I("chat")+' Message</a>')+'<button class="btn full" id="sh">'+I("share")+' Share this shop</button></div>'+
- '<div class="card"><dl style="display:grid;grid-template-columns:auto 1fr;gap:6px 14px;margin:0"><dt class="mu">Category</dt><dd style="margin:0;font-weight:600">'+esc(SH.category||"–")+'</dd><dt class="mu">Location</dt><dd style="margin:0;font-weight:600">'+esc(SH.area||"")+(SH.area?", ":"")+esc(SH.city)+', '+esc(SH.state)+'</dd><dt class="mu">Followers</dt><dd style="margin:0;font-weight:600">'+(FOL===null?"–":FOL)+'</dd><dt class="mu">Live products</dt><dd style="margin:0;font-weight:600">'+L.length+'</dd></dl></div>'+
+ '<div class="card"><dl style="display:grid;grid-template-columns:auto 1fr;gap:6px 14px;margin:0"><dt class="mu">Category</dt><dd style="margin:0;font-weight:600">'+esc(SH.category||"–")+'</dd><dt class="mu">Location</dt><dd style="margin:0;font-weight:600">'+esc(SH.area||"")+(SH.area?", ":"")+esc(SH.city)+', '+esc(SH.state)+'</dd>'+(PF.bio?'<dt class="mu">About</dt><dd style="margin:0;font-weight:600">'+esc(PF.bio)+'</dd>':'')+'<dt class="mu">Followers</dt><dd style="margin:0;font-weight:600">'+(FOL===null?"–":FOL)+'</dd><dt class="mu">Live products</dt><dd style="margin:0;font-weight:600">'+L.length+'</dd></dl></div>'+
  '<div class="sec"><h2>Products</h2></div>'+(L.length?'<div class="grid">'+L.map(pcard).join("")+'</div>':'<div class="card empty">'+I("box")+'<h3>No products yet</h3><p>This seller hasn’t published any products.</p></div>')+
  '<div class="note">Naija Mart doesn’t take payment or guarantee delivery. Confirm price and stock with the seller, and never pay in advance to someone you can’t verify.</div>';
 }
@@ -168,6 +169,7 @@ async function boot(){
   L=p.docs.map(norm).sort((a,b)=>sec(b.createdAt)-sec(a.createdAt));
   try{const st=await getDoc(doc(db,"shopStats",id));FOL=st.exists()?Math.max(0,Number(st.data().followers)||0):0}catch(e){FOL=null}
   wasF=S.follows.has(id);
+  try{const pd=await getDoc(doc(db,"profiles",id));PF=pd.exists()?pd.data():{}}catch(e){PF={}}
   paint();
  }catch(e){gone("Couldn’t load this shop. Check your connection.")}
 }
