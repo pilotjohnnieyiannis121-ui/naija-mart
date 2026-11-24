@@ -139,4 +139,87 @@ async function toggleFollow(sid,name){
  if(!S.u){need();return false}
  if(sid===S.u.uid){toast("This is your own shop.");return false}
  const id=S.u.uid+"_"+sid;
- try{if(S.follows.has(sid)){await deleteDoc(doc(db,"follows",id));S.follows.delete(sid);fc(sid,-1);toast("Unfollowed "+name)}else{await setDoc(doc(db,"follows",id),{buyerId:S.u.uid,sellerId:sid,shopName:String(name).slice(0,80),buyerName:String(S.name||"Buyer").slice(0,60),createdAt:serverTimestamp()});S.follows.set(sid,name);fc(sid,1);toast("Following "+name)}return t
+ try{if(S.follows.has(sid)){await deleteDoc(doc(db,"follows",id));S.follows.delete(sid);fc(sid,-1);toast("Unfollowed "+name)}else{await setDoc(doc(db,"follows",id),{buyerId:S.u.uid,sellerId:sid,shopName:String(name).slice(0,80),buyerName:String(S.name||"Buyer").slice(0,60),createdAt:serverTimestamp()});S.follows.set(sid,name);fc(sid,1);toast("Following "+name)}return true}
+ catch(e){toast("Couldn’t update. Please try again.");return false}
+}
+function pcard(p){
+ const ci=catOf(p),v=S.shops[p.sellerId]&&S.shops[p.sellerId].verified===true,sv=S.saves.has(p.id),img=safeImg(p.thumb),href="product.html?id="+encodeURIComponent(p.id);
+ const st=p.stock==="out"?'<span class="no">Out of stock</span>':p.stock==="low"?'<span class="lo">Low stock</span>':'<span class="ok">In stock</span>';
+ return '<article class="pc"><a class="im" href="'+href+'" style="background:'+TILE[ci%4]+'" aria-label="View '+esc(p.name)+'">'+(img?'<img src="'+img+'" alt="" loading="lazy">':art(ci))+'</a><button class="hv" data-sv="'+esc(p.id)+'" aria-pressed="'+sv+'" aria-label="Save '+esc(p.name)+'">'+I("heart")+'</button><div class="pb"><a href="'+href+'"><h3>'+esc(p.name)+'</h3></a><div class="pr">'+N(p.price)+'</div><div class="sh"><a href="shop.html?id='+encodeURIComponent(p.sellerId)+'">'+esc(p.shopName)+'</a>'+(v?' <span class="vf">'+I("shield")+'Verified</span>':'')+'</div><div class="mt">'+I("pin")+' '+esc(p.city)+', '+esc(p.state)+'</div><div class="mt">'+st+' · '+ago(p.createdAt)+'</div></div></article>';
+}
+document.addEventListener("click",async e=>{
+ const t=e.target.closest("[data-sv],[data-fl]");if(!t)return;
+ e.preventDefault();
+ const ok=t.dataset.sv?await toggleSave(t.dataset.sv):await toggleFollow(t.dataset.fl,t.dataset.n||"");
+ if(ok&&typeof onSocial==="function")onSocial();
+});
+
+const beat=()=>{if(S.u&&document.visibilityState==="visible")setDoc(doc(db,"presence",S.u.uid),{lastSeen:serverTimestamp()},{merge:true}).catch(()=>{})};
+setTimeout(beat,6000);setInterval(beat,120000);addEventListener("visibilitychange",beat);
+
+const id=new URLSearchParams(location.search).get("id"),M=$("m");
+let PR=null,PH=[],pi=0,booted=false;
+function gone(t){M.innerHTML='<div class="card empty">'+I("box")+'<h3>'+(t||"Product not available")+'</h3><p>It may have been hidden or removed by the seller.</p><a class="btn p" href="marketplace.html">Back to marketplace</a></div>'}
+function gal(){
+ const ci=catOf(PR),im=PH.length?PH:(safeImg(PR.thumb)?[safeImg(PR.thumb)]:[]),big=im[pi]||null;
+ return '<div class="gal" style="background:'+TILE[ci%4]+'">'+(big?'<img src="'+big+'" alt="'+esc(PR.name)+'">':art(ci))+(im.length?'<span class="cnt">'+(pi+1)+'/'+im.length+'</span>':'')+'</div>'+(im.length>1?'<div class="ths">'+im.map((u,i)=>'<button data-ph="'+i+'" aria-pressed="'+(i===pi)+'" aria-label="Photo '+(i+1)+'"><img src="'+u+'" alt=""></button>').join("")+'</div>':'');
+}
+function paint(){
+ const p=PR,ci=catOf(p),sh=S.shops[p.sellerId],v=sh&&sh.verified===true,own=S.u&&S.u.uid===p.sellerId,fl=S.follows.has(p.sellerId);
+ const q=Number.isInteger(p.qty)?p.qty:null,st=p.stock==="out"?'<span class="no">Out of stock</span>':p.stock==="low"?'<span class="lo">Low stock'+(q!==null?" · "+q+" left":"")+'</span>':'<span class="ok">In stock'+(q!==null?" · "+q+" available":"")+'</span>';
+ $("svb").dataset.sv=p.id;$("svb").setAttribute("aria-pressed",S.saves.has(p.id));
+ M.innerHTML='<div class="pg"><div><div id="galw">'+gal()+'</div></div><div>'+
+ '<div class="card" style="margin-top:0"><h1 style="font-size:1.6rem;overflow-wrap:anywhere">'+esc(p.name)+'</h1><div class="big">'+N(p.price)+'</div><div style="margin:6px 0">'+st+' <span class="mu">· Updated '+ago(p.createdAt)+'</span></div>'+(v?'<span class="pill ok2">'+I("shield")+' Verified seller</span>':'')+
+ '<p style="margin:14px 0 8px">'+esc(p.desc)+'</p>'+(p.options?'<div class="pills" style="margin:8px 0">'+p.options.split(/[,;]/).map(x=>x.trim()).filter(Boolean).map(x=>'<span class="pl">'+esc(x)+'</span>').join("")+'</div>':'')+
+ '<dl style="margin-top:12px"><dt>Condition</dt><dd>'+esc(p.cond||"–")+'</dd>'+(p.brand?'<dt>Brand</dt><dd>'+esc(p.brand)+'</dd>':'')+'<dt>Category</dt><dd>'+esc(CATS[ci])+'</dd><dt>Location</dt><dd>'+esc(p.area)+', '+esc(p.city)+', '+esc(p.state)+'</dd><dt>Pickup / delivery</dt><dd>'+esc(p.delivery)+'</dd></dl></div>'+
+ '<div class="card"><div class="row"><div class="av">'+esc(p.shopName.trim().split(/\s+/).slice(0,2).map(w=>w[0]).join("").toUpperCase())+'</div><div class="sp"><a href="shop.html?id='+encodeURIComponent(p.sellerId)+'"><b>'+esc(p.shopName)+'</b></a> '+(v?'<span class="vf">'+I("shield")+'Verified</span>':'<span class="mu">Not verified</span>')+'<div class="mu">'+I("pin")+' '+esc(p.city)+', '+esc(p.state)+'</div></div>'+(own?'':'<button class="btn s" data-fl="'+esc(p.sellerId)+'" data-n="'+esc(p.shopName)+'" aria-pressed="'+fl+'">'+(fl?"Following":"Follow")+'</button>')+'</div>'+
+ (own?'<p class="mu" style="margin:10px 0 0">This is your own product.</p>':'<div class="acts"><a class="btn p full" href="chat.html?to='+encodeURIComponent(p.sellerId)+'&shop='+encodeURIComponent(p.shopName)+'">'+I("chat")+' Message seller</a></div>')+
+ '<div class="acts" style="margin-top:10px"><button class="btn" data-sv="'+esc(p.id)+'" id="sv2">'+I("heart")+(S.saves.has(p.id)?" Saved":" Save")+'</button><button class="btn" id="sh2">'+I("share")+' Share</button><button class="btn full r" id="rp">'+I("flag")+' Report listing</button></div></div>'+
+ '<div class="note">Naija Mart doesn’t take payment or guarantee delivery. Confirm price and stock with the seller, and never pay in advance to someone you can’t verify.</div>'+
+ '</div></div>'+
+ '<h2 style="font-size:1.3rem;margin:18px 0 8px">Reviews and ratings</h2><div class="card"><p class="mu" style="margin:0">Seller reviews and star ratings are coming soon. For now you can ask questions in the comments below.</p></div>'+
+ '<h2 style="font-size:1.3rem;margin:18px 0 8px">Comments</h2><div class="card">'+(S.u?'<textarea class="in" id="ct" maxlength="300" placeholder="Ask a question or leave a comment"></textarea><button class="btn p" id="cp">Post comment</button>':'<p class="mu" style="margin:0">Sign in to comment. <a href="auth.html" style="color:var(--g2);font-weight:700">Sign in</a></p>')+'<div id="cl" style="margin-top:12px"></div></div>'+
+ '<h2 style="font-size:1.3rem;margin:18px 0 8px">Similar products</h2><div id="sm"><div class="sk"></div></div>';
+}
+async function loadPhotos(){
+ if(!PR)return;
+ try{const s=await getDocs(collection(db,"products",id,"photos"));PH=s.docs.map(d=>d.data()).sort((a,b)=>a.idx-b.idx).map(x=>safeImg(x.data)).filter(Boolean);const g=$("galw");if(g)g.innerHTML=gal()}catch(e){}
+}
+async function loadComments(){
+ try{const s=await getDocs(query(collection(db,"products",id,"comments"),orderBy("createdAt","asc"),limit(50)));
+  $("cl").innerHTML=s.docs.length?s.docs.map(d=>{const c=d.data(),mine=S.u&&c.userId===S.u.uid,own=S.u&&S.u.uid===PR.sellerId;return '<div class="cm"><div class="av">'+esc(String(c.name||"?")[0].toUpperCase())+'</div><div class="sp"><b>'+esc(c.name)+'</b> <span class="mu">'+ago(c.createdAt)+'</span><div style="overflow-wrap:anywhere">'+esc(c.text)+'</div></div>'+((mine||own)?'<button class="x" data-dc="'+d.id+'" aria-label="Delete comment">✕</button>':'')+'</div>'}).join(""):'<p class="mu" style="margin:0">No comments yet.</p>';
+ }catch(e){const c=$("cl");if(c)c.innerHTML='<p class="mu">Couldn’t load comments.</p>'}
+}
+async function loadSimilar(){
+ try{const s=await getDocs(query(collection(db,"products"),where("status","==","active"),where("cat","==",catOf(PR)),limit(9)));
+  const L=s.docs.map(norm).filter(p=>p.id!==id).slice(0,8);
+  $("sm").innerHTML=L.length?'<div class="grid">'+L.map(pcard).join("")+'</div>':'<div class="card"><p class="mu" style="margin:0">No similar products yet.</p></div>';
+ }catch(e){$("sm").innerHTML=''}
+}
+function onSocial(){if(PR){paint();loadPhotos();loadComments();loadSimilar()}}
+document.addEventListener("click",async e=>{
+ const t=e.target.closest("[data-ph],#sh2,#shb,#rp,#rc,#rs,#cp,[data-dc]");if(!t)return;
+ if(t.dataset.ph!==undefined){pi=+t.dataset.ph;$("galw").innerHTML=gal();return}
+ if(t.id==="sh2"||t.id==="shb"){const d={title:PR.name+" on Naija Mart",text:PR.name+" · "+N(PR.price),url:location.href};if(navigator.share)navigator.share(d).catch(()=>{});else{try{await navigator.clipboard.writeText(location.href);toast("Link copied")}catch(x){toast("Copy this page’s address to share it")}}return}
+ if(t.id==="rp"){if(!S.u)return need();$("dg").showModal();return}
+ if(t.id==="rc")return $("dg").close();
+ if(t.id==="rs"){t.disabled=true;try{await addDoc(collection(db,"reports"),{reporterId:S.u.uid,pid:id,sellerId:PR.sellerId,reason:($("rr").value+": "+$("rt").value.trim()).slice(0,300),createdAt:serverTimestamp()});$("dg").close();$("rt").value="";toast("Report sent. Thank you.")}catch(x){toast("Couldn’t send the report. Try again.")}t.disabled=false;return}
+ if(t.id==="cp"){const v=$("ct").value.trim();if(!v)return;t.disabled=true;try{await addDoc(collection(db,"products",id,"comments"),{userId:S.u.uid,name:(S.name||"Buyer").slice(0,60),text:v.slice(0,300),createdAt:serverTimestamp()});$("ct").value="";await loadComments();toast("Comment posted")}catch(x){toast("Couldn’t post your comment.")}t.disabled=false;return}
+ if(t.dataset.dc){try{await deleteDoc(doc(db,"products",id,"comments",t.dataset.dc));await loadComments()}catch(x){toast("Couldn’t delete that comment.")}}
+});
+async function boot(){
+ if(!id)return gone("No product selected");
+ try{
+  const d=await getDoc(doc(db,"products",id));
+  if(!d.exists())return gone();
+  PR=norm(d);
+  try{const s=await getDoc(doc(db,"shops",PR.sellerId));if(s.exists())S.shops[PR.sellerId]=s.data()}catch(e){}
+  document.title=PR.name+" – Naija Mart";recAdd(id);
+  if(S.u&&S.u.uid!==PR.sellerId&&PR.status==="active"){const k="nm_v_"+id;try{if(!sessionStorage.getItem(k)){sessionStorage.setItem(k,"1");updateDoc(doc(db,"products",id),{views:increment(1)}).catch(()=>{})}}catch(e){}}
+  paint();loadPhotos();loadComments();loadSimilar();
+ }catch(e){gone(e&&e.code==="permission-denied"?"This product isn’t available":"Couldn’t load this product. Check your connection.")}
+}
+onAuthStateChanged(auth,async u=>{S.u=u;if(u)await loadSocial();if(!booted){booted=true;boot()}else if(PR)onSocial()});
+</script>
+</body>
+</html>
