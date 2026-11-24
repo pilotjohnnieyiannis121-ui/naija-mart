@@ -67,6 +67,7 @@ dl{display:grid;grid-template-columns:auto 1fr;gap:8px 16px;margin:0}dt{color:va
 .cm{display:flex;gap:10px;padding:10px 0;border-top:1px solid var(--ln)}.cm:first-child{border-top:0}.cm .av{width:38px;height:38px;font-size:.85rem}.cm .x{background:none;border:0;color:var(--mu);cursor:pointer;min-width:36px}
 .pills{display:flex;gap:8px;flex-wrap:wrap}.pl{border:1.5px solid var(--ln);border-radius:99px;padding:4px 14px;font-weight:700;background:#fff}
 @media (min-width:800px){.pg{display:grid;grid-template-columns:1.05fr 1fr;gap:22px;align-items:start}.pg .card:first-child{margin-top:0}}
+.stars{color:#E2A400;letter-spacing:1px}.rvw{padding:10px 0;border-top:1px solid var(--ln)}.rvw:first-child{border-top:0}
 </style>
 </head>
 <body>
@@ -78,13 +79,14 @@ dl{display:grid;grid-template-columns:auto 1fr;gap:8px 16px;margin:0}dt{color:va
  <label class="f" for="rt">Details (optional)</label><textarea class="in" id="rt" maxlength="250"></textarea>
  <div class="row"><button class="btn sp" id="rc">Cancel</button><button class="btn p sp" id="rs">Send report</button></div>
 </div></dialog>
+<dialog id="od"><div class="dp"><h3 style="margin-bottom:6px">Request this item</h3><p class="mu" id="odp" style="margin:0 0 12px"></p><label class="f" for="oq">Quantity</label><input class="in" id="oq" type="number" min="1" max="100" value="1" inputmode="numeric"><label class="f" for="on">Note to the seller (optional)</label><textarea class="in" id="on" maxlength="250" placeholder="Pickup or delivery details, size, colour…"></textarea><p class="note" style="margin:0 0 12px">Naija Mart doesn’t take payment. The seller accepts or declines, then you agree payment and pickup or delivery together.</p><div class="row"><button class="btn sp" id="oc">Cancel</button><button class="btn p sp" id="os">Send request</button></div></div></dialog>
 <div class="toast" id="toast" role="status"></div>
 <script type="module">
 const firebaseConfig={apiKey:"AIzaSyCRQapXUQ32P4tpKaMiS11uccUc-z5k9yg",authDomain:"naija-mart-35ba6.firebaseapp.com",projectId:"naija-mart-35ba6",appId:"1:761759831734:web:2780ba182d5947d0cff817"};
 import {initializeApp} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
 import {getAuth,onAuthStateChanged,signOut,sendEmailVerification,updateProfile} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
-import {getFirestore,doc,getDoc,setDoc,updateDoc,deleteDoc,addDoc,collection,query,where,orderBy,limit,getDocs,writeBatch,onSnapshot,serverTimestamp,increment} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
-const app=initializeApp(firebaseConfig),auth=getAuth(app),db=getFirestore(app);
+import {getFirestore,initializeFirestore,doc,getDoc,setDoc,updateDoc,deleteDoc,addDoc,collection,query,where,orderBy,limit,getDocs,writeBatch,onSnapshot,serverTimestamp,increment} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+const app=initializeApp(firebaseConfig),auth=getAuth(app),db=initializeFirestore(app,{experimentalAutoDetectLongPolling:true});
 const $=i=>document.getElementById(i);
 const esc=s=>String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
 const N=n=>"₦"+Number(n||0).toLocaleString("en-NG");
@@ -111,7 +113,7 @@ const art=i=>'<svg class="art" viewBox="0 0 64 64" role="img" aria-hidden="true"
 
 const catOf=p=>Number.isInteger(p.cat)&&p.cat>=0&&p.cat<12?p.cat:11;
 const safeImg=s=>/^data:image\/jpeg;base64,[A-Za-z0-9+\/=]+$/.test(s||"")?s:"";
-const PATHS={home:"M4 11 12 4l8 7v9H4z",search:"M11 18a7 7 0 1 0 0-14 7 7 0 0 0 0 14zM20 20l-4-4",heart:"M12 20s-7-4.4-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 10c0 5.6-7 10-7 10z",chat:"M4 5h16v11H9l-5 4z",user:"M12 12a4 4 0 1 0 0-8 4 4 0 0 0 0 8zM4 21c0-4 4-6 8-6s8 2 8 6",bell:"M6 17V11a6 6 0 0 1 12 0v6l2 2H4zM10 21h4",pin:"M12 21s7-6.2 7-11a7 7 0 1 0-14 0c0 4.8 7 11 7 11zM12 12.5a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5z",shield:"M12 3 4 6v6c0 5 3.4 8 8 9 4.6-1 8-4 8-9V6zM9 12l2 2 4-4",check:"m5 12 5 5 9-10",plus:"M12 5v14M5 12h14",back:"M15 5l-7 7 7 7",share:"M6 14a2.5 2.5 0 1 0 0-4 2.5 2.5 0 0 0 0 4zM18 8a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5zM18 21a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5zM8.2 10.9l7.6-4M8.2 13.1l7.6 4",flag:"M5 21V4h12l-2 4 2 4H5",store:"M4 9l1-5h14l1 5M4 9v11h16V9M4 9a3 3 0 0 0 5.3 1.9A3 3 0 0 0 14.7 10.9 3 3 0 0 0 20 9M9 20v-5h6v5",logout:"M9 4H5v16h4M16 8l4 4-4 4M20 12H9",gear:"M12 15a3 3 0 1 0 0-6 3 3 0 0 0 0 6zM12 2v3M12 19v3M2 12h3M19 12h3M5 5l2 2M17 17l2 2M5 19l2-2M17 7l2-2",help:"M12 21a9 9 0 1 0 0-18 9 9 0 0 0 0 18zM9.5 9.5a2.5 2.5 0 1 1 3.5 2.3c-.7.4-1 .9-1 1.7M12 17h.01",clock:"M12 21a9 9 0 1 0 0-18 9 9 0 0 0 0 18zM12 7v5l3 2",chev:"m9 5 7 7-7 7",box:"M4 8l8-4 8 4v8l-8 4-8-4zM4 8l8 4 8-4M12 12v8",send:"M4 12 20 4l-4 16-4-6z",x:"M6 6l12 12M18 6 6 18"};
+const PATHS={home:"M4 11 12 4l8 7v9H4z",search:"M11 18a7 7 0 1 0 0-14 7 7 0 0 0 0 14zM20 20l-4-4",heart:"M12 20s-7-4.4-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 10c0 5.6-7 10-7 10z",chat:"M4 5h16v11H9l-5 4z",user:"M12 12a4 4 0 1 0 0-8 4 4 0 0 0 0 8zM4 21c0-4 4-6 8-6s8 2 8 6",bell:"M6 17V11a6 6 0 0 1 12 0v6l2 2H4zM10 21h4",pin:"M12 21s7-6.2 7-11a7 7 0 1 0-14 0c0 4.8 7 11 7 11zM12 12.5a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5z",shield:"M12 3 4 6v6c0 5 3.4 8 8 9 4.6-1 8-4 8-9V6zM9 12l2 2 4-4",check:"m5 12 5 5 9-10",plus:"M12 5v14M5 12h14",back:"M15 5l-7 7 7 7",share:"M6 14a2.5 2.5 0 1 0 0-4 2.5 2.5 0 0 0 0 4zM18 8a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5zM18 21a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5zM8.2 10.9l7.6-4M8.2 13.1l7.6 4",flag:"M5 21V4h12l-2 4 2 4H5",store:"M4 9l1-5h14l1 5M4 9v11h16V9M4 9a3 3 0 0 0 5.3 1.9A3 3 0 0 0 14.7 10.9 3 3 0 0 0 20 9M9 20v-5h6v5",logout:"M9 4H5v16h4M16 8l4 4-4 4M20 12H9",gear:"M12 15a3 3 0 1 0 0-6 3 3 0 0 0 0 6zM12 2v3M12 19v3M2 12h3M19 12h3M5 5l2 2M17 17l2 2M5 19l2-2M17 7l2-2",help:"M12 21a9 9 0 1 0 0-18 9 9 0 0 0 0 18zM9.5 9.5a2.5 2.5 0 1 1 3.5 2.3c-.7.4-1 .9-1 1.7M12 17h.01",clock:"M12 21a9 9 0 1 0 0-18 9 9 0 0 0 0 18zM12 7v5l3 2",chev:"m9 5 7 7-7 7",box:"M4 8l8-4 8 4v8l-8 4-8-4zM4 8l8 4 8-4M12 12v8",send:"M4 12 20 4l-4 16-4-6z",x:"M6 6l12 12M18 6 6 18",cart:"M3 4h2l2 11h11l2-8H7M9 20h.01M17 20h.01",star:"m12 3 2.7 5.6 6.1.9-4.4 4.3 1 6.1L12 17l-5.4 2.9 1-6.1L3.2 9.5l6.1-.9z"};
 const I=n=>'<svg class="i" viewBox="0 0 24 24"><path d="'+PATHS[n]+'"/></svg>';
 const S={u:null,name:"",saves:new Set(),follows:new Map(),shops:{}};
 function toast(t){const e=$("toast");e.textContent=t;e.style.display="block";clearTimeout(toast.t);toast.t=setTimeout(()=>e.style.display="none",2800)}
@@ -173,11 +175,11 @@ function paint(){
  '<p style="margin:14px 0 8px">'+esc(p.desc)+'</p>'+(p.options?'<div class="pills" style="margin:8px 0">'+p.options.split(/[,;]/).map(x=>x.trim()).filter(Boolean).map(x=>'<span class="pl">'+esc(x)+'</span>').join("")+'</div>':'')+
  '<dl style="margin-top:12px"><dt>Condition</dt><dd>'+esc(p.cond||"–")+'</dd>'+(p.brand?'<dt>Brand</dt><dd>'+esc(p.brand)+'</dd>':'')+'<dt>Category</dt><dd>'+esc(CATS[ci])+'</dd><dt>Location</dt><dd>'+esc(p.area)+', '+esc(p.city)+', '+esc(p.state)+'</dd><dt>Pickup / delivery</dt><dd>'+esc(p.delivery)+'</dd></dl></div>'+
  '<div class="card"><div class="row"><div class="av">'+esc(p.shopName.trim().split(/\s+/).slice(0,2).map(w=>w[0]).join("").toUpperCase())+'</div><div class="sp"><a href="shop.html?id='+encodeURIComponent(p.sellerId)+'"><b>'+esc(p.shopName)+'</b></a> '+(v?'<span class="vf">'+I("shield")+'Verified</span>':'<span class="mu">Not verified</span>')+'<div class="mu">'+I("pin")+' '+esc(p.city)+', '+esc(p.state)+'</div></div>'+(own?'':'<button class="btn s" data-fl="'+esc(p.sellerId)+'" data-n="'+esc(p.shopName)+'" aria-pressed="'+fl+'">'+(fl?"Following":"Follow")+'</button>')+'</div>'+
- (own?'<p class="mu" style="margin:10px 0 0">This is your own product.</p>':'<div class="acts"><a class="btn p full" href="chat.html?to='+encodeURIComponent(p.sellerId)+'&shop='+encodeURIComponent(p.shopName)+'">'+I("chat")+' Message seller</a></div>')+
+ (own?'<p class="mu" style="margin:10px 0 0">This is your own product.</p>':'<div class="acts"><a class="btn p full" href="chat.html?to='+encodeURIComponent(p.sellerId)+'&shop='+encodeURIComponent(p.shopName)+'">'+I("chat")+' Message seller</a><button class="btn g full" id="rq">'+I("check")+' Request this item</button></div>')+
  '<div class="acts" style="margin-top:10px"><button class="btn" data-sv="'+esc(p.id)+'" id="sv2">'+I("heart")+(S.saves.has(p.id)?" Saved":" Save")+'</button><button class="btn" id="sh2">'+I("share")+' Share</button><button class="btn full r" id="rp">'+I("flag")+' Report listing</button></div></div>'+
  '<div class="note">Naija Mart doesn’t take payment or guarantee delivery. Confirm price and stock with the seller, and never pay in advance to someone you can’t verify.</div>'+
  '</div></div>'+
- '<h2 style="font-size:1.3rem;margin:18px 0 8px">Reviews and ratings</h2><div class="card"><p class="mu" style="margin:0">Seller reviews and star ratings are coming soon. For now you can ask questions in the comments below.</p></div>'+
+ '<h2 style="font-size:1.3rem;margin:18px 0 8px">Seller reviews</h2><div class="card" id="rvs"><p class="mu" style="margin:0">Loading reviews…</p></div>'+
  '<h2 style="font-size:1.3rem;margin:18px 0 8px">Comments</h2><div class="card">'+(S.u?'<textarea class="in" id="ct" maxlength="300" placeholder="Ask a question or leave a comment"></textarea><button class="btn p" id="cp">Post comment</button>':'<p class="mu" style="margin:0">Sign in to comment. <a href="auth.html" style="color:var(--g2);font-weight:700">Sign in</a></p>')+'<div id="cl" style="margin-top:12px"></div></div>'+
  '<h2 style="font-size:1.3rem;margin:18px 0 8px">Similar products</h2><div id="sm"><div class="sk"></div></div>';
 }
@@ -196,11 +198,21 @@ async function loadSimilar(){
   $("sm").innerHTML=L.length?'<div class="grid">'+L.map(pcard).join("")+'</div>':'<div class="card"><p class="mu" style="margin:0">No similar products yet.</p></div>';
  }catch(e){$("sm").innerHTML=''}
 }
-function onSocial(){if(PR){paint();loadPhotos();loadComments();loadSimilar()}}
+const stars=n=>'<span class="stars" aria-label="'+n+' out of 5">'+"★".repeat(Math.round(n))+"☆".repeat(5-Math.round(n))+'</span>';
+async function loadReviews(){
+ try{const s=await getDocs(query(collection(db,"reviews"),where("sellerId","==",PR.sellerId),limit(100)));const L=s.docs.map(d=>d.data()).sort((a,b)=>sec(b.createdAt)-sec(a.createdAt));
+  const avg=L.length?L.reduce((t,r)=>t+(Number(r.rating)||0),0)/L.length:0,e=$("rvs");if(!e)return;
+  e.innerHTML=L.length?'<div class="row" style="margin-bottom:6px"><b style="font-size:1.6rem">'+avg.toFixed(1)+'</b>'+stars(avg)+'<span class="mu">'+L.length+' review'+(L.length===1?"":"s")+' of this seller</span></div>'+L.slice(0,5).map(r=>'<div class="rvw"><div class="row"><b class="sp">'+esc(r.buyerName||"Buyer")+'</b>'+stars(Number(r.rating)||0)+'</div><div class="mu">'+esc(r.pname||"")+' · '+ago(r.createdAt)+'</div><div>'+esc(r.text||"")+'</div></div>').join(""):'<p class="mu" style="margin:0">No reviews yet. Buyers can leave a review after the seller completes their order.</p>';
+ }catch(x){const e=$("rvs");if(e)e.innerHTML='<p class="mu" style="margin:0">Couldn’t load reviews.</p>'}
+}
+function onSocial(){if(PR){paint();loadPhotos();loadComments();loadSimilar();loadReviews()}}
 document.addEventListener("click",async e=>{
- const t=e.target.closest("[data-ph],#sh2,#shb,#rp,#rc,#rs,#cp,[data-dc]");if(!t)return;
+ const t=e.target.closest("[data-ph],#sh2,#shb,#rp,#rc,#rs,#cp,[data-dc],#rq,#oc,#os");if(!t)return;
  if(t.dataset.ph!==undefined){pi=+t.dataset.ph;$("galw").innerHTML=gal();return}
  if(t.id==="sh2"||t.id==="shb"){const d={title:PR.name+" on Naija Mart",text:PR.name+" · "+N(PR.price),url:location.href};if(navigator.share)navigator.share(d).catch(()=>{});else{try{await navigator.clipboard.writeText(location.href);toast("Link copied")}catch(x){toast("Copy this page’s address to share it")}}return}
+ if(t.id==="rq"){if(!S.u)return need();if(PR.stock==="out")return toast("This item is out of stock.");$("odp").textContent=PR.name+" · "+N(PR.price);$("oq").value=1;$("od").showModal();return}
+ if(t.id==="oc")return $("od").close();
+ if(t.id==="os"){const q=parseInt($("oq").value,10);if(!(q>=1&&q<=100))return toast("Enter a quantity from 1 to 100.");t.disabled=true;try{await addDoc(collection(db,"orders"),{buyerId:S.u.uid,sellerId:PR.sellerId,buyerName:String(S.name||"Buyer").slice(0,60),shopName:String(PR.shopName).slice(0,80),pid:id,pname:String(PR.name).slice(0,100),pprice:Number(PR.price)||0,qty:q,note:$("on").value.trim().slice(0,300),status:"requested",createdAt:serverTimestamp()});$("od").close();$("on").value="";toast("Request sent. Follow it in Account → My orders.")}catch(x){toast(x.code==="permission-denied"?"Couldn’t send. The latest Firestore rules may not be published yet.":"Couldn’t send your request. Try again.")}t.disabled=false;return}
  if(t.id==="rp"){if(!S.u)return need();$("dg").showModal();return}
  if(t.id==="rc")return $("dg").close();
  if(t.id==="rs"){t.disabled=true;try{await addDoc(collection(db,"reports"),{reporterId:S.u.uid,pid:id,sellerId:PR.sellerId,reason:($("rr").value+": "+$("rt").value.trim()).slice(0,300),createdAt:serverTimestamp()});$("dg").close();$("rt").value="";toast("Report sent. Thank you.")}catch(x){toast("Couldn’t send the report. Try again.")}t.disabled=false;return}
@@ -216,10 +228,16 @@ async function boot(){
   try{const s=await getDoc(doc(db,"shops",PR.sellerId));if(s.exists())S.shops[PR.sellerId]=s.data()}catch(e){}
   document.title=PR.name+" – Naija Mart";recAdd(id);
   if(S.u&&S.u.uid!==PR.sellerId&&PR.status==="active"){const k="nm_v_"+id;try{if(!sessionStorage.getItem(k)){sessionStorage.setItem(k,"1");updateDoc(doc(db,"products",id),{views:increment(1)}).catch(()=>{})}}catch(e){}}
-  paint();loadPhotos();loadComments();loadSimilar();
- }catch(e){gone(e&&e.code==="permission-denied"?"This product isn’t available":"Couldn’t load this product. Check your connection.")}
+  paint();loadPhotos();loadComments();loadSimilar();loadReviews();
+ }catch(e){gone(e&&e.code==="permission-denied"?"This product isn’t available":"Couldn’t load this product"+(e&&e.code?" ("+e.code+")":"")+". Check your connection and reload.")}
 }
-onAuthStateChanged(auth,async u=>{S.u=u;if(u)await loadSocial();if(!booted){booted=true;boot()}else if(PR)onSocial()});
+onAuthStateChanged(auth,async u=>{S.u=u;
+ if(!booted){booted=true;boot();if(u)loadSocial().then(()=>{if(PR)onSocial()}).catch(()=>{})}
+ else{if(u)await loadSocial().catch(()=>{});if(PR)onSocial()}
+});
+setTimeout(()=>{if(!booted){booted=true;boot()}},4000);
+setTimeout(()=>{if(!PR&&M.innerHTML.indexOf('class="sk"')>-1)gone("This is taking too long. Check your connection, then reload the page.")},12000);
+addEventListener("error",ev=>{if(!PR&&M.innerHTML.indexOf('class="sk"')>-1)gone("Something went wrong loading this page"+(ev&&ev.message?" ("+String(ev.message).slice(0,80)+")":"")+".")});
 </script>
 </body>
 </html>
